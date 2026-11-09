@@ -306,7 +306,7 @@ def narrate(facts: list[Fact], level: str, risk: float, language: str = "en", pr
         return fallback, "template"
     system = SYSTEM_PROMPT + (" Write in Hindi using Devanagari script." if language == "hi" else " Write in English.")
     try:
-        output = PROVIDERS[provider](system, json.dumps(payload, ensure_ascii=False)).strip()
+        output = PROVIDERS[provider](system, json.dumps(payload, ensure_ascii=False)).strip().strip('"“”').strip()  # small models often quote their answer
     except Exception as error:  # A narrator outage must never block an alert: the template is always available.
         log.warning("Qwen provider %s failed: %s", provider, error)
         return fallback, "template"
