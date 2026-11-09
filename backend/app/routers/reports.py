@@ -2,10 +2,12 @@
 import csv
 from datetime import datetime
 from io import BytesIO, StringIO
+from collections.abc import Iterator
 from typing import Any
 from xml.sax.saxutils import escape
 
 from fastapi import APIRouter, HTTPException, Query, Response
+from fastapi.responses import StreamingResponse
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
@@ -19,6 +21,8 @@ from ml.features import RULE_LABELS
 
 from ..deps import DB, MAX_ID, CurrentUser, Id, audit, through
 from ..models import SEEDED_COMMENT, Alert, Case, Event, Feedback, User, utcnow
+from ..db import SessionLocal
+from ..services import latest_feedback
 
 router = APIRouter(prefix="/reports", tags=["reports"])
 
@@ -152,9 +156,41 @@ def _safe_cell(value: Any) -> Any:
     return value
 
 
+def _flag_names(flags: list[str]) -> str:
+    return "; ".join(RULE_LABELS.get(f, f) for f in flags)
+
+
+def _round(value: float | None, digits: int) -> float | None:
+    return None if value is None else round(value, digits)
+
+
+def _csv(header: list[str], rows: Iterator[list[Any]], filename: str) -> StreamingResponse:
+    """Written a chunk at a time, so a results file of 500,000 invoices never sits in memory whole."""
+    def chunks() -> Iterator[str]:
+        buffer = StringIO()
+        writer = csv.writer(buffer)
+        writer.writerow(header)
+        for number, row in enumerate(rows, 1):
+            writer.writerow([_safe_cell(v) for v in row])
+            if number % 2000 == 0:
+                yield buffer.getvalue()
+                buffer.seek(0)
+                buffer.truncate()
+        yield buffer.getvalue()
+    return StreamingResponse(chunks(), media_type="text/csv", headers={"Content-Disposition": f'attachment; filename="{filename}"'})
+
+
+ALERT_COLUMNS = [
+    "alert_id", "event_id", "vendor_id", "vendor_name", "invoice_date", "amount", "vendor_usual_amount", "times_usual",
+    "usual_from", "risk", "level", "forest_signal", "deviation_signal", "rule_signal", "red_flags", "why_flagged",
+    "status", "decision", "decided_by", "decided_at", "decision_reason", "decision_comment", "simulated_review",
+    "assignee", "case_id", "model_version"]
+
+
 @router.get("/alerts.csv")
 def alerts_csv(db: DB, user: CurrentUser, date_from: datetime | None = None, date_to: datetime | None = None,
-               vendor_id: str | None = None, case_id: int | None = Query(None, ge=1, le=MAX_ID)) -> Response:
+               vendor_id: str | None = None, case_id: int | None = Query(None, ge=1, le=MAX_ID)) -> StreamingResponse:
+    """One row per alert: why it was flagged, the numbers behind it, and what the reviewer decided."""
     query = _range_query(date_from, date_to, vendor_id)
     if case_id is not None:
         if db.get(Case, case_id) is None:
@@ -163,14 +199,49 @@ def alerts_csv(db: DB, user: CurrentUser, date_from: datetime | None = None, dat
     alerts = _load(db, query)
     if not alerts:
         raise HTTPException(404, "No alerts match that selection")
-    simulated = set(db.scalars(select(Feedback.alert_id).where(Feedback.comment == SEEDED_COMMENT)))
-    output = StringIO()
-    writer = csv.writer(output)
-    writer.writerow(["alert_id", "event_id", "vendor_id", "vendor_name", "invoice_date", "amount", "risk", "level", "status",
-                     "simulated_review", "flags", "explanation", "model_version", "case_id"])
-    for a in alerts:
-        writer.writerow([_safe_cell(v) for v in (a.id, a.event.event_id, a.vendor_id, a.event.vendor_name, f"{a.event.invoice_date:%Y-%m-%d}",
-                         a.event.amount, round(a.risk, 4), a.level, a.status, a.id in simulated, ";".join(a.flags), a.explanation, a.model_version, a.case_id)])
-    audit(db, user, "report_exported", "report", "csv", vendor_id=vendor_id)
+    decisions = {f.alert_id: f for f in latest_feedback(db)}
+    people = dict(db.execute(select(User.id, User.name)).tuples().all())
+    audit(db, user, "report_exported", "report", "csv", vendor_id=vendor_id, case_id=case_id)
     db.commit()
-    return Response(output.getvalue(), media_type="text/csv", headers={"Content-Disposition": 'attachment; filename="afed-alerts.csv"'})
+
+    def rows() -> Iterator[list[Any]]:
+        for a in alerts:
+            e, d = a.event, decisions.get(a.id)
+            yield [a.id, e.event_id, a.vendor_id, e.vendor_name, f"{e.invoice_date:%Y-%m-%d}", e.amount,
+                   _round(e.baseline_amount, 2), _round(e.amt_ratio, 2), e.baseline_source, round(a.risk, 4), a.level,
+                   round(a.a_score, 3), round(a.d_score, 3), round(a.f_score, 3), _flag_names(a.flags), a.explanation, a.status,
+                   d.action if d else "", people.get(d.user_id, "") if d else "", f"{d.created_at:%Y-%m-%d %H:%M}" if d else "",
+                   d.reason if d else "", d.comment if d and d.comment != SEEDED_COMMENT else "",
+                   bool(d and d.comment == SEEDED_COMMENT), a.assignee.name if a.assignee else "", a.case_id or "", a.model_version]
+    return _csv(ALERT_COLUMNS, rows(), "afed-alerts.csv")
+
+
+RESULT_COLUMNS = [
+    "event_id", "vendor_id", "vendor_name", "invoice_date", "amount", "vendor_usual_amount", "times_usual", "usual_from",
+    "risk", "level", "alerted", "alert_id", "red_flags", "why_flagged", "status"]
+
+
+@router.get("/results.csv")
+def results_csv(db: DB, user: CurrentUser, date_from: datetime | None = None, date_to: datetime | None = None,
+                vendor_id: str | None = None) -> StreamingResponse:
+    """Every scored invoice of the latest run, Low risk included, so a reader can also see what was not flagged."""
+    query = select(Event, Alert).outerjoin(Alert, Alert.event_pk == Event.id).where(Event.risk.is_not(None))
+    if date_from:
+        query = query.where(Event.invoice_date >= date_from)
+    if date_to:
+        query = query.where(Event.invoice_date <= through(date_to))
+    if vendor_id:
+        query = query.where(or_(Event.vendor_id == vendor_id, Event.vendor_name.icontains(vendor_id, autoescape=True)))
+    if not db.scalar(select(func.count()).select_from(query.limit(1).subquery())):
+        raise HTTPException(404, "No scored invoices match that selection")
+    audit(db, user, "report_exported", "report", "results_csv", vendor_id=vendor_id)
+    db.commit()
+
+    def rows() -> Iterator[list[Any]]:
+        # Its own session: the request's may already be closed while the response is still streaming.
+        with SessionLocal() as stream:
+            for e, a in stream.execute(query.order_by(Event.risk.desc(), Event.id).execution_options(yield_per=2000)):
+                    yield [e.event_id, e.vendor_id, e.vendor_name, f"{e.invoice_date:%Y-%m-%d}", e.amount, _round(e.baseline_amount, 2),
+                       _round(e.amt_ratio, 2), e.baseline_source, round(e.risk, 4), e.level, a is not None, a.id if a else "",
+                       _flag_names(e.flags or []), a.explanation if a else "", a.status if a else ""]
+    return _csv(RESULT_COLUMNS, rows(), "afed-results.csv")

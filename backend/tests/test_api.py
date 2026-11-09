@@ -62,7 +62,7 @@ def check_access_matrix(client: TestClient, headers: dict[str, dict[str, str]], 
         ("GET", "/dashboard", None, ALL), ("GET", "/entities", None, ALL), ("GET", "/evaluation", None, ALL),
         ("GET", "/alerts", None, ALL), (f"GET", f"/alerts/{alert}", None, ALL), ("GET", f"/alerts/{alert}/similar", None, ALL),
         ("GET", f"/alerts/{alert}/explain", None, ALL), ("GET", "/cases", None, ALL), ("GET", f"/cases/{case}", None, ALL),
-        ("GET", f"/reports/alert/{alert}.pdf", None, ALL), ("GET", "/reports/alerts.csv", None, ALL),
+        ("GET", f"/reports/alert/{alert}.pdf", None, ALL), ("GET", "/reports/alerts.csv", None, ALL), ("GET", "/reports/results.csv", None, ALL),
         ("GET", "/notifications", None, ALL), ("GET", "/auth/me", None, ALL),
         ("POST", f"/alerts/{alert}/escalate", review, ACT), ("POST", f"/alerts/{alert}/assign", {"assignee_id": None}, ACT),
         ("POST", "/alerts/bulk", {"ids": [alert], "action": "assign", "assignee_id": None}, ACT),
@@ -157,9 +157,28 @@ def check_exports(client: TestClient, h: dict[str, dict[str, str]], alert: int, 
         target.event.vendor_name = "=HYPERLINK(evil) & <b>"
         db.commit()
     assert client.get(f"/reports/alert/{alert}.pdf", headers=h["Viewer"]).status_code == 200  # markup is escaped
-    rows = pd.read_csv(io.StringIO(client.get("/reports/alerts.csv", headers=h["Viewer"]).text))
+    rows = pd.read_csv(io.StringIO(client.get("/reports/alerts.csv", headers=h["Viewer"]).text), keep_default_na=False)
     assert rows.loc[rows["alert_id"] == alert, "vendor_name"].iloc[0].startswith("'=")
-    print("ok   PDF and CSV exports, with formula and markup escaping")
+    assert {"why_flagged", "red_flags", "vendor_usual_amount", "times_usual", "decision", "decided_by", "simulated_review"} <= set(rows.columns)
+    assert not {"is_anomaly", "anomaly_type", "bank_account"} & set(rows.columns)  # labels and accounts never leave
+    flagged = rows[rows["red_flags"] != ""]["red_flags"]
+    assert len(flagged) and not flagged.str.contains("_").any()  # plain words, not rule codes
+    decided = client.post(f"/alerts/{alert}/dismiss", json={"reason": "Needs audit", "comment": "Same vendor as last quarter"}, headers=h["Reviewer"])
+    assert decided.status_code == 200, decided.text
+    rows = pd.read_csv(io.StringIO(client.get("/reports/alerts.csv", headers=h["Viewer"]).text), keep_default_na=False)
+    row = rows[rows["alert_id"] == alert].iloc[0]
+    assert (row["decision"], row["decided_by"], row["decision_reason"], row["decision_comment"]) == (
+        "Dismissed", "Reviewer", "Needs audit", "Same vendor as last quarter") and str(row["simulated_review"]) == "False", row.to_dict()
+    with SessionLocal() as db:
+        scored = db.scalar(select(func.count()).select_from(Event).where(Event.risk.is_not(None)))
+        alerted = db.scalar(select(func.count()).select_from(Alert))
+    results = pd.read_csv(io.StringIO(client.get("/reports/results.csv", headers=h["Viewer"]).text), keep_default_na=False)
+    assert len(results) == scored and (results["alerted"].astype(str) == "True").sum() == alerted
+    assert (results["level"] == "Low").any() and results["risk"].is_monotonic_decreasing
+    assert not {"is_anomaly", "anomaly_type", "bank_account"} & set(results.columns)
+    assert results.loc[results["vendor_name"].str.startswith("'="), "vendor_name"].size >= 1
+    assert client.get("/reports/results.csv", params={"vendor_id": "no such vendor"}, headers=h["Viewer"]).status_code == 404
+    print("ok   PDF and CSV exports: reasons, numbers, decisions, full results, escaping, no labels")
 
 
 def check_detail_hides_labels(client: TestClient, h: dict[str, dict[str, str]], alert: int) -> None:

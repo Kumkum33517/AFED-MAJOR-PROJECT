@@ -422,7 +422,7 @@ fact, so an uploaded field cannot carry instructions to the model, and bank acco
 | **Data & runs** | Upload a CSV, map its columns, validate, run; or use the real NSPCL sample in one click; download the CSV template; rerun on stored events; run history, including runs started by other systems. |
 | **Model settings** | Approval limit, fusion weights, tier cut-offs, Isolation Forest contamination, LSTM window, mode, epochs and whether its errors feed the forest, each rule on or off, the narration provider; recalibration from reviews; model versions. |
 | **Evaluation** | Headline numbers; the four-model comparison with AFED highlighted; the same comparison across six datasets; the ablation at equal budget; Precision@k; recall by anomaly type; confusion matrix and rates; money and workload; risk score distribution; reviewer feedback trends. Each card says in one line what its numbers mean. |
-| **Reports** | PDF reports by date range, vendor or case; CSV of alerts. Every export is written to the audit log. |
+| **Reports** | PDF reports by date range, vendor or case. **Alerts CSV**: one row per alert with the explanation, red flags in words, the vendor's usual amount and how many times above it, the three signal scores, and the reviewer's decision, reason and comment. **All results CSV**: every scored invoice, Low risk included, highest risk first. Labels and bank accounts are never exported. Every export is written to the audit log. Examples in `docs/examples/`. |
 | **Notifications** | Assignments, new Critical alerts, completed runs, password reset requests. |
 | **Profile** | Name, theme, explanation language, password change (which ends other sessions). |
 | **Users** | Admin only: invite users with a temporary password, change roles, deactivate, reset passwords, read the audit log. |
@@ -851,6 +851,7 @@ The three accepted narrations not judged "entailed" were read by hand, as the pl
 | 5-6 | Cases → open one | "What this case is about": a vendor with several alerts in 30 days. Export the PDF. |
 | (optional) | With Qwen set to "on this server" in Model settings, press Regenerate on an alert, then switch to Hindi | "Qwen may only join these facts. When its wording adds or drops anything, it is refused and the page says so." |
 | 6-8 | Sign in as Analyst; Data & runs → **Use the NSPCL sample** → Validate → Run detection | "Real payments of a Government of India joint venture, through the same path as any file." Optionally start the feed script and watch "API: …" runs appear. |
+| (optional) | Reports → All results CSV, or open `docs/examples/` | "Every invoice, why it was or was not flagged, and what the reviewer decided, in a spreadsheet." |
 | 8-10 | Evaluation | The comparison table: AFED F1 0.50 against 0.07 to 0.10. Then **the across-datasets table**, and say it plainly: "On real ledgers every model is weak, and on two US ledgers a plain Isolation Forest beats us. We report that." |
 
 ### 13.3 Questions to expect, and honest answers
@@ -997,7 +998,7 @@ Up to 500,000 rows and 50 MB per file; up to 50,000 events and 20 MB per API bat
 | Data and runs | `POST /upload/preview`, `/validate`, `/run`, `/events`, `/rerun`, `GET /upload/runs`, `/runs/{id}` |
 | Settings | `GET/PUT /settings`, `GET /settings/models`, `POST /settings/recalibrate` |
 | Evaluation | `GET /evaluation`, `GET /evaluation/summary` |
-| Reports | `GET /reports/alert/{id}.pdf`, `/case/{id}.pdf`, `/range.pdf`, `/alerts.csv` |
+| Reports | `GET /reports/alert/{id}.pdf`, `/case/{id}.pdf`, `/range.pdf`, `/alerts.csv`, `/results.csv` |
 | Notifications | `GET /notifications`, `POST /notifications/read-all`, `POST /notifications/{id}/read` |
 | Users | `GET/POST /users`, `PATCH /users/{id}`, `POST /users/{id}/reset-password`, `GET /users/assignees`, `GET /users/audit-log` |
 
@@ -1021,7 +1022,7 @@ data/
   scripts/        one loader per source, common.py, build_unified.py, make_samples.py
   DATA_CARD.md, checksums.sha256
 supabase/schema.sql   tables, row-level security, column grants
-docs/                 screenshots used in this report
+docs/                 screenshots used in this report; examples/ holds three exported result files
 DATASETS.md, README.md, AFED.md, docker-compose.yml, render.yaml, vercel.json
 ```
 

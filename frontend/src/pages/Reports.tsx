@@ -13,7 +13,7 @@ export default function Reports() {
 
   return (
     <>
-      <PageHeader title="Reports" subtitle="Export alerts for audit or sharing. Exports are recorded in the audit log." />
+      <PageHeader title="Reports" subtitle="Export alerts, or every scored invoice, for audit or sharing. Exports are recorded in the audit log." />
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Card title="By date range or vendor" subtitle="Leave fields empty to include everything.">
           <div className="grid gap-3 sm:grid-cols-2">
@@ -28,7 +28,8 @@ export default function Reports() {
           </div>
           <div className="mt-4 flex flex-wrap items-start gap-2">
             <DownloadButton variant="primary" path="/reports/range.pdf" filename="afed-alerts.pdf" params={params}>Export PDF</DownloadButton>
-            <DownloadButton path="/reports/alerts.csv" filename="afed-alerts.csv" params={params}>Export CSV</DownloadButton>
+            <DownloadButton path="/reports/alerts.csv" filename="afed-alerts.csv" params={params}>Alerts CSV</DownloadButton>
+            <DownloadButton path="/reports/results.csv" filename="afed-results.csv" params={params}>All results CSV</DownloadButton>
           </div>
         </Card>
         <Card title="By case">
