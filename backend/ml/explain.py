@@ -24,7 +24,7 @@ BANNED = re.compile(unicodedata.normalize("NFC", (
     r"fraud|scam|theft|stolen|embezzl|criminal|corrupt|forge|kickback|bribe|launder|illegal|collu|shell compan|"
     r"धोखाधड़ी|धोखा|फ्रॉड|घोटाल|चोरी|जालसाज|फर्जी|रिश्वत|अपराध|भ्रष्टाचार|गबन")), re.IGNORECASE)
 NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
-WORD = re.compile(r"[a-z]+|[\u0900-\u097f]+")
+WORD = re.compile(r"[a-z]+|[\u0900-\u0963\u0966-\u097f]+")  # Devanagari without the danda (।, ॥), which is punctuation
 DEVANAGARI_DIGITS = str.maketrans("०१२३४५६७८९", "0123456789")
 # Besides these, narration may only use words that appear in the facts it was given. A new reason
 # needs new words, so this is what stops "shell company", "kickback" or "सात करोड़" reaching a reviewer.
@@ -33,7 +33,8 @@ a an the and or but so as at by for from in into of on over to under up with wit
 it its is are was were be been being has have had do does did not no also both each more most less than very
 flagged flag flags review reviewed reviewer reviewers risk level event events invoice invoices vendor vendors payment payments
 amount amounts usual usually normal normally typical typically compared comparison against about around approximately
-because due reason reasons main noted note notes shows show indicates indicated
+because due reason reasons main noted note notes shows show
+it they there then also additionally too together while whereas however after before same just instead times
 है हैं था थे और या का की के को में से पर ने यह ये इस इसे इन उस वह तथा लेकिन क्योंकि जो कि भी ही लिए साथ गया गई गए किया की हुआ हुई
 इसलिए कारण मुख्य अन्य जानकारी समीक्षा जोखिम चिह्नित घटना चालान विक्रेता राशि भुगतान सामान्य
 """).split())
@@ -176,13 +177,18 @@ def build_facts(row: dict[str, Any], limit: float) -> list[Fact]:
     return sorted(facts, key=lambda f: -f["severity"])
 
 
+def main_facts(facts: list[Fact], key: str = "text") -> list[str]:
+    """The reasons an explanation must give: up to three facts of real weight, or the first one."""
+    return [f[key] for f in facts if f["severity"] >= 0.2 and f["key"] != "thin_history"][:3] or [f[key] for f in facts[:1]]
+
+
 def template_explanation(facts: list[Fact], level: str, risk: float, language: str = "en") -> str:
     """The reasons, one sentence each, straight from the facts. This path has no dependencies and cannot fail.
 
     The level and risk score are not repeated: every screen and report shows them beside the text.
     """
     key = "text_hi" if language == "hi" else "text"
-    main = [f[key] for f in facts if f["severity"] >= 0.2 and f["key"] != "thin_history"][:3] or [f[key] for f in facts[:1]]
+    main = main_facts(facts, key)
     other = [f[key] for f in facts if f[key] not in main and f["key"] != "model_rank"][:1]
     if not main:  # nothing computed to explain with: say only what the score says
         names = {"Low": "कम", "Medium": "मध्यम", "High": "उच्च", "Critical": "गंभीर"}
@@ -194,11 +200,15 @@ def template_explanation(facts: list[Fact], level: str, risk: float, language: s
 
 
 SYSTEM_PROMPT = (
-    "You rewrite audit facts into 2 or 3 plain sentences for a procurement reviewer. Strict rules: "
-    "Use only the facts provided. Do not add reasons, causes, guesses or advice. "
-    "Copy every number and amount exactly as written. Never accuse anyone and never use the word fraud; "
-    "say the event is flagged for review. Do not restate the risk level or score; start with the most important fact. "
-    "Output only the sentences."
+    "You join audit facts into 2 or 3 short, plain sentences for a procurement reviewer. "
+    "The facts are already correct sentences. Keep each fact's own words and copy every number exactly, as digits. "
+    "You may only reorder the facts, join them with short linking words such as and, also, while, because, "
+    "and drop a fact that repeats another. Do not explain, interpret, judge or add advice, and do not say what a fact "
+    "might mean. Do not restate the risk level. Never accuse anyone. Output only the sentences.\n\n"
+    "Example facts: [\"Amount Rs. 2,40,000 is 4.0x this vendor's usual of Rs. 60,000\", "
+    "\"Approved on a Sunday\", \"Paid to account XXXX1234, not the usual account XXXX5678\"]\n"
+    "Example output: Amount Rs. 2,40,000 is 4.0x this vendor's usual of Rs. 60,000. "
+    "It was approved on a Sunday and paid to account XXXX1234, not the usual account XXXX5678."
 )
 
 
@@ -212,10 +222,13 @@ def _numbers(text: str) -> set[str]:
 
 
 def _payload(facts: list[Fact], level: str, risk: float, language: str) -> dict[str, Any]:
-    """Everything the model is shown, and so everything it may repeat."""
+    """Everything the model is shown, and so everything it may repeat: the finished fact sentences only.
+
+    Raw observed values, baselines and ratios are left out on purpose: shown them, a small model re-derives
+    its own numbers and gets them wrong. Level and risk are left out because the screen shows them already.
+    """
     key = "text_hi" if language == "hi" else "text"
-    return {"level": level, "risk": round(risk, 2),
-            "facts": [{"fact": f[key], "observed": f["observed"], "baseline": f["baseline"], "ratio": f["ratio"]} for f in facts[:6]]}
+    return {"facts": [f[key] for f in facts[:6] if f["key"] != "model_rank"]}
 
 
 def is_grounded(output: str, payload: dict[str, Any]) -> bool:
@@ -231,6 +244,17 @@ def is_grounded(output: str, payload: dict[str, Any]) -> bool:
     if not _numbers(text) <= _numbers(source):
         return False
     return set(WORD.findall(text.lower())) <= set(WORD.findall(source.lower())) | CONNECTIVES
+
+
+def is_complete(output: str, facts: list[Fact], language: str = "en") -> bool:
+    """True if every number in the main facts appears in the narration, so no reason was dropped.
+
+    The grounding check stops additions; this stops omissions, such as a rewording that keeps the amount
+    and quietly leaves out the change of bank account.
+    """
+    key = "text_hi" if language == "hi" else "text"
+    needed = set().union(*(_numbers(text) for text in main_facts(facts, key)))
+    return needed <= _numbers(unicodedata.normalize("NFC", output))
 
 
 def _hf_api(system: str, user: str) -> str:
@@ -256,8 +280,12 @@ def _ollama(system: str, user: str) -> str:
 
 @lru_cache(maxsize=1)
 def _local_pipeline() -> Any:
+    import torch
     from transformers import pipeline  # optional and heavy, so only imported when selected
-    return pipeline("text-generation", model=os.getenv("QWEN_LOCAL_MODEL", "Qwen/Qwen2.5-1.5B-Instruct"))
+    # Half precision: a 1.5B model needs about 3 GB instead of 6, which fits beside the app on an 8 GB machine.
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    dtype = torch.bfloat16 if device == "cpu" else torch.float16
+    return pipeline("text-generation", model=os.getenv("QWEN_LOCAL_MODEL", "Qwen/Qwen2.5-1.5B-Instruct"), dtype=dtype, device=device)
 
 
 def _local(system: str, user: str) -> str:
@@ -274,6 +302,8 @@ def narrate(facts: list[Fact], level: str, risk: float, language: str = "en", pr
     if provider not in PROVIDERS:
         return fallback, "template"
     payload = _payload(facts, level, risk, language)
+    if not payload["facts"]:  # only the model's rank to go on: nothing for a narrator to join
+        return fallback, "template"
     system = SYSTEM_PROMPT + (" Write in Hindi using Devanagari script." if language == "hi" else " Write in English.")
     try:
         output = PROVIDERS[provider](system, json.dumps(payload, ensure_ascii=False)).strip()
@@ -282,5 +312,8 @@ def narrate(facts: list[Fact], level: str, risk: float, language: str = "en", pr
         return fallback, "template"
     if not is_grounded(output, payload):
         log.warning("Qwen output rejected by the grounding check: %r", output[:200])
+        return fallback, "template"
+    if not is_complete(output, facts, language):
+        log.warning("Qwen output rejected for leaving out a main fact: %r", output[:200])
         return fallback, "template"
     return output, provider
