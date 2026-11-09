@@ -222,22 +222,28 @@ Dates before 1990 or more than a year ahead count as invalid.
 
 ## Qwen narration
 
-Facts are computed in `ml/explain.py` and never by a model. Qwen receives only those facts as JSON and may
-only reword them. Its output is thrown away, and the template used instead, if it contains a number or a word
-that is not in what it was sent or a short list of connectives, or any accusing term, or if the provider fails.
-The check is strict on purpose: a free rewording fails it, because a word check cannot tell a synonym from an
-invented reason. Bank accounts are masked and uploaded identifiers are stripped of anything sentence-like first.
+Facts are computed in `ml/explain.py` and never by a model. Qwen is shown only the finished fact sentences and
+may only join them into two or three sentences. Its wording is refused, and the template shown instead, if it
+adds a number, a word outside the facts and a short list of linking words, or an accusing term, or if it leaves
+out a number from the main facts, or if the provider fails. The alert page says when Qwen's wording was refused.
+Bank accounts are masked and uploaded identifiers are stripped of anything sentence-like first.
 
 | Provider | Set up |
 |---|---|
 | `template` (default) | Nothing. Always works. |
-| `hf_api` | `HF_TOKEN`. Model from `QWEN_HF_MODEL`, default `Qwen/Qwen2.5-7B-Instruct`. |
+| `local` | `pip install -r requirements-qwen.txt`. Downloads `Qwen/Qwen2.5-1.5B-Instruct` (about 3 GB) and runs it in half precision on the GPU if there is one. Fits on an 8 GB machine. |
 | `ollama` | `ollama pull qwen2.5:3b`, then set `OLLAMA_URL` if it is not on localhost. |
-| `local` | `pip install transformers accelerate`. Downloads `Qwen/Qwen2.5-1.5B-Instruct`. |
+| `hf_api` | `HF_TOKEN`. Model from `QWEN_HF_MODEL`, default `Qwen/Qwen2.5-7B-Instruct`. |
 
 `QWEN_PROVIDER` sets the initial value; after that, use **Model settings**. A run narrates its top 50 alerts
 with Qwen, stops trying after three failures in a row, and uses the template for the rest. Any alert can be
 re-narrated on demand, in English or Hindi.
+
+**Tested** (`experiments/narration_evaluation.md`, pre-registered): on 100 held-out alerts the local 1.5B model's
+wording passed for 46 English and 61 Hindi narrations. An independent NLI judge found 43 of the 46 accepted
+English ones entailed by their facts; one real error got through (a "which" attaching a percentage to the wrong
+amount). Refused narrations were about six times as likely to be unsupported or contradicted. The template stays
+the default; see `AFED.md`, section 10.9.
 
 ## Tests
 

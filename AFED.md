@@ -1,4 +1,4 @@
-# AFED: Automated Fraud and Event Detection
+now # AFED: Automated Fraud and Event Detection
 
 **A project report on entity-relative anomaly detection for vendor and procurement payments, with grounded
 explanations and a human review workflow**
@@ -16,7 +16,7 @@ next to each table so it can be checked or regenerated.
 4. [System architecture](#4-system-architecture)
 5. [Data](#5-data)
 6. [Methodology: the detection pipeline](#6-methodology-the-detection-pipeline)
-7. [Explanations and the grounding guard](#7-explanations-and-the-grounding-guard)
+7. [Explanations and the Qwen narration layer](#7-explanations-and-the-qwen-narration-layer)
 8. [The application: pages, roles and workflows](#8-the-application-pages-roles-and-workflows)
 9. [Evaluation methodology](#9-evaluation-methodology)
 10. [Results](#10-results)
@@ -51,7 +51,9 @@ baselines reaches F1 0.098. On four real payment ledgers with seeded, planted an
 between 0.02 and 0.06. AFED is best on two Indian ledgers (NSPCL, MPLADS) and behind a global Isolation Forest
 on two US ledgers (Chicago, Delaware). A pre-registered test shows that choosing the alert threshold on each
 ledger's own past more than doubles F1 on three of them, by cutting false alarms rather than by catching more.
-The report states all of these results, because the real-data ones are the more realistic.
+On 100 held-out alerts, a small local Qwen model's wording passed AFED's checks for 46% of English and 61% of
+Hindi narrations; the checks refused every narration that added a number. The report states all of these results,
+because the real-data ones are the more realistic.
 
 ---
 
@@ -349,23 +351,57 @@ evaluation labels.
 
 ---
 
-## 7. Explanations and the grounding guard
+## 7. Explanations and the Qwen narration layer
 
-Every alert gets a list of **facts**, computed deterministically from its features, each with an observed
-value, a baseline and a ratio, in English and Hindi. For example:
+### 7.1 Facts first
+
+Every alert gets a list of **facts**, computed deterministically from its features, each with an observed value,
+a baseline and a ratio, in English and Hindi. The facts are the only source of reasons anywhere in AFED. For
+example:
 
 > Amount Rs. 4,53,809 is 27.6x this vendor's usual of Rs. 16,452. 4 invoices just below the Rs. 5,00,000
 > approval limit within 3 days. Invoice came on the same day as the previous one, while the usual gap is 17
 > days. Also noted: Amount Rs. 4,53,809 is 91% of the Rs. 5,00,000 approval limit.
 
-The default **template** writes the strongest facts as sentences. It cannot fail and needs nothing installed.
+The **main facts** are up to three with real weight (severity at least 0.2). The default **template** writes
+them as sentences, then adds one other fact as "Also noted". It cannot fail and needs nothing installed.
 
-**Qwen narration** (optional) rewrites the facts into two or three sentences, in English or Hindi. The output is
-accepted only if every number in it appears in the facts, every word is in the facts or a short list of
-connectives, and no accusing term (such as "fraud") appears. Text is Unicode-normalised first. Anything else,
-including a provider failure, falls back to the template. Uploaded identifiers are stripped of anything
-sentence-like before they reach a fact, so an uploaded field cannot carry instructions to the model, and bank
-accounts are masked. A run narrates its top 50 alerts and stops trying after three failures in a row.
+### 7.2 What Qwen is allowed to do
+
+Qwen 2.5 [11] may only **join** the finished fact sentences into two or three readable sentences, in English or
+Hindi. It is not shown the raw fields (observed values, baselines, ratios, percentile ranks) or the risk level,
+because a small model shown those re-derives its own numbers and gets them wrong (section 10.9). The prompt
+lists the rules (keep each fact's words, copy numbers as digits, only reorder and link, never interpret, judge,
+advise or accuse) and gives one worked example on different facts.
+
+### 7.3 The two checks
+
+A narration is shown only if it passes both. Otherwise the template is shown, and the alert page says that
+Qwen's wording was refused.
+
+1. **Grounding** (stops additions). After Unicode normalisation: no number that is not in the facts (Devanagari
+   digits included); no word that is not in the facts or a short reviewed list of linking words (inference
+   words such as "indicates" are not on it); no accusing term in English or Hindi (fraud, scam, bribe, धोखाधड़ी,
+   घोटाला and others).
+2. **Completeness** (stops omissions). Every number of the main facts must appear, so a rewording cannot keep
+   the amount and quietly drop the change of bank account.
+
+The word check reads the Hindi full stop (।) as punctuation. An earlier version read it as part of a word,
+which wrongly refused correct Hindi. It never let an incorrect narration through.
+
+### 7.4 Providers and operation
+
+| Provider | Model | Needs |
+|---|---|---|
+| `template` (default) | None | Nothing |
+| `local` | Qwen2.5-1.5B-Instruct, half precision, on the server's GPU or CPU | `pip install -r requirements-qwen.txt`; about 3 GB downloaded once |
+| `ollama` | qwen2.5:3b by default | An Ollama server |
+| `hf_api` | Qwen2.5-7B-Instruct by default | `HF_TOKEN` |
+
+A run narrates its top 50 alerts and stops trying after three failures in a row; any alert can be re-narrated
+on demand in either language. Local generations run one at a time, because the API serves requests from several
+threads and one model is shared. Uploaded identifiers are stripped of anything sentence-like before they reach a
+fact, so an uploaded field cannot carry instructions to the model, and bank accounts are masked.
 
 ---
 
@@ -379,7 +415,7 @@ accounts are masked. A run narrates its top 50 alerts and stops trying after thr
 | **Sign in** | Email and password; password reset requests notify Admins. Five wrong attempts per account and address lock that pair for five minutes. Demo accounts are offered in development only. |
 | **Dashboard** | Counts of events, flagged events, Critical alerts, alerts pending review and open cases; flagged events per month; events per risk level; riskiest vendors; latest alerts; the last run. |
 | **Alerts** | The review queue: every event at Medium risk or above, highest first. Search and filter by level, status, red flag, vendor or date; select several for bulk decisions. |
-| **Alert detail** | Why it was flagged (template or Qwen, English or Hindi); score breakdown (A, D, F); the amount against the vendor's normal range; related alerts for the same vendor; similar alerts elsewhere; activity history; the decision (Confirm, Dismiss, Escalate, with a reason); PDF export. |
+| **Alert detail** | Why it was flagged (template or Qwen, English or Hindi, regenerate on demand, with a note when Qwen's wording was refused); score breakdown (A, D, F); the amount against the vendor's normal range; related alerts for the same vendor; similar alerts elsewhere; activity history; the decision (Confirm, Dismiss, Escalate, with a reason); PDF export. |
 | **Cases** | Alerts grouped per vendor over 30 days; filter by status; click a row to open it. |
 | **Case detail** | "What this case is about" (vendor, dates, total, top risk, red flags and each alert's explanation); the alert table; status (Open, Investigating, Closed); assignee; notes; PDF export. |
 | **Entities** | Every vendor and department with its alert history; a profile with the spending pattern and a peer comparison. |
@@ -711,6 +747,59 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 | Delaware, 363,435 events | about 0.37 ms per event, a little over 2 minutes |
 | Rule-based, global IF, LOF on the demo set | under 0.03 ms per event |
 
+### 10.9 The Qwen narration layer (pre-registered)
+
+Plan: `backend/experiments/narration_evaluation.md`, committed before the test run. Results:
+`narration_evaluation_results.md`. Model: Qwen2.5-1.5B-Instruct, local, half precision, greedy decoding.
+
+**Development (30 alerts, not reported as results).** With the original prompt, which passed the raw fields, the
+model's wording was refused 30 times out of 30, each time for a real fault. It wrote that approval was "57%
+shorter than the usual 7-day timeframe" (no such number), that a payment was "taking significantly longer than
+usual" (the fact says the opposite), and that a same-day approval indicated "potential irregularities that
+require further investigation" (an invented accusation). Showing only the fact sentences, with one worked
+example, raised acceptance to 18 of 30. It also showed that accepted narrations sometimes dropped facts, which led
+to the completeness check, and that correct Hindi was being refused because of the tokenizer fault in 7.3.
+
+**Test (100 different alerts, each in English and in Hindi).**
+
+| Language | Accepted | New word | New number | Main fact left out | Accusing term | Median time |
+|---|---|---|---|---|---|---|
+| English | **46 of 100** | 54 | 0 | 0 | 0 | 1.6 s |
+| Hindi | **61 of 100** | 29 | 7 | 3 | 0 | 2.6 s |
+
+**Faithfulness of the English narrations.** An independent natural-language-inference model, DeBERTa-v3-large
+trained on MNLI, FEVER, ANLI, LingNLI and WANLI [19, 20, 21], judged every sentence against the alert's facts, in
+the style of NLI-based factual-consistency checks [22, 23]:
+
+| English narrations | Count | Entailed | Neutral | Contradiction |
+|---|---|---|---|---|
+| Accepted by AFED's checks | 46 | 43 | 1 | 2 |
+| Refused by AFED's checks | 54 | 33 | 17 | 4 |
+
+The three accepted narrations not judged "entailed" were read by hand, as the plan required:
+
+- Alert 93 (neutral): faithful; the judge was cautious.
+- Alert 160 (contradiction): both sentences are copied word for word from the facts; a judge error.
+- Alert 248 (contradiction): **a real error.** "Amount Rs. 4,55,872 is 1.9x this vendor's usual of Rs. 2,35,735,
+  *which is 91%* of the Rs. 5,00,000 approval limit." The relative clause attaches 91% to the usual amount rather
+  than to the invoice. Every word and number is in the facts, so a word-level check cannot see it.
+
+**What this shows.**
+
+- The checks do their job. Narrations they refused were about six times as likely to be unsupported or
+  contradicted (21 of 54, 39%, against 3 of 46 accepted, 7%), and they refused every narration that added a number or left out a main
+  fact. One subtle error in 46 accepted English narrations (about 2%) got through.
+- The model adds little. Accepted narrations average 76 characters and are mostly the template's sentences,
+  lightly joined. A 1.5B model is too small to reword freely without error. Half the narrations that were refused
+  for new words were still faithful (33 entailed), so the check also costs some good wording.
+- **The template stays the default.** Qwen is an option that makes text a little smoother, mostly in Hindi, and
+  is never trusted to add anything. A larger model (the 7B behind `hf_api`) may be accepted more often; that was
+  not tested here.
+
+![Qwen narration accepted, English](docs/qwen_accepted_en.png)
+
+![Qwen wording refused, Hindi, template shown](docs/qwen_refused_hi.png)
+
 ---
 
 ## 11. Security and privacy
@@ -727,7 +816,7 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 | Uploads | Deleted after their run; abandoned ones removed after 24 hours |
 | Secrets | `JWT_SECRET` must be 32+ characters on any real database; `.env` never committed |
 | Privacy | No personal names stored in datasets; bank accounts masked in explanations; the alert API never returns labels or raw bank accounts, so reviewers cannot be steered by the answer key |
-| Language model | Facts only, never raw rows; output checked word by word; identifiers sanitised against prompt injection |
+| Language model | Shown finished fact sentences only, never raw rows; output checked for added numbers, words and accusations, and for left-out facts; refused wording falls back to the template and the page says so; identifiers sanitised against prompt injection |
 
 ---
 
@@ -735,7 +824,8 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 
 | Suite | What it covers | Result |
 |---|---|---|
-| `backend/tests/test_afed.py` | Date and number parsing, baselines, rules, fusion and tiers, recalibration with its held-back check, the grounding guard, prompt-injection through ids, metrics, injection | 25 passed |
+| `backend/tests/test_afed.py` | Date and number parsing, baselines, rules, fusion and tiers, recalibration with its held-back check, the grounding and completeness checks (English and Hindi), fallback when a provider fails or invents, prompt injection through ids, metrics, injection | 27 passed |
+| `backend/experiments/narration_evaluation.py` | Qwen on 100 held-out alerts in two languages, with an NLI judge | Section 10.9 |
 | `backend/tests/test_api.py` | The access matrix for every route and role, review and rerun workflows, uploads (including hostile files), automatic intake, exports, sessions ending on password change, lockout, forged headers, oversized unsigned bodies, a failed run leaving nothing behind; also runs on Postgres | All checks pass |
 | `frontend/e2e/smoke.py` | Signs in as each role through the real form, opens every page it may reach (37 visits), checks refused pages, runs the sample upload; fails on any console error | All checks pass |
 | TypeScript | `tsc --noEmit` over the frontend | Clean |
@@ -759,6 +849,7 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 | 2-4 | Alerts → a Critical alert | The explanation, the score breakdown, the amount against the vendor's range. Switch to Hindi. "Every number here is computed. The language model may only reword these facts; anything else is rejected." |
 | 4-5 | Sign in as Reviewer; confirm the alert with a reason | "The person who decides cannot change the model; the person who tunes the model cannot decide." |
 | 5-6 | Cases → open one | "What this case is about": a vendor with several alerts in 30 days. Export the PDF. |
+| (optional) | With Qwen set to "on this server" in Model settings, press Regenerate on an alert, then switch to Hindi | "Qwen may only join these facts. When its wording adds or drops anything, it is refused and the page says so." |
 | 6-8 | Sign in as Analyst; Data & runs → **Use the NSPCL sample** → Validate → Run detection | "Real payments of a Government of India joint venture, through the same path as any file." Optionally start the feed script and watch "API: …" runs appear. |
 | 8-10 | Evaluation | The comparison table: AFED F1 0.50 against 0.07 to 0.10. Then **the across-datasets table**, and say it plainly: "On real ledgers every model is weak, and on two US ledgers a plain Isolation Forest beats us. We report that." |
 
@@ -769,7 +860,8 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 | "95.5% accuracy is lower than doing nothing?" | Yes: with 2.5% anomalies, flagging nothing scores 97.5%. Balanced accuracy, which is fair under imbalance, is 93.1% for AFED against 50% for doing nothing. We lead with recall, F1, PR-AUC and money caught. |
 | "Is this tested on real fraud?" | No dataset with confirmed fraud is public. We plant tagged anomalies into nine real ledgers and report the lower bound that gives. |
 | "Aren't the synthetic results circular?" | Partly, and we say so: the rules target the generator's anomaly types. That is why the real-data results are in the report. |
-| "What does the LLM do?" | It only rewords computed facts. A word-and-number check rejects anything not in the facts, and the template is the default. |
+| "What does the LLM do?" | It only joins computed fact sentences. Two checks refuse wording that adds a number, a word or an accusation, or leaves a fact out; then the template is shown and the page says so. Tested on 100 held-out alerts: 46% of English and 61% of Hindi narrations passed; one subtle error in 46 got through. The template is the default. |
+| "Why not let the LLM explain freely?" | Because a 1.5B model, shown the raw numbers, invented percentages, reversed facts and suggested "irregularities" in all 30 development cases. |
 | "Does it learn?" | Reviewer decisions recalibrate the weights, but only if the new settings hold up on the newest 30% of reviews, which they were not fitted to. |
 | "Can it run in a real organisation?" | Yes: CSV upload with column mapping, or automatic intake from an accounting system over an authenticated API, Postgres with row-level security, role separation, audit log. |
 | "Why an LSTM?" | It adds temporal signals, mostly for billing-frequency changes. Whether its errors should feed the forest is a pre-registered open question, with evidence on both sides (sections 10.4 and 10.5). |
@@ -791,6 +883,9 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 - **One currency rate per currency** for all years; matching vendors by normalised name can merge or split firms.
 - **Mixed event kinds.** Some datasets record awards, contracts or work orders rather than payments.
 - **Deployment untested.** Docker, Render and Vercel configurations exist but have not been run in production.
+- **Narration.** The word check cannot see a correctly worded sentence that attaches a number to the wrong thing
+  (alert 248). Hindi narrations were not judged by the NLI model, which is English only. Only the 1.5B local model
+  was tested.
 
 ---
 
@@ -805,7 +900,9 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 4. **More fields from real systems**: approvals, creators and bank accounts, which most of the rules need.
 5. **Graph signals**: shared bank accounts, addresses or approvers across vendors.
 6. **A labelled real benchmark**, for example from audit findings, to replace planted anomalies.
-7. **Production hardening**: shared rate-limit storage (such as Redis) across workers, a mail service for
+7. **A stronger narration gate**: add an NLI check like the one in section 10.9 to the live checks, and test the
+   7B model behind `hf_api`.
+8. **Production hardening**: shared rate-limit storage (such as Redis) across workers, a mail service for
    password resets and invitations, and a test deployment.
 
 ---
@@ -824,6 +921,7 @@ threshold where recall is high and reports balanced accuracy beside plain accura
 | Recalibration checked on held-back reviews | Adopted. |
 | Per-dataset thresholds | Pre-registered test PASSED (F1 up on all 4 real ledgers, by precision; recall falls). Served by recalibration; default unchanged. |
 | Explanations without a repeated level | Adopted; the level is shown beside every explanation. |
+| Narration provider | Template by default. Qwen (local 1.5B) available and tested: 46% English and 61% Hindi accepted, errors caught by the checks (section 10.9). |
 
 ---
 
@@ -862,6 +960,7 @@ python experiments/model_comparison.py        # four models, six datasets, figur
 python experiments/real_data_evaluation.py    # real ledgers with planted anomalies, LSTM rule
 python experiments/temporal_ablation.py       # pre-registered LSTM ablation
 python experiments/threshold_calibration.py   # pre-registered threshold test
+pip install -r requirements-qwen.txt && python experiments/narration_evaluation.py   # Qwen narration, about 15 minutes
 ```
 
 Datasets: run a loader in `data/scripts/` (for example `python load_nspcl.py`), then `python build_unified.py`.
@@ -922,6 +1021,7 @@ data/
   scripts/        one loader per source, common.py, build_unified.py, make_samples.py
   DATA_CARD.md, checksums.sha256
 supabase/schema.sql   tables, row-level security, column grants
+docs/                 screenshots used in this report
 DATASETS.md, README.md, AFED.md, docker-compose.yml, render.yaml, vercel.json
 ```
 
@@ -976,6 +1076,18 @@ DATASETS.md, README.md, AFED.md, docker-compose.yml, render.yaml, vercel.json
 17. Committee of Sponsoring Organizations of the Treadway Commission (COSO) (2013). *Internal Control:
     Integrated Framework*.
 18. Ministry of Finance, Government of India (2017). *General Financial Rules 2017*.
+19. He, P., Liu, X., Gao, J., and Chen, W. (2021). DeBERTa: Decoding-enhanced BERT with disentangled attention.
+    *International Conference on Learning Representations (ICLR)*.
+20. Williams, A., Nangia, N., and Bowman, S. (2018). A broad-coverage challenge corpus for sentence understanding
+    through inference. *Proceedings of NAACL-HLT 2018*, 1112-1122.
+21. Laurer, M., van Atteveldt, W., Casas, A., and Welbers, K. (2024). Less annotating, more classifying:
+    Addressing the data scarcity issue of supervised machine learning with deep transfer learning and BERT-NLI.
+    *Political Analysis*, 32(1), 84-100.
+22. Kryściński, W., McCann, B., Xiong, C., and Socher, R. (2020). Evaluating the factual consistency of
+    abstractive text summarization. *Proceedings of EMNLP 2020*, 9332-9346.
+23. Laban, P., Schnabel, T., Bennett, P. N., and Hearst, M. A. (2022). SummaC: Re-visiting NLI-based models for
+    inconsistency detection in summarization. *Transactions of the Association for Computational Linguistics*,
+    10, 163-177.
 
 **Data sources**
 
