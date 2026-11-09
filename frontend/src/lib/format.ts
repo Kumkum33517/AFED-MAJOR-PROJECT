@@ -32,6 +32,6 @@ export const RULE_LABELS: Record<string, string> = {
   near_limit: "Near approval limit",
 };
 
-export const humanise = (text: string) => text.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase()).replace(/^Sod\b/, "SoD");
+export const humanise = (text: string) => text.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase()).replace(/^Sod\b/, "SoD").replace(/^Po\b/, "PO");
 
 export const plural = (n: number, word: string) => `${n.toLocaleString("en-IN")} ${word}${n === 1 ? "" : "s"}`;

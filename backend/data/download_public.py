@@ -21,7 +21,7 @@ import requests
 
 HERE = Path(__file__).parent
 PAGE = 5000
-USD_TO_INR = 84.0  # illustrative, for demo data only
+USD_TO_INR = 93.92  # ECB reference rate, 6 Nov 2026, the same as data/scripts/common.py
 
 
 def fetch(url: str, params: dict, limit: int) -> pd.DataFrame:

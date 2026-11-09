@@ -181,7 +181,7 @@ python scripts/seed.py --csv data/public_sf.csv
 ```
 
 The public sets have no approvals, bank accounts, vendor creation dates or invoice times, so the rules needing
-those stay silent. Their amounts are US dollars, converted at a fixed illustrative rate of 84 so the rupee limit
+those stay silent. Their amounts are US dollars, converted at the ECB reference rate of 93.92 (6 Nov 2026), the same as the dataset loaders, so the rupee limit
 rules mean something. San Francisco publishes no payment date, so its source-update stamp stands in for one, and
 date-based signals on that set are only indicative. `scripts/download_datasets.py` fetches the optional Hugging
 Face sets into the repo-root `data/raw/`. It reads `HF_TOKEN` and asks in the terminal if a dataset needs one.
