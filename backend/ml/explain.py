@@ -8,6 +8,7 @@ import json
 import logging
 import os
 import re
+import threading
 import unicodedata
 from functools import lru_cache
 from typing import Any
@@ -288,9 +289,13 @@ def _local_pipeline() -> Any:
     return pipeline("text-generation", model=os.getenv("QWEN_LOCAL_MODEL", "Qwen/Qwen2.5-1.5B-Instruct"), dtype=dtype, device=device)
 
 
+_local_lock = threading.Lock()  # one model in memory, used by the API's worker threads: one generation at a time
+
+
 def _local(system: str, user: str) -> str:
     messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-    return _local_pipeline()(messages, max_new_tokens=200, do_sample=False)[0]["generated_text"][-1]["content"]
+    with _local_lock:
+        return _local_pipeline()(messages, max_new_tokens=200, do_sample=False)[0]["generated_text"][-1]["content"]
 
 
 PROVIDERS = {"hf_api": _hf_api, "ollama": _ollama, "local": _local}
