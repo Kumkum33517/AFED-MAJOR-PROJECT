@@ -13,6 +13,7 @@ Datasets, fixed by a fitness test, not by results:
   nspcl, mplads, chicago, delaware.
 Fraud detection rate is not reported as a number: no dataset has confirmed-fraud labels.
 """
+import json
 import sys
 import tempfile
 import time
@@ -65,7 +66,7 @@ def classify(y: np.ndarray, alert: np.ndarray, score: np.ndarray, amount: np.nda
     precision = tp / (tp + fp) if tp + fp else 0.0
     recall = tp / (tp + fn)
     order = np.argsort(-score, kind="stable")
-    return {"accuracy": (tp + tn) / len(y), "precision": precision, "recall": recall,
+    return {"accuracy": (tp + tn) / len(y), "balanced_accuracy": (recall + tn / (tn + fp)) / 2, "precision": precision, "recall": recall,
             "f1": 2 * precision * recall / (precision + recall) if precision + recall else 0.0,
             "tp": tp, "fp": fp, "fn": fn, "tn": tn, "roc_auc": roc_auc_score(y, score), "pr_auc": average_precision_score(y, score),
             "fpr": fp / (fp + tn), "fnr": fn / (fn + tp), "alerts": tp + fp,
@@ -230,11 +231,11 @@ def main() -> None:
             row = [spread([r[model][k] for r in runs]) for k in ("accuracy", "precision", "recall", "f1")]
             text = f"**{model}**" if model == MODELS[3] else model
             lines.append(f"| {text} | " + " | ".join(f"**{v}**" if model == MODELS[3] else v for v in row) + " |")
-        lines += ["", "| Model | TP | FP | FN | TN | ROC-AUC | PR-AUC | FPR | FNR | Anomaly detection rate | Alerts | ms per event |",
-                  "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+        lines += ["", "| Model | Balanced accuracy | TP | FP | FN | TN | ROC-AUC | PR-AUC | FPR | FNR | Anomaly detection rate | Alerts | ms per event |",
+                  "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for model in MODELS:
             c = {k: mean(r[model][k] for r in runs) for k in ("tp", "fp", "fn", "tn", "alerts")}
-            lines.append(f"| {SHORT[model]} | {c['tp']:,.0f} | {c['fp']:,.0f} | {c['fn']:,.0f} | {c['tn']:,.0f} | {spread([r[model]['roc_auc'] for r in runs])} | "
+            lines.append(f"| {SHORT[model]} | {spread([r[model]['balanced_accuracy'] for r in runs])} | {c['tp']:,.0f} | {c['fp']:,.0f} | {c['fn']:,.0f} | {c['tn']:,.0f} | {spread([r[model]['roc_auc'] for r in runs])} | "
                          f"{spread([r[model]['pr_auc'] for r in runs])} | {spread([r[model]['fpr'] for r in runs], 4)} | {spread([r[model]['fnr'] for r in runs])} | "
                          f"{spread([r[model]['recall'] for r in runs])} | {c['alerts']:,.0f} | {mean(r[model]['ms_per_event'] for r in runs):.3f} |")
         lines += ["", "| Precision@K | " + " | ".join(SHORT[m] for m in MODELS) + " |", "|---|" + "---|" * len(MODELS)]
@@ -248,6 +249,14 @@ def main() -> None:
     lines += ["## Figures (AFED synthetic, seed 42)", "", "- `figures/model_comparison.png`", "- `figures/score_distribution.png`",
               "- `figures/risk_levels.png`", "- `figures/precision_at_k.png`", "- `figures/amount_analysis.png`"]
     (OUT / "model_comparison_results.md").write_text("\n".join(lines) + "\n")
+    # The same means, for the Evaluation page.
+    keys = ("accuracy", "balanced_accuracy", "precision", "recall", "f1", "roc_auc", "pr_auc")
+    summary = {"models": dict(zip(["rule_based", "global_if", "lof", "afed"], MODELS)), "datasets": [
+        {"name": name, "real": not name.startswith("afed_"), "seeds": len(runs), "events": round(mean(r["afed_extra"]["events"] for r in runs)),
+         "results": {short: {k: round(mean(r[model][k] for r in runs), 4) for k in keys}
+                     for short, model in zip(["rule_based", "global_if", "lof", "afed"], MODELS)}}
+        for name, runs in results.items()]}
+    (OUT / "model_comparison_results.json").write_text(json.dumps(summary, indent=1) + "\n")
     print("written")
 
 

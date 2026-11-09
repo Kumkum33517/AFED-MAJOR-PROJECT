@@ -31,6 +31,8 @@ def _score_variant(scores: np.ndarray, labels: np.ndarray, types: pd.Series, bud
         "f1": round(2 * precision * recall / (precision + recall), 4) if precision + recall else 0.0,
         # Accuracy is reported because it is asked for, but with 2-3% anomalies "everything is normal" scores ~97%.
         "accuracy": round((tp + tn) / len(labels), 4),
+        # The mean of the two classes' hit rates: "everything is normal" scores 0.5 however rare anomalies are.
+        "balanced_accuracy": round((recall + tn / (tn + fp)) / 2, 4),
         "false_alarm_rate": round(fp / (fp + tn), 4),  # false positive rate
         "false_negative_rate": round(fn / (fn + tp), 4),
         "confusion": {"tp": tp, "fp": fp, "fn": fn, "tn": tn},
@@ -105,7 +107,8 @@ def _classified(labels: np.ndarray, alert: np.ndarray, score: np.ndarray) -> dic
     recall = tp / (tp + fn)
     order = np.argsort(-score, kind="stable")
     return {
-        "accuracy": round((tp + tn) / len(labels), 4), "precision": round(precision, 4), "recall": round(recall, 4),
+        "accuracy": round((tp + tn) / len(labels), 4), "balanced_accuracy": round((recall + tn / (tn + fp)) / 2, 4),
+        "precision": round(precision, 4), "recall": round(recall, 4),
         "f1": round(2 * precision * recall / (precision + recall), 4) if precision + recall else 0.0,
         "confusion": {"tp": tp, "fp": fp, "fn": fn, "tn": tn}, "alerts": tp + fp,
         "roc_auc": round(float(roc_auc_score(labels, score)), 4), "pr_auc": round(float(average_precision_score(labels, score)), 4),

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { download, toError, type ApiError, type Loaded } from "../lib/api";
 import { RULE_LABELS } from "../lib/format";
 
-export function Card({ title, subtitle, action, children, className = "" }: {
-  title?: ReactNode; subtitle?: ReactNode; action?: ReactNode; children: ReactNode; className?: string;
+export function Card({ title, subtitle, action, hint, children, className = "" }: {
+  title?: ReactNode; subtitle?: ReactNode; action?: ReactNode; hint?: ReactNode; children: ReactNode; className?: string;
 }) {
   return (
     <section className={`min-w-0 rounded-md border border-line bg-surface p-5 ${className}`}>
@@ -18,6 +18,7 @@ export function Card({ title, subtitle, action, children, className = "" }: {
         </div>
       )}
       {children}
+      {hint && <p className="mt-4 border-t border-line pt-3 text-xs leading-relaxed text-muted"><span className="font-semibold text-fg">What this means: </span>{hint}</p>}
     </section>
   );
 }
@@ -204,12 +205,12 @@ export function Stat({ label, value, note }: { label: string; value: ReactNode; 
 }
 
 /** A chart with a table view beside it, so nothing depends on seeing the colours. */
-export function ChartCard({ title, subtitle, table, children, className }: {
-  title: string; subtitle?: ReactNode; table?: ReactNode; children: ReactNode; className?: string;
+export function ChartCard({ title, subtitle, table, hint, children, className }: {
+  title: string; subtitle?: ReactNode; table?: ReactNode; hint?: ReactNode; children: ReactNode; className?: string;
 }) {
   const [asTable, setAsTable] = useState(false);
   return (
-    <Card title={title} subtitle={subtitle} className={className}
+    <Card title={title} subtitle={subtitle} hint={hint} className={className}
       action={table ? <button type="button" onClick={() => setAsTable(!asTable)} className="whitespace-nowrap text-xs text-muted underline underline-offset-2 hover:text-fg">{asTable ? "Show chart" : "Show table"}</button> : undefined}>
       {asTable ? <div className="max-h-72 overflow-auto">{table}</div> : children}
     </Card>

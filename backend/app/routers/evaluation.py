@@ -1,4 +1,5 @@
 """Evaluation metrics from the latest labelled run, plus reviewer analytics."""
+import json
 from collections import defaultdict
 from typing import Any
 
@@ -7,11 +8,21 @@ from sqlalchemy import select
 
 from ml.evaluate import COMPARISON_LABELS, VARIANT_LABELS
 
+from ..config import BACKEND_DIR
 from ..deps import DB, CurrentUser
 from ..models import SEEDED_COMMENT, Run
 from ..services import latest_feedback
 
 router = APIRouter(prefix="/evaluation", tags=["evaluation"])
+# Written by experiments/model_comparison.py: the same four models across synthetic and real datasets.
+BENCHMARKS = BACKEND_DIR / "experiments" / "model_comparison_results.json"
+
+
+def _benchmarks() -> dict[str, Any] | None:
+    try:
+        return json.loads(BENCHMARKS.read_text())
+    except (OSError, ValueError):  # not run yet, or a deployment without the experiments folder
+        return None
 
 
 def _latest(db: DB) -> Run | None:
@@ -49,5 +60,6 @@ def evaluation(db: DB, _: CurrentUser) -> dict[str, Any]:
         # Only variants that ran: without torch there is no LSTM + IF row to show.
         "variant_labels": {k: v for k, v in VARIANT_LABELS.items() if run and k in run.metrics.get("variants", {})},
         "comparison_labels": COMPARISON_LABELS,
+        "benchmarks": _benchmarks(),
         "feedback": {"totals": totals, "trend": trend, "seeded": sum(f.comment == SEEDED_COMMENT for f in feedback)},
     }

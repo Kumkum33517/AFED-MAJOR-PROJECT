@@ -238,6 +238,7 @@ def test_operational_metrics_add_up() -> None:
     v = m["variants"]["afed"]
     assert v["confusion"] == {"tp": 1, "fp": 1, "fn": 1, "tn": 3}
     assert v["f1"] == 0.5 and v["false_negative_rate"] == 0.5 and v["accuracy"] == round(4 / 6, 4)
+    assert v["balanced_accuracy"] == round((1 / 2 + 3 / 4) / 2, 4)  # mean of recall and the normal class's hit rate
     assert m["amount_at_risk"]["anomalous_caught"] == 100 and m["amount_at_risk"]["anomalous_missed"] == 50
     assert m["investigation"]["baseline_reviews_for_same_recall"] == 5  # the baseline finds its first anomaly fifth
     assert m["fraud_detection_rate"] is None

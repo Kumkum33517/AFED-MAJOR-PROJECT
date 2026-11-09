@@ -326,12 +326,14 @@ if __name__ == "__main__":
             case = db.scalar(select(Case.id).limit(1))
         summary = client.get("/evaluation/summary").json()
         assert summary["available"] and "variants" not in summary
-        metrics = client.get("/evaluation", headers=h["Viewer"]).json()["metrics"]
+        page = client.get("/evaluation", headers=h["Viewer"]).json()
+        assert "benchmarks" in page  # null until experiments/model_comparison.py has run
+        metrics = page["metrics"]
         assert {"confusion", "f1", "false_negative_rate", "accuracy"} <= set(metrics["variants"]["afed"])
         assert {"amount_at_risk", "investigation", "score_distribution", "processing_seconds"} <= set(metrics)
         assert metrics["fraud_detection_rate"] is None
         assert set(metrics["comparison"]) == {"rule_based", "global_if", "lof", "afed"}
-        assert all({"accuracy", "precision", "recall", "f1", "confusion", "pr_auc"} <= set(m) for m in metrics["comparison"].values())
+        assert all({"accuracy", "balanced_accuracy", "precision", "recall", "f1", "confusion", "pr_auc"} <= set(m) for m in metrics["comparison"].values())
         check_access_matrix(client, h, alert, case)
         check_detail_hides_labels(client, h, alert)
         check_review_and_rerun(client, h)
