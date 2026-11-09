@@ -177,23 +177,28 @@ def build_facts(row: dict[str, Any], limit: float) -> list[Fact]:
 
 
 def template_explanation(facts: list[Fact], level: str, risk: float, language: str = "en") -> str:
-    """Two or three sentences straight from the facts. This path has no dependencies and cannot fail."""
+    """The reasons, one sentence each, straight from the facts. This path has no dependencies and cannot fail.
+
+    The level and risk score are not repeated: every screen and report shows them beside the text.
+    """
     key = "text_hi" if language == "hi" else "text"
     main = [f[key] for f in facts if f["severity"] >= 0.2 and f["key"] != "thin_history"][:3] or [f[key] for f in facts[:1]]
     other = [f[key] for f in facts if f[key] not in main and f["key"] != "model_rank"][:1]
-    if language == "hi":
+    if not main:  # nothing computed to explain with: say only what the score says
         names = {"Low": "कम", "Medium": "मध्यम", "High": "उच्च", "Critical": "गंभीर"}
-        text = f"इस घटना को समीक्षा के लिए {names.get(level, level)} जोखिम ({risk:.2f}) पर चिह्नित किया गया है। मुख्य कारण: {'; '.join(main)}।"
-        return text + (f" अन्य जानकारी: {other[0]}।" if other else "")
-    text = f"This event is flagged for review at {level} risk ({risk:.2f}). Main reasons: {'; '.join(main)}."
-    return text + (f" Also noted: {other[0]}." if other else "")
+        return (f"समीक्षा के लिए {names.get(level, level)} जोखिम ({risk:.2f}) पर चिह्नित।" if language == "hi"
+                else f"Flagged for review at {level} risk ({risk:.2f}).")
+    if language == "hi":
+        return "। ".join(main) + "।" + (f" अन्य जानकारी: {other[0]}।" if other else "")
+    return ". ".join(main) + "." + (f" Also noted: {other[0]}." if other else "")
 
 
 SYSTEM_PROMPT = (
     "You rewrite audit facts into 2 or 3 plain sentences for a procurement reviewer. Strict rules: "
     "Use only the facts provided. Do not add reasons, causes, guesses or advice. "
     "Copy every number and amount exactly as written. Never accuse anyone and never use the word fraud; "
-    "say the event is flagged for review. Output only the sentences."
+    "say the event is flagged for review. Do not restate the risk level or score; start with the most important fact. "
+    "Output only the sentences."
 )
 
 

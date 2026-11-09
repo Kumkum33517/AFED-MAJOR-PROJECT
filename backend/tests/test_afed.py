@@ -127,6 +127,12 @@ def test_uploaded_ids_cannot_carry_instructions_into_facts() -> None:
     assert " " not in facts[0]["observed"] and len(facts[0]["observed"]) <= 40
 
 
+def test_template_gives_reasons_without_repeating_the_level() -> None:
+    text = explain.template_explanation(_facts(), "High", 0.7)
+    assert text.startswith("Amount Rs. 4,80,000 is 9.6x") and "High" not in text and text.endswith(".")
+    assert explain.template_explanation([], "High", 0.7) == "Flagged for review at High risk (0.70)."
+
+
 def test_narrate_falls_back_when_provider_fails_or_invents() -> None:
     facts = _facts()
     template = explain.template_explanation(facts, "High", 0.7)
