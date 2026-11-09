@@ -73,9 +73,9 @@ function Form({ data, reload }: { data: Loaded; reload: () => void }) {
             <Field label="LSTM epochs"><input className="input" type="number" min="1" max="100" {...register("lstm.epochs", number)} /></Field>
             <Field label="Contamination" hint='"auto" or a share such as 0.03. Sets the forest&apos;s own cut-off only: risk uses its ranking, so scores and alerts do not change.'><input className="input" {...register("contamination", { required: true })} /></Field>
             <Field label="Approval limit (Rs.)"><input className="input" type="number" min="1" {...register("approval_limit", number)} /></Field>
-            <Field label="Qwen provider">
+            <Field label="Qwen provider" hint="Qwen only rewords the computed facts. Wording that adds or drops anything is refused and the template is used.">
               <select className="input" {...register("qwen_provider")}>
-                <option value="template">Template (no model)</option><option value="hf_api">Hugging Face API</option><option value="ollama">Ollama</option><option value="local">Local transformers</option>
+                <option value="template">Template (no model)</option><option value="local">Qwen 2.5 1.5B on this server</option><option value="ollama">Qwen through Ollama</option><option value="hf_api">Qwen 2.5 7B, Hugging Face API</option>
               </select>
             </Field>
           </div>

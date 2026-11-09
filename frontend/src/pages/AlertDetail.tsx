@@ -22,7 +22,7 @@ const SCORE_ROWS = [
 function Explanation({ alert }: { alert: Detail }) {
   const { user } = useAuth();
   const [language, setLanguage] = useState<"en" | "hi">("en");
-  const [override, setOverride] = useState<{ text: string; provider: string } | null>(null);
+  const [override, setOverride] = useState<{ text: string; provider: string; fellBack: boolean } | null>(null);
   const [showFacts, setShowFacts] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -33,10 +33,10 @@ function Explanation({ alert }: { alert: Detail }) {
     setBusy(true);
     setError("");
     try {
-      const { data } = await api.get<{ explanation: string; provider: string }>(`/alerts/${alert.id}/explain`, { params: { language: next } });
+      const { data } = await api.get<{ explanation: string; provider: string; fell_back: boolean }>(`/alerts/${alert.id}/explain`, { params: { language: next } });
       if (request !== latest.current) return;
       setLanguage(next);
-      setOverride({ text: data.explanation, provider: data.provider });
+      setOverride({ text: data.explanation, provider: data.provider, fellBack: data.fell_back });
     } catch (e) {
       if (request === latest.current) setError(toError(e).message);
     } finally {
@@ -50,7 +50,8 @@ function Explanation({ alert }: { alert: Detail }) {
   const hi = language === "hi";
   const provider = override?.provider ?? alert.explanation_provider;
   return (
-    <Card title="Why this was flagged" subtitle={provider === "template" ? "Written from the facts by template" : `Narrated by Qwen (${provider}) from the facts only`}
+    <Card title="Why this was flagged" subtitle={override?.fellBack ? "Qwen's wording did not pass the fact check, so the template is shown"
+        : provider === "template" ? "Written from the facts by template" : `Reworded by Qwen (${provider}) from the facts only, and checked`}
       action={
         <div className="flex items-center gap-2 text-xs">
           <div role="group" aria-label="Language" className="flex overflow-hidden rounded border border-line">

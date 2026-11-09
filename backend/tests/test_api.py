@@ -166,7 +166,8 @@ def check_detail_hides_labels(client: TestClient, h: dict[str, dict[str, str]], 
     body = client.get(f"/alerts/{alert}", headers=h["Reviewer"]).json()
     assert "is_anomaly" not in body["event"] and "anomaly_type" not in body["event"] and "bank_account" not in body["event"]
     assert body["sequence"] and body["facts"] and body["explanation"]
-    assert "है" in client.get(f"/alerts/{alert}/explain", params={"language": "hi"}, headers=h["Viewer"]).json()["explanation"]
+    hindi = client.get(f"/alerts/{alert}/explain", params={"language": "hi"}, headers=h["Viewer"]).json()
+    assert "है" in hindi["explanation"] and hindi["provider"] == "template" and hindi["fell_back"] is False  # template chosen, not refused
     print("ok   alert detail, Hindi narration, labels hidden from reviewers")
 
 
