@@ -156,6 +156,8 @@ Labelled synthetic data, seeds 42, 7 and 123, mean ± sd:
 | **AFED (proposed)** | **0.957 ± 0.002** | **0.359 ± 0.010** | **0.898 ± 0.008** | **0.513 ± 0.009** |
 
 Accuracy is high for doing nothing (97.5% of events are normal), so F1 and PR-AUC are the measures to read.
+Balanced accuracy, the mean of recall and specificity, is fair under imbalance: Rule-based 0.498, Global IF
+0.576, LOF 0.526, **AFED 0.928**. Flagging nothing scores 0.5.
 No dataset has confirmed-fraud labels, so the fraud detection rate is not reported.
 
 **On real data the picture is different.** With anomalies injected into real vendor histories (NSPCL, MPLADS,
@@ -164,6 +166,12 @@ Chicago and Delaware, where AFED's ranking is close to random (ROC-AUC 0.51 to 0
 of the fields AFED's rules need, and AFED's thresholds were set on synthetic data. See
 `experiments/real_data_evaluation_results.md`, which also re-tests the LSTM question on real data: keeping
 its errors in the forest passed the pre-registered rule on 5 of 7 real datasets.
+
+**Thresholds per dataset.** A pre-registered test (`experiments/threshold_calibration.md`, committed before it
+ran) chose each real ledger's threshold on its earliest 60% of events and tested it on the latest 40%. It passed:
+F1 rose on all four (MPLADS 0.023 to 0.105, Chicago 0.017 to 0.039, Delaware 0.024 to 0.058, NSPCL unchanged at
+0.047), by cutting alerts 50% to 95%. Recall fell, so the gain is cheaper review, not better detection. In the app
+this is what recalibration from reviewer decisions does for each deployment. The full report is `AFED.md`.
 
 ## Data
 
