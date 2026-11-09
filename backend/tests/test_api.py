@@ -130,7 +130,12 @@ def check_event_intake(client: TestClient, h: dict[str, dict[str, str]]) -> None
     assert client.post("/upload/events", json=batch, headers=h["Viewer"]).status_code == 403
     assert client.post("/upload/events", json=batch, headers=h["Reviewer"]).status_code == 403
     typo = client.post("/upload/events", json={"source": "x", "events": [{**events[0], "amout": 1}]}, headers=h["Analyst"])
-    assert typo.status_code == 422 and "amout" in typo.json()["detail"]
+    assert typo.status_code == 422 and typo.json()["detail"][0]["loc"][-1] == "amout", typo.text
+    # A large batch needs a valid token before its body is even read, so strangers cannot make the server parse it.
+    big = b'{"source":"x","events":[' + b",".join([b'{"event_id":"' + b"X" * 60 + b'"}'] * 20_000) + b"]}"
+    assert client.post("/upload/events", content=big, headers={"Content-Type": "application/json"}).status_code == 413
+    assert client.post("/upload/events", content=big, headers={"Content-Type": "application/json", "Authorization": "Bearer forged"}).status_code == 413
+    assert client.post("/upload/events", content=big, headers={**h["Analyst"], "Content-Type": "application/json"}).status_code != 413
     incomplete = client.post("/upload/events", json={"source": "x", "events": [{"event_id": "A", "vendor_id": "B"}]}, headers=h["Analyst"])
     assert incomplete.status_code == 422 and "Missing required columns" in incomplete.json()["detail"]
     assert client.post("/upload/events", json={"source": "x", "events": []}, headers=h["Analyst"]).status_code == 422

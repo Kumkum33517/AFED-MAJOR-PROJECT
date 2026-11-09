@@ -84,14 +84,21 @@ def test_fusion_formula_and_tiers() -> None:
     assert list(levels) == ["Low", "Medium", "High", "Critical"]
 
 
-def test_recalibrate_needs_both_classes_and_improves_f1() -> None:
-    current = {"weights": {"w1": 0.4, "w2": 0.35, "w3": 0.25}, "thresholds": {"medium": 0.45, "high": 0.6, "critical": 0.75}}
-    a, d, f = np.full(12, 0.5), np.full(12, 0.5), np.r_[np.full(6, 0.9), np.full(6, 0.1)]
-    assert not fusion.recalibrate(a, d, f, np.ones(12), current)["ok"]
-    assert not fusion.recalibrate(a[:5], d[:5], f[:5], np.array([1, 0, 1, 0, 1]), current)["ok"]
-    result = fusion.recalibrate(a, d, f, np.r_[np.ones(6), np.zeros(6)], current)
-    assert result["ok"] and result["f1_after"] >= result["f1_before"]
-    assert result["thresholds"]["medium"] < result["thresholds"]["high"] < result["thresholds"]["critical"]
+def test_recalibrate_keeps_a_fit_only_if_it_holds_on_newer_reviews() -> None:
+    current = {"weights": {"w1": 0.4, "w2": 0.35, "w3": 0.25}, "thresholds": {"medium": 0.40, "high": 0.6, "critical": 0.75}}
+    half = lambda n: np.full(n, 0.5)  # noqa: E731
+    f = np.tile([0.9, 0.1], 15)
+    assert not fusion.recalibrate(half(30), half(30), f, np.ones(30), current)["ok"]  # one class only
+    assert not fusion.recalibrate(half(12), half(12), f[:12], np.tile([1, 0], 6), current)["ok"]  # too few
+    # Every review agrees that a high F score means a real problem: the fit is kept and holds on the newest 30%.
+    kept = fusion.recalibrate(half(30), half(30), f, np.tile([1, 0], 15), current)
+    assert kept["ok"] and kept["heldout_after"] >= kept["heldout_before"] and kept["check_reviews"] == 9
+    assert kept["thresholds"]["medium"] < kept["thresholds"]["high"] < kept["thresholds"]["critical"]
+    # The newest reviews say the opposite: the fit looks perfect on the older ones, but is refused.
+    labels = np.r_[np.tile([1, 0], 11)[:21], np.tile([1, 0], 5)[:9]]  # rows 21+ start on a low F score
+    refused = fusion.recalibrate(half(30), half(30), f, labels, current)
+    assert not refused["ok"] and refused["f1_after"] == 1.0 and refused["heldout_after"] < refused["heldout_before"]
+    assert "nothing was changed" in refused["message"]
 
 
 def _facts() -> list[dict]:

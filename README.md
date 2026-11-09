@@ -199,8 +199,8 @@ the same mapping and validation as any upload. `afed_template.csv` lists every c
 
 **Automatic intake.** Another system can send invoices instead of a person uploading them. An Admin or Analyst
 token posts `{"source": "SAP nightly export", "events": [{...}, ...]}` to `POST /upload/events`, with the template's
-column names (up to 100,000 events and 50 MB per batch). Unknown fields are refused, so a typo in an integration
-fails loudly. The batch is validated and run exactly like an upload; a `409` means a run is in progress and the
+column names (up to 50,000 events and 20 MB per batch; a body that large is only read once its token checks out).
+Unknown fields are refused, so a typo in an integration fails loudly. The batch is validated and run exactly like an upload; a `409` means a run is in progress and the
 sender should retry. Events already stored are skipped, so resending a batch is safe. To see it working:
 
 ```bash
@@ -282,7 +282,10 @@ set `AFED_BIND=0.0.0.0` and `PREVIEW_ALLOWED_HOSTS`, and change those passwords 
 - **Seeding adds 60 simulated reviews** from the synthetic labels, so the feedback charts have data. The dashboard,
   evaluation page, activity timelines, PDFs and CSVs all disclose them. Unlabelled datasets get none.
 - **Recalibration ignores simulated reviews.** They are copies of the evaluation labels, and fitting to them would
-  tune the model on its own answer key. On fresh demo data it therefore asks for 10 real reviews first.
+  tune the model on its own answer key. On fresh demo data it therefore asks for 20 real reviews first.
+- **Recalibration is checked on reviews it did not see.** It searches on the older 70% of decisions and keeps the
+  result only if F1 on the newest 30% does not fall. A separate classifier trained on reviews would need a few
+  hundred real decisions to train and test honestly; until those exist, it would be guesswork.
 - **Bulk decisions only touch Pending alerts,** so one person's decision is never overwritten in passing.
 - **Reviewers never see labels.** `is_anomaly` is left out of the alert API, and invoice numbers carry no hint of it.
 - **PDFs are English only.** The built-in fonts have no Devanagari. They list the newest 5,000 alerts and say so if

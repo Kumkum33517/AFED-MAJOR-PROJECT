@@ -8,7 +8,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from .config import CORS_ORIGINS, MAX_BODY_BYTES, MAX_UPLOAD_BYTES
+from .auth import decode_token
+from .config import CORS_ORIGINS, MAX_BATCH_BYTES, MAX_BODY_BYTES, MAX_UPLOAD_BYTES
 from .db import SessionLocal, init_db
 from .routers import alerts, auth, cases, dashboard, entities, evaluation, notifications, reports, settings, upload, users
 from .services import mark_interrupted_runs
@@ -44,11 +45,22 @@ class RequestGuard:
         await self.app(scope, receive, send)
 
     @staticmethod
+    def _signed_in(headers: dict[bytes, bytes]) -> bool:
+        scheme, _, token = headers.get(b"authorization", b"").decode("latin-1").partition(" ")
+        return scheme.lower() == "bearer" and decode_token(token) is not None
+
+    @staticmethod
     def _refusal(scope: dict[str, Any]) -> tuple[int, str] | None:
         if b"%00" in scope.get("query_string", b"") or "\x00" in scope["path"]:
             return 400, "Invalid request"
         headers = dict(scope["headers"])
-        limit = MAX_UPLOAD_BYTES + 65536 if scope["path"].endswith(("/upload/preview", "/upload/events")) else MAX_BODY_BYTES
+        limit = MAX_BODY_BYTES
+        large = {"/upload/preview": MAX_UPLOAD_BYTES + 65536, "/upload/events": MAX_BATCH_BYTES}
+        path = next((p for p in large if scope["path"].endswith(p)), None)
+        # Only a signed, unexpired token earns the large limit, checked before any body is read: otherwise
+        # anyone could make the server parse megabytes before the route's own role check turns them away.
+        if path and RequestGuard._signed_in(headers):
+            limit = large[path]
         length = headers.get(b"content-length")
         if length is None and b"transfer-encoding" in headers:
             return 411, "A content length is required"

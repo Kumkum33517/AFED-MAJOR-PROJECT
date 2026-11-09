@@ -11,7 +11,8 @@ interface Values {
 interface Loaded extends Values { rule_info: { name: string; label: string; severity: number }[] }
 interface Model { version: string; has_lstm: boolean; recall: number | null; precision: number | null; roc_auc: number | null }
 interface Recalibration {
-  ok: boolean; reviews: number; message?: string; f1_before?: number; f1_after?: number; weights?: Values["weights"]; thresholds?: Values["thresholds"];
+  ok: boolean; reviews: number; message?: string; f1_before?: number; f1_after?: number;
+  fit_reviews?: number; check_reviews?: number; heldout_before?: number; heldout_after?: number; weights?: Values["weights"]; thresholds?: Values["thresholds"];
   simulated_excluded: number;
 }
 
@@ -95,12 +96,13 @@ function Form({ data, reload }: { data: Loaded; reload: () => void }) {
         {saved && <span role="status" className="text-sm text-muted">{saved}</span>}
         {error && <span role="alert" className="notice-error">{error}</span>}
       </div>
-      <Card title="Recalibrate from feedback" subtitle="Searches weights and the Medium cut-off for the best F1 on real reviewer decisions. Needs 10 of them, with both outcomes. Simulated seed reviews do not count.">
+      <Card title="Recalibrate from feedback" subtitle="Searches weights and the Medium cut-off for the best F1 on the older 70% of real reviewer decisions, then checks the result on the newest 30% and keeps it only if it does at least as well there. Needs 20 decisions, with both outcomes. Simulated seed reviews do not count.">
         <Button variant="secondary" onClick={recalibrate}>Recalibrate</Button>
         {calibration && (calibration.ok ? (
           <p role="status" className="mt-3 text-sm">
-            F1 went from {calibration.f1_before?.toFixed(3)} to {calibration.f1_after?.toFixed(3)} on {calibration.reviews} reviews.
-            Weights {calibration.weights?.w1}, {calibration.weights?.w2}, {calibration.weights?.w3}; Medium from {calibration.thresholds?.medium}. Saved for the next run. Fitted to these reviews, so check it on new alerts before trusting it.
+            On the {calibration.check_reviews} newest reviews, which the search did not see, F1 went from {calibration.heldout_before?.toFixed(3)} to {calibration.heldout_after?.toFixed(3)}
+            (on the {calibration.fit_reviews} it was fitted to: {calibration.f1_before?.toFixed(3)} to {calibration.f1_after?.toFixed(3)}).
+            Weights {calibration.weights?.w1}, {calibration.weights?.w2}, {calibration.weights?.w3}; Medium from {calibration.thresholds?.medium}. Saved for the next run.
           </p>
         ) : <p role="status" className="mt-3 text-sm text-muted">
           {calibration.message} Found {calibration.reviews}.{calibration.simulated_excluded > 0 && ` ${calibration.simulated_excluded} simulated reviews were left out, because they are copies of the labels the evaluation is measured on.`}

@@ -74,8 +74,9 @@ def recalibrate_from_feedback(db: DB, user: CanOperate) -> dict[str, Any]:
     them would tune the model on its own answer key and inflate every published metric.
     """
     decisions = [f for f in latest_feedback(db) if f.label is not None]
-    real = {f.alert_id: f.label for f in decisions if f.comment != SEEDED_COMMENT}
-    rows = db.execute(select(Alert.id, Alert.a_score, Alert.d_score, Alert.f_score).where(Alert.id.in_(real))).all()
+    real = {f.alert_id: f.label for f in sorted(decisions, key=lambda f: (f.created_at, f.id)) if f.comment != SEEDED_COMMENT}
+    found = {r.id: r for r in db.execute(select(Alert.id, Alert.a_score, Alert.d_score, Alert.f_score).where(Alert.id.in_(real)))}
+    rows = [found[i] for i in real if i in found]  # oldest review first: the newest are held back to check the fit
     settings = get_settings(db)
     a, d, f = (np.array([r[i] for r in rows], dtype=float) for i in (1, 2, 3))
     labels = np.array([real[r.id] for r in rows], dtype=int)

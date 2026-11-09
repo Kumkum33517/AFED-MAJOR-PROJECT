@@ -117,14 +117,12 @@ def ingest_events(body: EventBatch, background: BackgroundTasks, db: DB, user: C
     The batch takes the same path as an upload (validation, then a run), so nothing about it is special.
     A 409 means a run is in progress: the sender should retry later.
     """
-    columns = sorted({key for event in body.events for key in event})
-    unknown = [c for c in columns if c not in REQUIRED + OPTIONAL + LABELS]
-    if unknown:
-        raise HTTPException(422, f"Unknown fields: {', '.join(unknown[:10])}. Use the column names of the CSV template.")
+    rows = [event.model_dump(exclude_unset=True) for event in body.events]  # unknown keys were refused while parsing
+    columns = [c for c in REQUIRED + OPTIONAL + LABELS if any(c in row for row in rows)]
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     _discard_abandoned_uploads()
     path = UPLOAD_DIR / f"{uuid4().hex}.csv"
-    pd.DataFrame(body.events, columns=columns).to_csv(path, index=False)
+    pd.DataFrame(rows, columns=columns).to_csv(path, index=False)
     mapping = {c: c for c in columns}
     report = validate(_mapped(path, mapping))
     if not report["ok"]:

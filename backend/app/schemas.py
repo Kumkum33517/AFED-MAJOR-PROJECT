@@ -82,10 +82,39 @@ class CaseNote(BaseModel):
     text: Text = Field(min_length=1, max_length=4000)
 
 
+Cell = str | float | int | bool | None
+
+
+class EventIn(BaseModel):
+    """One invoice under AFED's own column names (frontend/public/samples/afed_template.csv).
+
+    Fixed fields with extra="forbid", so a misspelt or unknown key is refused while parsing. Required columns
+    are checked with the rest of validation, so a batch gets the same messages as an upload.
+    """
+    model_config = ConfigDict(extra="forbid")
+    event_id: Cell = None
+    vendor_id: Cell = None
+    amount: Cell = None
+    invoice_date: Cell = None
+    invoice_number: Cell = None
+    vendor_name: Cell = None
+    category: Cell = None
+    department: Cell = None
+    approver_id: Cell = None
+    created_by: Cell = None
+    approval_date: Cell = None
+    processing_days: Cell = None
+    bank_account: Cell = None
+    vendor_created: Cell = None
+    po_amount: Cell = None
+    is_anomaly: Cell = None
+    anomaly_type: Cell = None
+
+
 class EventBatch(BaseModel):
-    """Invoices pushed by another system, under AFED's own column names (frontend/public/samples/afed_template.csv)."""
+    """Invoices pushed by another system to /upload/events."""
     source: Text = Field(min_length=1, max_length=60)  # shown in the run history, e.g. "SAP nightly export"
-    events: list[dict[str, str | float | int | bool | None]] = Field(min_length=1, max_length=100_000)
+    events: list[EventIn] = Field(min_length=1, max_length=50_000)
 
 
 class MappingBody(BaseModel):
