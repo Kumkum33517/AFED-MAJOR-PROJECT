@@ -311,6 +311,9 @@ def check_login_lockout(client: TestClient) -> None:
     for _ in range(5):
         assert client.post("/auth/login", data={"username": "viewer@t.co", "password": "wrong"}).status_code == 401
     assert client.post("/auth/login", data={"username": "viewer@t.co", "password": "pw123456"}).status_code == 429
+    # With no trusted proxy configured, a forged X-Forwarded-For must not open a fresh allowance.
+    forged = {"X-Forwarded-For": "203.0.113.9"}
+    assert client.post("/auth/login", data={"username": "viewer@t.co", "password": "pw123456"}, headers=forged).status_code == 429
     print("ok   login lockout")
 
 

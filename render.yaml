@@ -21,3 +21,6 @@ services:
         value: template
       - key: HF_TOKEN
         sync: false
+      # Render's proxy appends the caller's address to X-Forwarded-For; the login limit keys on it.
+      - key: TRUSTED_PROXY_HOPS
+        value: "1"

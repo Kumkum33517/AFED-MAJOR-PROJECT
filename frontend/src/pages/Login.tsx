@@ -27,7 +27,8 @@ export default function Login() {
 
   // Back to the page that asked for a login. Same-site paths only.
   const wanted = (location.state as { from?: string } | null)?.from ?? params.get("next");
-  const destination = (role: Role) => (wanted?.startsWith("/") && !wanted.startsWith("//") ? wanted : homeFor(role));
+  // One leading slash and no backslash anywhere: browsers read "/\host" as "//host", another site.
+  const destination = (role: Role) => (wanted && /^\/(?![/\\])[^\\]*$/.test(wanted) ? wanted : homeFor(role));
 
   if (user) return <Navigate to={destination(user.role)} replace />;
 

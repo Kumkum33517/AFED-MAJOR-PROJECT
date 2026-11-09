@@ -33,5 +33,7 @@ CORS_ORIGINS = [o.strip() for o in os.getenv(
 
 QWEN_PROVIDER = os.getenv("QWEN_PROVIDER", "template")
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024
+# Proxies in front of the API that append to X-Forwarded-For (Render: 1). 0 trusts no header: a client can write it.
+TRUSTED_PROXY_HOPS = int(os.getenv("TRUSTED_PROXY_HOPS", "0"))
 MAX_BODY_BYTES = 1024 * 1024  # every request except a CSV upload
 UPLOAD_MAX_AGE_HOURS = 24

@@ -10,6 +10,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import select
 
 from ..auth import create_token, hash_password, verify_password
+from ..config import TRUSTED_PROXY_HOPS
 from ..deps import DB, CurrentUser, audit, notify
 from ..models import Notification, User, utcnow
 from ..schemas import ForgotPassword, PasswordChange, ProfileUpdate, Token, UserOut
@@ -22,6 +23,16 @@ _attempts: dict[str, list[float]] = {}
 _attempts_lock = threading.Lock()
 # Checked when an account does not exist, so response time cannot reveal which emails do.
 _NO_SUCH_USER = hash_password(secrets.token_hex(16))
+
+
+def client_address(request: Request) -> str:
+    """The caller's address. Behind N trusted proxies, the Nth entry from the right of X-Forwarded-For is the one
+    the outermost proxy saw; anything further left was written by the client and is ignored."""
+    if TRUSTED_PROXY_HOPS:
+        hops = [h.strip() for h in request.headers.get("x-forwarded-for", "").split(",") if h.strip()]
+        if len(hops) >= TRUSTED_PROXY_HOPS:
+            return hops[-TRUSTED_PROXY_HOPS]
+    return request.client.host if request.client else ""
 
 
 def _reserve_attempt(key: str) -> bool:
@@ -43,7 +54,7 @@ def login(request: Request, form: Annotated[OAuth2PasswordRequestForm, Depends()
     if len(email) > 255 or "\x00" in email:
         raise HTTPException(401, "Incorrect email or password")
     # Keyed on the address as well, so a stranger's bad guesses cannot lock an account's real owner out.
-    key = f"{email}|{request.client.host if request.client else ''}"
+    key = f"{email}|{client_address(request)}"
     if not _reserve_attempt(key):
         raise HTTPException(429, "Too many failed attempts. Try again in a few minutes.")
 
