@@ -142,20 +142,13 @@ export default function Upload() {
           <div className="mt-5 grid gap-4 border-t border-line pt-4 text-sm sm:grid-cols-2">
             <div>
               <p className="font-medium">No file to hand?</p>
-              <p className="mt-0.5 text-xs text-muted">5,745 real payments by 80 vendors of NSPCL, a Government of India joint venture, from 2023 to 2026. Unlabelled, as real data is.</p>
-              <Button variant="secondary" className="mt-2" disabled={busy || running} onClick={useSample}>Use the NSPCL sample</Button>
-              <p className="mt-1.5 text-[11px] text-muted">Source: NSPCL vendor payments, nspcl.co.in, reproduced with acknowledgement.</p>
+              <Button variant="secondary" className="mt-2" disabled={busy || running} onClick={useSample} title="Source: NSPCL vendor payments, nspcl.co.in, reproduced with acknowledgement">Use the NSPCL sample</Button>
             </div>
             <div>
               <p className="font-medium">Preparing your own data?</p>
-              <p className="mt-0.5 text-xs text-muted">Every column AFED understands, with two example rows. Only the first four are required; label columns are for evaluation.</p>
               <a href={`${SAMPLES}afed_template.csv`} download className="mt-2 inline-flex items-center gap-1.5 rounded border border-line bg-surface px-3.5 py-2 text-sm font-medium hover:bg-bg">Download the CSV template</a>
             </div>
           </div>
-          <p className="mt-4 text-xs text-muted">
-            Other systems can send invoices without this page: an accounting system posts batches to <code className="text-fg">POST /upload/events</code> using
-            the template's column names, and each batch is validated and run like an upload. Those runs appear below as "API: …".
-          </p>
         </Card>
 
         {preview && (
