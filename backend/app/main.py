@@ -48,7 +48,7 @@ class RequestGuard:
         if b"%00" in scope.get("query_string", b"") or "\x00" in scope["path"]:
             return 400, "Invalid request"
         headers = dict(scope["headers"])
-        limit = MAX_UPLOAD_BYTES + 65536 if scope["path"].endswith("/upload/preview") else MAX_BODY_BYTES
+        limit = MAX_UPLOAD_BYTES + 65536 if scope["path"].endswith(("/upload/preview", "/upload/events")) else MAX_BODY_BYTES
         length = headers.get(b"content-length")
         if length is None and b"transfer-encoding" in headers:
             return 411, "A content length is required"

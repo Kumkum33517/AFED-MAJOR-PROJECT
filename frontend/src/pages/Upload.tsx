@@ -152,6 +152,10 @@ export default function Upload() {
               <a href={`${SAMPLES}afed_template.csv`} download className="mt-2 inline-flex items-center gap-1.5 rounded border border-line bg-surface px-3.5 py-2 text-sm font-medium hover:bg-bg">Download the CSV template</a>
             </div>
           </div>
+          <p className="mt-4 text-xs text-muted">
+            Other systems can send invoices without this page: an accounting system posts batches to <code className="text-fg">POST /upload/events</code> using
+            the template's column names, and each batch is validated and run like an upload. Those runs appear below as "API: …".
+          </p>
         </Card>
 
         {preview && (

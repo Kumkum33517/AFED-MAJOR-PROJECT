@@ -197,6 +197,16 @@ for data. `nspcl_sample.csv` holds 5,745 real payments by 80 NSPCL vendors (2023
 `data/scripts/make_samples.py` and shipped under NSPCL's reproduction-with-acknowledgement terms. It runs through
 the same mapping and validation as any upload. `afed_template.csv` lists every column with two made-up rows.
 
+**Automatic intake.** Another system can send invoices instead of a person uploading them. An Admin or Analyst
+token posts `{"source": "SAP nightly export", "events": [{...}, ...]}` to `POST /upload/events`, with the template's
+column names (up to 100,000 events and 50 MB per batch). Unknown fields are refused, so a typo in an integration
+fails loudly. The batch is validated and run exactly like an upload; a `409` means a run is in progress and the
+sender should retry. Events already stored are skipped, so resending a batch is safe. To see it working:
+
+```bash
+python scripts/send_events.py --batch 500 --every 20   # plays an accounting system, sending the NSPCL sample
+```
+
 **Dates.** ISO dates are read as they are. Numeric dates are read day first, the Indian convention, unless the
 column proves it is month first; the validation report warns when a column could be either. `YYYYMMDD` is
 understood. UTC offsets are dropped and the recorded clock time is kept, because off-hours rules mean local time.

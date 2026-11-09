@@ -15,7 +15,7 @@ from ml.features import LABELS, OPTIONAL, REQUIRED, read_csv, validate
 from ..config import MAX_UPLOAD_BYTES, UPLOAD_DIR, UPLOAD_MAX_AGE_HOURS
 from ..deps import DB, CanOperate, Id, audit
 from ..models import Run, User
-from ..schemas import MappingBody
+from ..schemas import EventBatch, MappingBody
 from ..services import apply_mapping, execute_run
 
 router = APIRouter(prefix="/upload", tags=["upload"])
@@ -108,6 +108,34 @@ def run_upload(body: MappingBody, background: BackgroundTasks, db: DB, user: Can
     if not report["ok"]:
         raise HTTPException(422, "; ".join(report["errors"]))
     return {"run_id": _start(db, user, background, "CSV upload", str(path), body.mapping).id}
+
+
+@router.post("/events", status_code=202)
+def ingest_events(body: EventBatch, background: BackgroundTasks, db: DB, user: CanOperate) -> dict[str, int]:
+    """Automatic intake: another system posts a batch of invoices and a run starts on them.
+
+    The batch takes the same path as an upload (validation, then a run), so nothing about it is special.
+    A 409 means a run is in progress: the sender should retry later.
+    """
+    columns = sorted({key for event in body.events for key in event})
+    unknown = [c for c in columns if c not in REQUIRED + OPTIONAL + LABELS]
+    if unknown:
+        raise HTTPException(422, f"Unknown fields: {', '.join(unknown[:10])}. Use the column names of the CSV template.")
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    _discard_abandoned_uploads()
+    path = UPLOAD_DIR / f"{uuid4().hex}.csv"
+    pd.DataFrame(body.events, columns=columns).to_csv(path, index=False)
+    mapping = {c: c for c in columns}
+    report = validate(_mapped(path, mapping))
+    if not report["ok"]:
+        path.unlink(missing_ok=True)
+        raise HTTPException(422, "; ".join(report["errors"]))
+    try:
+        run = _start(db, user, background, f"API: {body.source}", str(path), mapping)
+    except HTTPException:
+        path.unlink(missing_ok=True)
+        raise
+    return {"run_id": run.id, "rows": report["rows"]}
 
 
 @router.post("/rerun", status_code=202)

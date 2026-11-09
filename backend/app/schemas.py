@@ -82,6 +82,12 @@ class CaseNote(BaseModel):
     text: Text = Field(min_length=1, max_length=4000)
 
 
+class EventBatch(BaseModel):
+    """Invoices pushed by another system, under AFED's own column names (frontend/public/samples/afed_template.csv)."""
+    source: Text = Field(min_length=1, max_length=60)  # shown in the run history, e.g. "SAP nightly export"
+    events: list[dict[str, str | float | int | bool | None]] = Field(min_length=1, max_length=100_000)
+
+
 class MappingBody(BaseModel):
     upload_id: str = Field(pattern=r"^[0-9a-f]{32}$")  # used in a file path, so keep it strict
     mapping: dict[str, str]  # AFED column -> column in the uploaded file

@@ -124,6 +124,25 @@ def check_upload(client: TestClient, h: dict[str, dict[str, str]]) -> None:
     print("ok   upload, mapping, validation and run")
 
 
+def check_event_intake(client: TestClient, h: dict[str, dict[str, str]]) -> None:
+    events = [{"event_id": f"API{i}", "vendor_id": "FEEDV", "amount": 2000 + i, "invoice_date": f"2026-09-{i % 28 + 1:02d}"} for i in range(30)]
+    batch = {"source": "ERP test feed", "events": events}
+    assert client.post("/upload/events", json=batch, headers=h["Viewer"]).status_code == 403
+    assert client.post("/upload/events", json=batch, headers=h["Reviewer"]).status_code == 403
+    typo = client.post("/upload/events", json={"source": "x", "events": [{**events[0], "amout": 1}]}, headers=h["Analyst"])
+    assert typo.status_code == 422 and "amout" in typo.json()["detail"]
+    incomplete = client.post("/upload/events", json={"source": "x", "events": [{"event_id": "A", "vendor_id": "B"}]}, headers=h["Analyst"])
+    assert incomplete.status_code == 422 and "Missing required columns" in incomplete.json()["detail"]
+    assert client.post("/upload/events", json={"source": "x", "events": []}, headers=h["Analyst"]).status_code == 422
+    reply = client.post("/upload/events", json=batch, headers=h["Analyst"])
+    assert reply.status_code == 202 and reply.json()["rows"] == 30, reply.text
+    run = client.get(f"/upload/runs/{reply.json()['run_id']}", headers=h["Analyst"]).json()
+    assert run["status"] == "completed" and run["new_rows"] == 30 and run["source"] == "API: ERP test feed", run
+    again = client.post("/upload/events", json=batch, headers=h["Analyst"]).json()  # a resent batch adds nothing
+    assert client.get(f"/upload/runs/{again['run_id']}", headers=h["Analyst"]).json()["new_rows"] == 0
+    print("ok   automatic intake: roles, unknown and missing fields, resends")
+
+
 def check_exports(client: TestClient, h: dict[str, dict[str, str]], alert: int, case: int) -> None:
     for path in (f"/reports/alert/{alert}.pdf", f"/reports/case/{case}.pdf", "/reports/range.pdf"):
         response = client.get(path, headers=h["Viewer"])
@@ -338,6 +357,7 @@ if __name__ == "__main__":
         check_detail_hides_labels(client, h, alert)
         check_review_and_rerun(client, h)
         check_upload(client, h)
+        check_event_intake(client, h)
         check_settings(client, h)
         check_exports(client, h, alert, case)
         check_users(client, h)
