@@ -31,6 +31,10 @@ injected anomalies only (`backend/ml/inject.py`), tagged and never stored with t
 | AFED temporal | `backend/data/generate_temporal.py`, seed 1 | Synthetic | Ours | 9,155 invoices | Oct 2023 – Sep 2026 | Vendor | Daily | Yes, 3 temporal types | 148 with 24+ | Labelled. For the LSTM ablation |
 | ICAI vendor payments | [Kaggle kmldas/vendor-payment-dataset-icai-book](https://www.kaggle.com/datasets/kmldas/vendor-payment-dataset-icai-book) | Synthetic (India) | CDLA-Permissive-1.0 | 10,951 payments, 598 vendors | Apr 2023 – Apr 2024 | Vendor | Daily | None (its risk cluster is K-means output) | 180 with 24+ | Tests and demo only |
 
+**Shipped sample.** One subset is committed: `frontend/public/samples/nspcl_sample.csv`, the full histories of 80
+NSPCL vendors (5,745 payments, vendor numbers only), offered on the upload page. NSPCL permits reproduction with
+acknowledgement, which the page and README give. No other dataset is redistributed.
+
 ## Considered and rejected
 
 ### Indian government sources

@@ -9,6 +9,7 @@ interface Preview {
 }
 interface Report { ok: boolean; rows: number; errors: string[]; warnings: string[]; dropped_rows: number; missing_optional: string[] }
 
+const SAMPLES = `${import.meta.env.BASE_URL}samples/`;
 const POLL_MS = 800;
 const MAX_POLL_FAILURES = 10;
 
@@ -88,6 +89,19 @@ export default function Upload() {
     }
   };
 
+  // The sample goes through the same preview, mapping and validation as any file, so the demo shows the real path.
+  const useSample = async () => {
+    setError(""); setBusy(true);
+    try {
+      const response = await fetch(`${SAMPLES}nspcl_sample.csv`);
+      if (!response.ok) throw new Error(`The sample file could not be loaded (${response.status}).`);
+      await choose(new File([await response.blob()], "nspcl_sample.csv", { type: "text/csv" }));
+    } catch (e) {
+      setError(toError(e).message);
+      setBusy(false);
+    }
+  };
+
   const validate = async () => {
     setError(""); setBusy(true);
     try {
@@ -125,6 +139,19 @@ export default function Upload() {
 
         <Card title="1. Choose a CSV" subtitle="Needs event_id, vendor_id, amount and invoice_date, under any column names. Up to 50 MB.">
           <input aria-label="CSV file" type="file" accept=".csv,text/csv" disabled={busy || running} className="text-sm text-muted file:mr-3 file:cursor-pointer file:rounded file:border-0 file:bg-accent file:px-3.5 file:py-2 file:text-sm file:font-medium file:text-accent-fg" onChange={(e) => { void choose(e.target.files?.[0]); e.target.value = ""; }} />
+          <div className="mt-5 grid gap-4 border-t border-line pt-4 text-sm sm:grid-cols-2">
+            <div>
+              <p className="font-medium">No file to hand?</p>
+              <p className="mt-0.5 text-xs text-muted">5,745 real payments by 80 vendors of NSPCL, a Government of India joint venture, from 2023 to 2026. Unlabelled, as real data is.</p>
+              <Button variant="secondary" className="mt-2" disabled={busy || running} onClick={useSample}>Use the NSPCL sample</Button>
+              <p className="mt-1.5 text-[11px] text-muted">Source: NSPCL vendor payments, nspcl.co.in, reproduced with acknowledgement.</p>
+            </div>
+            <div>
+              <p className="font-medium">Preparing your own data?</p>
+              <p className="mt-0.5 text-xs text-muted">Every column AFED understands, with two example rows. Only the first four are required; label columns are for evaluation.</p>
+              <a href={`${SAMPLES}afed_template.csv`} download className="mt-2 inline-flex items-center gap-1.5 rounded border border-line bg-surface px-3.5 py-2 text-sm font-medium hover:bg-bg">Download the CSV template</a>
+            </div>
+          </div>
         </Card>
 
         {preview && (

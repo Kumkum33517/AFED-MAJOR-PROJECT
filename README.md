@@ -192,6 +192,11 @@ category, department, approver_id, created_by, approval_date, processing_days, b
 po_amount`. For evaluation: `is_anomaly` (0/1 or yes/no; anything else counts as unlabelled) and `anomaly_type`.
 The upload page maps other column names onto these. A file can have up to 500,000 rows and 50 MB.
 
+**Sample files.** The Data & runs page offers two files from `frontend/public/samples/`, so a demo never waits
+for data. `nspcl_sample.csv` holds 5,745 real payments by 80 NSPCL vendors (2023 to 2026, unlabelled), built by
+`data/scripts/make_samples.py` and shipped under NSPCL's reproduction-with-acknowledgement terms. It runs through
+the same mapping and validation as any upload. `afed_template.csv` lists every column with two made-up rows.
+
 **Dates.** ISO dates are read as they are. Numeric dates are read day first, the Indian convention, unless the
 column proves it is month first; the validation report warns when a column could be either. `YYYYMMDD` is
 understood. UTC offsets are dropped and the recorded clock time is kept, because off-hours rules mean local time.
