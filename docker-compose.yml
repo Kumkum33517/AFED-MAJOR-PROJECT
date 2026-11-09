@@ -1,0 +1,33 @@
+# JWT_SECRET=$(openssl rand -hex 32) docker compose up --build, then open http://localhost:5173
+# The first start seeds demo data into the volume; later starts keep it.
+# Ports stay on this machine, because the demo accounts have a published password. To expose them
+# on purpose, set AFED_BIND=0.0.0.0, change those passwords, and list your host in PREVIEW_ALLOWED_HOSTS.
+services:
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-sqlite:////data/afed.db}
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET, for example with openssl rand -hex 32}
+      QWEN_PROVIDER: ${QWEN_PROVIDER:-template}
+      HF_TOKEN: ${HF_TOKEN:-}
+      QWEN_HF_MODEL: ${QWEN_HF_MODEL:-Qwen/Qwen2.5-7B-Instruct}
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    # The marker is written only after a complete seed, so an interrupted first start tries again.
+    command: sh -c "[ -f /data/.seeded ] || { python scripts/seed.py && touch /data/.seeded; }; exec uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports: ["${AFED_BIND:-127.0.0.1}:8000:8000"]
+    volumes:
+      - afed-data:/data
+      - afed-models:/app/models_store
+
+  frontend:
+    build: ./frontend
+    environment:
+      API_PROXY_TARGET: http://backend:8000
+      PREVIEW_ALLOWED_HOSTS: ${PREVIEW_ALLOWED_HOSTS:-}
+    ports: ["${AFED_BIND:-127.0.0.1}:5173:5173"]
+    depends_on: [backend]
+
+volumes:
+  afed-data:
+  afed-models:

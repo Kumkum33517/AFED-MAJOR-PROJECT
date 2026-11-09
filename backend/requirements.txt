@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pandas
+pyarrow
+scikit-learn
+torch
+requests
+sqlalchemy>=2
+python-jose[cryptography]
+bcrypt
+reportlab
+httpx
+psycopg2-binary
+python-dotenv
+pdfplumber

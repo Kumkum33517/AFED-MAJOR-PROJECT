@@ -1,0 +1,7 @@
+.venv
+__pycache__
+*.pyc
+afed.db*
+models_store/v*
+data/uploads
+data/public_*.csv

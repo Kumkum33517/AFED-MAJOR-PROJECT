@@ -1,0 +1,23 @@
+# Backend on Render. torch needs more memory than the free plan offers.
+services:
+  - type: web
+    name: afed-api
+    runtime: python
+    plan: standard
+    rootDir: backend
+    buildCommand: pip install torch --index-url https://download.pytorch.org/whl/cpu && pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false
+      - key: QWEN_PROVIDER
+        value: template
+      - key: HF_TOKEN
+        sync: false
