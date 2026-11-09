@@ -240,7 +240,17 @@ python tests/test_api.py      # access matrix, workflows, hostile input, exports
 python experiments/temporal_ablation.py      # the pre-registered LSTM ablation, about 90 seconds
 python experiments/real_data_evaluation.py   # AFED on real data with injected anomalies (long; resumable)
 python experiments/model_comparison.py       # Rule-based vs Global IF vs LOF vs AFED, with figures
+python experiments/threshold_calibration.py  # pre-registered per-dataset threshold test on a later period
 TEST_DATABASE_URL=postgresql://... JWT_SECRET=<32+ characters> python tests/test_api.py    # the same on Postgres
+```
+
+The browser smoke test signs in as each role through the real form, opens every page that role may reach,
+checks the refused ones, and runs the sample upload. It needs the app running on demo data:
+
+```bash
+cd frontend
+pip install -r e2e/requirements.txt && playwright install chromium
+python e2e/smoke.py --url http://localhost:5173
 ```
 
 ## Deploy
