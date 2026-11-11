@@ -1,0 +1,14 @@
+{
+ "events": 10914,
+ "alerts": 717,
+ "levels": {
+  "Low": 10197,
+  "Medium": 512,
+  "High": 129,
+  "Critical": 76
+ },
+ "risk_sha256": "dad75ade9e4a52827ae4d18e6615264c755b9bfb4679d9325acc072ac8ccaef9",
+ "level_sha256": "85cbf4b94b339c03f3e723f46bf0dd282deea894765bc10aad3059c91087ea68",
+ "a_sha256": "c7c885af31c8de6fd5674efb50f3c3581cead3dc929073578fa0cdb94d42bf89",
+ "recorded_from": "commit 54e82a2, v1 code, synthetic seed 42, risk rounded to 6 decimals"
+}
