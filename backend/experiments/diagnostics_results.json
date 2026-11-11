@@ -1,0 +1,3218 @@
+{
+ "nspcl": [
+  {
+   "events": 26382,
+   "anomalies": 492,
+   "overall": {
+    "f1": 0.06031594064145524,
+    "precision": 0.039448966812773954,
+    "recall": 0.12804878048780488,
+    "alerts": 1597,
+    "tp": 63,
+    "fp": 1534,
+    "fn": 429,
+    "tn": 24356,
+    "roc_auc": 0.6193859182218706,
+    "pr_auc": 0.032222938592478545
+   },
+   "recall_by_type": {
+    "amount_spike": 0.3458646616541353,
+    "frequency_shift": 0.00819672131147541,
+    "off_cycle_invoice": 0.04040404040404041,
+    "slow_drift": 0.08695652173913043
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7301587301587301,
+    "slow_drift": 0.19047619047619047,
+    "frequency_shift": 0.015873015873015872,
+    "off_cycle_invoice": 0.06349206349206349
+   },
+   "history": {
+    "median": 9.0,
+    "q1": 2.0,
+    "q3": 31.0,
+    "under_8": 0.4605412781441892,
+    "under_24": 0.6956258054734289
+   },
+   "baseline": {
+    "vendor": 0.5394587218558108,
+    "global": 0.4605412781441892
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.021454021681449473
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.00018952315973011903
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.07289060723220378
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.01724660753544083
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.020809642938367068
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5978046189789823,
+     "pr_auc": 0.024048722704310483
+    },
+    "D": {
+     "roc_auc": 0.6437090394947982,
+     "pr_auc": 0.06450987660432615
+    },
+    "F": {
+     "roc_auc": 0.4967111089129432,
+     "pr_auc": 0.01864971352644997
+    },
+    "fusion": {
+     "roc_auc": 0.6193859182218706,
+     "pr_auc": 0.032222938592478545
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8785535592449397,
+    "d_zero": 0.9228640739898416,
+    "mass_share": {
+     "a": 0.7718189119556501,
+     "d": 0.07835806188595344,
+     "f": 0.14701178046538832,
+     "bonus": 0.0028112456930081404
+    }
+   }
+  },
+  {
+   "events": 26388,
+   "anomalies": 490,
+   "overall": {
+    "f1": 0.06628242074927954,
+    "precision": 0.04334170854271357,
+    "recall": 0.14081632653061224,
+    "alerts": 1592,
+    "tp": 69,
+    "fp": 1523,
+    "fn": 421,
+    "tn": 24375,
+    "roc_auc": 0.6232675756224182,
+    "pr_auc": 0.03344859362373419
+   },
+   "recall_by_type": {
+    "amount_spike": 0.3464566929133858,
+    "frequency_shift": 0.0673076923076923,
+    "off_cycle_invoice": 0.07317073170731707,
+    "slow_drift": 0.0661764705882353
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.6376811594202898,
+    "slow_drift": 0.13043478260869565,
+    "frequency_shift": 0.10144927536231885,
+    "off_cycle_invoice": 0.13043478260869565
+   },
+   "history": {
+    "median": 9.0,
+    "q1": 2.0,
+    "q3": 31.0,
+    "under_8": 0.46043656207366984,
+    "under_24": 0.6954676368046081
+   },
+   "baseline": {
+    "vendor": 0.5395634379263301,
+    "global": 0.46043656207366984
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.02156283159011672
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.00018948006669698348
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.07363195391844778
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.01709110201606791
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.020501743216613612
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.6044907730641875,
+     "pr_auc": 0.02474758252485707
+    },
+    "D": {
+     "roc_auc": 0.6346989602853266,
+     "pr_auc": 0.06270070926751284
+    },
+    "F": {
+     "roc_auc": 0.5055946720336139,
+     "pr_auc": 0.019212504379141918
+    },
+    "fusion": {
+     "roc_auc": 0.6232675756224182,
+     "pr_auc": 0.03344859362373419
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8780506290738215,
+    "d_zero": 0.9237153251477944,
+    "mass_share": {
+     "a": 0.7722331855778811,
+     "d": 0.07776360326769895,
+     "f": 0.14711814007501683,
+     "bonus": 0.0028850710794031996
+    }
+   }
+  },
+  {
+   "events": 26400,
+   "anomalies": 494,
+   "overall": {
+    "f1": 0.07633587786259542,
+    "precision": 0.049937578027465665,
+    "recall": 0.16194331983805668,
+    "alerts": 1602,
+    "tp": 80,
+    "fp": 1522,
+    "fn": 414,
+    "tn": 24384,
+    "roc_auc": 0.6110184719529436,
+    "pr_auc": 0.03264469315925668
+   },
+   "recall_by_type": {
+    "amount_spike": 0.41044776119402987,
+    "frequency_shift": 0.025210084033613446,
+    "off_cycle_invoice": 0.1,
+    "slow_drift": 0.08264462809917356
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.6875,
+    "slow_drift": 0.125,
+    "frequency_shift": 0.0375,
+    "off_cycle_invoice": 0.15
+   },
+   "history": {
+    "median": 9.0,
+    "q1": 2.0,
+    "q3": 31.0,
+    "under_8": 0.4602272727272727,
+    "under_24": 0.6958712121212122
+   },
+   "baseline": {
+    "vendor": 0.5397727272727273,
+    "global": 0.4602272727272727
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.021174242424242425
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0001893939393939394
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.07375
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.017196969696969697
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.020492424242424243
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5907839960792538,
+     "pr_auc": 0.024128785155388303
+    },
+    "D": {
+     "roc_auc": 0.642976272671893,
+     "pr_auc": 0.07028134712000042
+    },
+    "F": {
+     "roc_auc": 0.4999300648154601,
+     "pr_auc": 0.01873051557863247
+    },
+    "fusion": {
+     "roc_auc": 0.6110184719529436,
+     "pr_auc": 0.03264469315925668
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8779545454545454,
+    "d_zero": 0.9235606060606061,
+    "mass_share": {
+     "a": 0.7704188033979641,
+     "d": 0.07808849855587946,
+     "f": 0.1486657742429402,
+     "bonus": 0.0028269238032162143
+    }
+   }
+  }
+ ],
+ "mplads": [
+  {
+   "events": 49788,
+   "anomalies": 220,
+   "overall": {
+    "f1": 0.02199783627839885,
+    "precision": 0.01145324821629741,
+    "recall": 0.2772727272727273,
+    "alerts": 5326,
+    "tp": 61,
+    "fp": 5265,
+    "fn": 159,
+    "tn": 44303,
+    "roc_auc": 0.6238984828921885,
+    "pr_auc": 0.016503725818479323
+   },
+   "recall_by_type": {
+    "amount_spike": 0.7142857142857143,
+    "frequency_shift": 0.11320754716981132,
+    "off_cycle_invoice": 0.12698412698412698,
+    "slow_drift": 0.04878048780487805
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7377049180327869,
+    "slow_drift": 0.03278688524590164,
+    "frequency_shift": 0.09836065573770492,
+    "off_cycle_invoice": 0.13114754098360656
+   },
+   "history": {
+    "median": 3.0,
+    "q1": 0.0,
+    "q3": 23.0,
+    "under_8": 0.6083393588816582,
+    "under_24": 0.7503414477384108
+   },
+   "baseline": {
+    "peer": 0.5953442596609625,
+    "vendor": 0.39166064111834176,
+    "global": 0.01299509922069575
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.37685787740017673
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.016811279826464208
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.1697999517956134
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.21667871776331646
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.0641118341769101
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.7150680057515113,
+     "pr_auc": 0.012637424113896921
+    },
+    "D": {
+     "roc_auc": 0.6314692580257057,
+     "pr_auc": 0.05189292487249729
+    },
+    "F": {
+     "roc_auc": 0.3329459713744939,
+     "pr_auc": 0.003908530544945793
+    },
+    "fusion": {
+     "roc_auc": 0.6238984828921885,
+     "pr_auc": 0.016503725818479323
+    }
+   },
+   "zeros": {
+    "f_zero": 0.4186149272917169,
+    "d_zero": 0.9557925604563349,
+    "mass_share": {
+     "a": 0.4644688453939755,
+     "d": 0.02760684939089865,
+     "f": 0.5041931745749755,
+     "bonus": 0.0037311306401504613
+    }
+   }
+  },
+  {
+   "events": 49800,
+   "anomalies": 276,
+   "overall": {
+    "f1": 0.02540898016011138,
+    "precision": 0.013345521023765997,
+    "recall": 0.2644927536231884,
+    "alerts": 5470,
+    "tp": 73,
+    "fp": 5397,
+    "fn": 203,
+    "tn": 44127,
+    "roc_auc": 0.6286510624624688,
+    "pr_auc": 0.019835748044479493
+   },
+   "recall_by_type": {
+    "amount_spike": 0.8450704225352113,
+    "frequency_shift": 0.014084507042253521,
+    "off_cycle_invoice": 0.07017543859649122,
+    "slow_drift": 0.1038961038961039
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.821917808219178,
+    "slow_drift": 0.1095890410958904,
+    "frequency_shift": 0.0136986301369863,
+    "off_cycle_invoice": 0.0547945205479452
+   },
+   "history": {
+    "median": 3.0,
+    "q1": 0.0,
+    "q3": 23.0,
+    "under_8": 0.6081927710843373,
+    "under_24": 0.750421686746988
+   },
+   "baseline": {
+    "peer": 0.5952008032128514,
+    "vendor": 0.39180722891566266,
+    "global": 0.012991967871485944
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.37610441767068276
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.01682730923694779
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.16967871485943775
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.21602409638554218
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.06403614457831325
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.7332187204798376,
+     "pr_auc": 0.01455680827725409
+    },
+    "D": {
+     "roc_auc": 0.6524022461953741,
+     "pr_auc": 0.06270176233999526
+    },
+    "F": {
+     "roc_auc": 0.3065816281141394,
+     "pr_auc": 0.0047885812121511795
+    },
+    "fusion": {
+     "roc_auc": 0.6286510624624688,
+     "pr_auc": 0.019835748044479493
+    }
+   },
+   "zeros": {
+    "f_zero": 0.4193975903614458,
+    "d_zero": 0.955582329317269,
+    "mass_share": {
+     "a": 0.46521340914195775,
+     "d": 0.028075015586385255,
+     "f": 0.5029418795086955,
+     "bonus": 0.0037696957629615026
+    }
+   }
+  },
+  {
+   "events": 49787,
+   "anomalies": 237,
+   "overall": {
+    "f1": 0.025017618040873858,
+    "precision": 0.01305387019672734,
+    "recall": 0.29957805907172996,
+    "alerts": 5439,
+    "tp": 71,
+    "fp": 5368,
+    "fn": 166,
+    "tn": 44182,
+    "roc_auc": 0.6487105468201153,
+    "pr_auc": 0.019516702543533927
+   },
+   "recall_by_type": {
+    "amount_spike": 0.8333333333333334,
+    "frequency_shift": 0.04838709677419355,
+    "off_cycle_invoice": 0.018867924528301886,
+    "slow_drift": 0.21428571428571427
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7746478873239436,
+    "slow_drift": 0.16901408450704225,
+    "frequency_shift": 0.04225352112676056,
+    "off_cycle_invoice": 0.014084507042253521
+   },
+   "history": {
+    "median": 3.0,
+    "q1": 0.0,
+    "q3": 23.0,
+    "under_8": 0.6083515777210918,
+    "under_24": 0.7503966898989696
+   },
+   "baseline": {
+    "peer": 0.5953562174864925,
+    "vendor": 0.39164842227890817,
+    "global": 0.012995360234599393
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.3766846767228393
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.01679153192600478
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.16950207885592625
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.2162813585875831
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.0640729507702814
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.7346520371103646,
+     "pr_auc": 0.014014970642971521
+    },
+    "D": {
+     "roc_auc": 0.6596875678575534,
+     "pr_auc": 0.0587902417880044
+    },
+    "F": {
+     "roc_auc": 0.30852840118024244,
+     "pr_auc": 0.004147841731180283
+    },
+    "fusion": {
+     "roc_auc": 0.6487105468201153,
+     "pr_auc": 0.019516702543533927
+    }
+   },
+   "zeros": {
+    "f_zero": 0.4189647900054231,
+    "d_zero": 0.9559322714764898,
+    "mass_share": {
+     "a": 0.46571332097152934,
+     "d": 0.027778611621861102,
+     "f": 0.5027506141427733,
+     "bonus": 0.0037574532638362
+    }
+   }
+  }
+ ],
+ "bbmp_2024": [
+  {
+   "events": 4725,
+   "anomalies": 18,
+   "overall": {
+    "f1": 0.0718232044198895,
+    "precision": 0.0377906976744186,
+    "recall": 0.7222222222222222,
+    "alerts": 344,
+    "tp": 13,
+    "fp": 331,
+    "fn": 5,
+    "tn": 4376,
+    "roc_auc": 0.9112787101952174,
+    "pr_auc": 0.04697767947699968
+   },
+   "recall_by_type": {
+    "amount_spike": 0.8461538461538461,
+    "frequency_shift": 0.5,
+    "off_cycle_invoice": 0.5,
+    "slow_drift": 0.0
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.8461538461538461,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.07692307692307693,
+    "off_cycle_invoice": 0.07692307692307693
+   },
+   "history": {
+    "median": 2.0,
+    "q1": 0.0,
+    "q3": 6.0,
+    "under_8": 0.8014814814814815,
+    "under_24": 0.9348148148148148
+   },
+   "baseline": {
+    "global": 0.8014814814814815,
+    "vendor": 0.1985185185185185
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": true,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.0491005291005291
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.004232804232804233
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.08275132275132276
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": true,
+     "fires": 0.0008465608465608466
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.006137566137566138
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.01904761904761905
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.8757052144560111,
+     "pr_auc": 0.018831280712171498
+    },
+    "D": {
+     "roc_auc": 0.8732738474612279,
+     "pr_auc": 0.08529116247153729
+    },
+    "F": {
+     "roc_auc": 0.6196445010976559,
+     "pr_auc": 0.006539408236584781
+    },
+    "fusion": {
+     "roc_auc": 0.9112787101952174,
+     "pr_auc": 0.04697767947699968
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8560846560846561,
+    "d_zero": 0.9515343915343916,
+    "mass_share": {
+     "a": 0.7398754122887887,
+     "d": 0.05480210566623061,
+     "f": 0.20080937329194373,
+     "bonus": 0.004513108753037052
+    }
+   }
+  },
+  {
+   "events": 4730,
+   "anomalies": 13,
+   "overall": {
+    "f1": 0.024390243902439022,
+    "precision": 0.012698412698412698,
+    "recall": 0.3076923076923077,
+    "alerts": 315,
+    "tp": 4,
+    "fp": 311,
+    "fn": 9,
+    "tn": 4406,
+    "roc_auc": 0.8473443029304806,
+    "pr_auc": 0.014079336324442911
+   },
+   "recall_by_type": {
+    "amount_spike": 0.75,
+    "frequency_shift": 0.0,
+    "off_cycle_invoice": 0.2
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.75,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.0,
+    "off_cycle_invoice": 0.25
+   },
+   "history": {
+    "median": 2.0,
+    "q1": 0.0,
+    "q3": 6.0,
+    "under_8": 0.8006342494714588,
+    "under_24": 0.9346723044397462
+   },
+   "baseline": {
+    "global": 0.8006342494714588,
+    "vendor": 0.19936575052854122
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": true,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.0492600422832981
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.004228329809725159
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.08308668076109936
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": true,
+     "fires": 0.0008456659619450317
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.00613107822410148
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.01945031712473573
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.8632279317036579,
+     "pr_auc": 0.01207687281561759
+    },
+    "D": {
+     "roc_auc": 0.67100993134489,
+     "pr_auc": 0.0159975301116672
+    },
+    "F": {
+     "roc_auc": 0.5691932616884917,
+     "pr_auc": 0.0033257197621596995
+    },
+    "fusion": {
+     "roc_auc": 0.8473443029304806,
+     "pr_auc": 0.014079336324442911
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8553911205073996,
+    "d_zero": 0.9534883720930233,
+    "mass_share": {
+     "a": 0.7406697109219925,
+     "d": 0.051987902880580056,
+     "f": 0.20279225284021218,
+     "bonus": 0.004550133357215174
+    }
+   }
+  },
+  {
+   "events": 4729,
+   "anomalies": 24,
+   "overall": {
+    "f1": 0.035928143712574856,
+    "precision": 0.01935483870967742,
+    "recall": 0.25,
+    "alerts": 310,
+    "tp": 6,
+    "fp": 304,
+    "fn": 18,
+    "tn": 4401,
+    "roc_auc": 0.8544279135671271,
+    "pr_auc": 0.01898080790943559
+   },
+   "recall_by_type": {
+    "amount_spike": 0.375,
+    "frequency_shift": 0.3333333333333333,
+    "off_cycle_invoice": 0.4,
+    "slow_drift": 0.0
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.5,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.16666666666666666,
+    "off_cycle_invoice": 0.3333333333333333
+   },
+   "history": {
+    "median": 2.0,
+    "q1": 0.0,
+    "q3": 6.0,
+    "under_8": 0.8008035525481074,
+    "under_24": 0.9350814125607951
+   },
+   "baseline": {
+    "global": 0.8008035525481074,
+    "vendor": 0.19919644745189258
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": true,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.049481920067667585
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.004229223937407486
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.08352717276379784
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": true,
+     "fires": 0.0008458447874814971
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.006132374709240854
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.01924296891520406
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.8466702089975203,
+     "pr_auc": 0.02167315222216102
+    },
+    "D": {
+     "roc_auc": 0.6457226354941552,
+     "pr_auc": 0.020794738651406873
+    },
+    "F": {
+     "roc_auc": 0.627608041091038,
+     "pr_auc": 0.009289068245318811
+    },
+    "fusion": {
+     "roc_auc": 0.8544279135671271,
+     "pr_auc": 0.01898080790943559
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8551490801437936,
+    "d_zero": 0.9528441530979065,
+    "mass_share": {
+     "a": 0.7400371091725542,
+     "d": 0.053060297979109106,
+     "f": 0.2024927061173347,
+     "bonus": 0.004409886731002132
+    }
+   }
+  }
+ ],
+ "bbmp_2010_2019": [
+  {
+   "events": 19900,
+   "anomalies": 123,
+   "overall": {
+    "f1": 0.024134312696747113,
+    "precision": 0.012899607403252944,
+    "recall": 0.18699186991869918,
+    "alerts": 1783,
+    "tp": 23,
+    "fp": 1760,
+    "fn": 100,
+    "tn": 18017,
+    "roc_auc": 0.5480296361339505,
+    "pr_auc": 0.03171411454808943
+   },
+   "recall_by_type": {
+    "amount_spike": 0.6666666666666666,
+    "frequency_shift": 0.03225806451612903,
+    "off_cycle_invoice": 0.08,
+    "slow_drift": 0.05
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.782608695652174,
+    "slow_drift": 0.08695652173913043,
+    "frequency_shift": 0.043478260869565216,
+    "off_cycle_invoice": 0.08695652173913043
+   },
+   "history": {
+    "median": 10.0,
+    "q1": 2.0,
+    "q3": 80.0,
+    "under_8": 0.45391959798994974,
+    "under_24": 0.6161306532663317
+   },
+   "baseline": {
+    "vendor": 0.5460804020100503,
+    "global": 0.45391959798994974
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.30005025125628143
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.013417085427135678
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.3457286432160804
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.007587939698492462
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.034020100502512564
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5747680129377519,
+     "pr_auc": 0.009783481129699265
+    },
+    "D": {
+     "roc_auc": 0.6190884048194276,
+     "pr_auc": 0.026802611416034912
+    },
+    "F": {
+     "roc_auc": 0.40336623268138927,
+     "pr_auc": 0.005693789913673506
+    },
+    "fusion": {
+     "roc_auc": 0.5480296361339505,
+     "pr_auc": 0.03171411454808943
+    }
+   },
+   "zeros": {
+    "f_zero": 0.5145226130653267,
+    "d_zero": 0.9564824120603015,
+    "mass_share": {
+     "a": 0.4885051850781816,
+     "d": 0.028396255743016543,
+     "f": 0.47989628124703415,
+     "bonus": 0.003202277931767748
+    }
+   }
+  },
+  {
+   "events": 19897,
+   "anomalies": 105,
+   "overall": {
+    "f1": 0.026954177897574125,
+    "precision": 0.014285714285714285,
+    "recall": 0.23809523809523808,
+    "alerts": 1750,
+    "tp": 25,
+    "fp": 1725,
+    "fn": 80,
+    "tn": 18067,
+    "roc_auc": 0.5907398852831351,
+    "pr_auc": 0.02730645321661914
+   },
+   "recall_by_type": {
+    "amount_spike": 0.625,
+    "frequency_shift": 0.14814814814814814,
+    "off_cycle_invoice": 0.038461538461538464,
+    "slow_drift": 0.0
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.8,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.16,
+    "off_cycle_invoice": 0.04
+   },
+   "history": {
+    "median": 10.0,
+    "q1": 2.0,
+    "q3": 80.0,
+    "under_8": 0.45398803839774843,
+    "under_24": 0.6162235512891391
+   },
+   "baseline": {
+    "vendor": 0.5460119616022516,
+    "global": 0.45398803839774843
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.3000954917826808
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.013419108408302759
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.3457807709704981
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.0075388249484846966
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.03407548876715083
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.6225083727913154,
+     "pr_auc": 0.010161745945829938
+    },
+    "D": {
+     "roc_auc": 0.6299702621549833,
+     "pr_auc": 0.03597366603601352
+    },
+    "F": {
+     "roc_auc": 0.40564537860414984,
+     "pr_auc": 0.004850297139961484
+    },
+    "fusion": {
+     "roc_auc": 0.5907398852831351,
+     "pr_auc": 0.02730645321661914
+    }
+   },
+   "zeros": {
+    "f_zero": 0.5145499321505754,
+    "d_zero": 0.956626627129718,
+    "mass_share": {
+     "a": 0.4903339914732955,
+     "d": 0.028439154143026543,
+     "f": 0.4781464781550349,
+     "bonus": 0.003080376228643032
+    }
+   }
+  },
+  {
+   "events": 19906,
+   "anomalies": 130,
+   "overall": {
+    "f1": 0.022423918846769888,
+    "precision": 0.012048192771084338,
+    "recall": 0.16153846153846155,
+    "alerts": 1743,
+    "tp": 21,
+    "fp": 1722,
+    "fn": 109,
+    "tn": 18054,
+    "roc_auc": 0.5666316591984067,
+    "pr_auc": 0.0324089986720696
+   },
+   "recall_by_type": {
+    "amount_spike": 0.5714285714285714,
+    "frequency_shift": 0.025,
+    "off_cycle_invoice": 0.0,
+    "slow_drift": 0.0
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.9523809523809523,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.047619047619047616,
+    "off_cycle_invoice": 0.0
+   },
+   "history": {
+    "median": 10.0,
+    "q1": 2.0,
+    "q3": 80.0,
+    "under_8": 0.4537827790615895,
+    "under_24": 0.6159951773334673
+   },
+   "baseline": {
+    "vendor": 0.5462172209384105,
+    "global": 0.4537827790615895
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.29930674168592386
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.013362805184366522
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.3457751431729127
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.0075856525670652064
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.033959610167788604
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5979516741349266,
+     "pr_auc": 0.0127949655602166
+    },
+    "D": {
+     "roc_auc": 0.6195275547672391,
+     "pr_auc": 0.038029657059344094
+    },
+    "F": {
+     "roc_auc": 0.41745414021657956,
+     "pr_auc": 0.006319337650910662
+    },
+    "fusion": {
+     "roc_auc": 0.5666316591984067,
+     "pr_auc": 0.0324089986720696
+    }
+   },
+   "zeros": {
+    "f_zero": 0.5148196523661208,
+    "d_zero": 0.9562945845473727,
+    "mass_share": {
+     "a": 0.48802489497518636,
+     "d": 0.028656605982533237,
+     "f": 0.48010579777012524,
+     "bonus": 0.0032127012721551956
+    }
+   }
+  }
+ ],
+ "chicago": [
+  {
+   "events": 74183,
+   "anomalies": 758,
+   "overall": {
+    "f1": 0.02506112469437653,
+    "precision": 0.014172139647424819,
+    "recall": 0.10817941952506596,
+    "alerts": 5786,
+    "tp": 82,
+    "fp": 5704,
+    "fn": 676,
+    "tn": 67721,
+    "roc_auc": 0.5292146869663101,
+    "pr_auc": 0.019742741579514944
+   },
+   "recall_by_type": {
+    "amount_spike": 0.2706422018348624,
+    "frequency_shift": 0.04854368932038835,
+    "off_cycle_invoice": 0.03773584905660377,
+    "slow_drift": 0.04
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7195121951219512,
+    "slow_drift": 0.08536585365853659,
+    "frequency_shift": 0.12195121951219512,
+    "off_cycle_invoice": 0.07317073170731707
+   },
+   "history": {
+    "median": 64.0,
+    "q1": 19.0,
+    "q3": 192.0,
+    "under_8": 0.13039375598182873,
+    "under_24": 0.28433738187994556
+   },
+   "baseline": {
+    "vendor": 0.8696062440181713,
+    "peer": 0.09589798201744335,
+    "global": 0.03449577396438537
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.09597886308183816
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.003100440801800952
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.18927517086124854
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.0016445816426944179
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.023010662820322717
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5221641813168895,
+     "pr_auc": 0.011047985162569399
+    },
+    "D": {
+     "roc_auc": 0.5795165673514967,
+     "pr_auc": 0.039624849435629744
+    },
+    "F": {
+     "roc_auc": 0.47320913322247415,
+     "pr_auc": 0.009769631867403478
+    },
+    "fusion": {
+     "roc_auc": 0.5292146869663101,
+     "pr_auc": 0.019742741579514944
+    }
+   },
+   "zeros": {
+    "f_zero": 0.732041033660003,
+    "d_zero": 0.9576048420797217,
+    "mass_share": {
+     "a": 0.6677131000366874,
+     "d": 0.025173228392409465,
+     "f": 0.30578251237090714,
+     "bonus": 0.0013311591999959254
+    }
+   }
+  },
+  {
+   "events": 74173,
+   "anomalies": 750,
+   "overall": {
+    "f1": 0.0211672210462655,
+    "precision": 0.011937244201909959,
+    "recall": 0.09333333333333334,
+    "alerts": 5864,
+    "tp": 70,
+    "fp": 5794,
+    "fn": 680,
+    "tn": 67629,
+    "roc_auc": 0.5432698745624668,
+    "pr_auc": 0.019627592788804077
+   },
+   "recall_by_type": {
+    "amount_spike": 0.21076233183856502,
+    "frequency_shift": 0.047872340425531915,
+    "off_cycle_invoice": 0.023952095808383235,
+    "slow_drift": 0.05813953488372093
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.6714285714285714,
+    "slow_drift": 0.14285714285714285,
+    "frequency_shift": 0.12857142857142856,
+    "off_cycle_invoice": 0.05714285714285714
+   },
+   "history": {
+    "median": 64.0,
+    "q1": 19.0,
+    "q3": 192.0,
+    "under_8": 0.13041133566122443,
+    "under_24": 0.28447009019454517
+   },
+   "baseline": {
+    "vendor": 0.8695886643387756,
+    "peer": 0.09591091097838836,
+    "global": 0.034500424682836074
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.09565475307726531
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.003060412818680652
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.18938158089870977
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.001644803365105901
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.022892427163523115
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5354910223408651,
+     "pr_auc": 0.011020367156515803
+    },
+    "D": {
+     "roc_auc": 0.5769302443830042,
+     "pr_auc": 0.033406877761765805
+    },
+    "F": {
+     "roc_auc": 0.48786252264276864,
+     "pr_auc": 0.009976949834358729
+    },
+    "fusion": {
+     "roc_auc": 0.5432698745624668,
+     "pr_auc": 0.019627592788804077
+    }
+   },
+   "zeros": {
+    "f_zero": 0.7320588354252895,
+    "d_zero": 0.9574643064187778,
+    "mass_share": {
+     "a": 0.6669855521018149,
+     "d": 0.025255430927581653,
+     "f": 0.3064146962846108,
+     "bonus": 0.0013443206859926919
+    }
+   }
+  },
+  {
+   "events": 74198,
+   "anomalies": 765,
+   "overall": {
+    "f1": 0.023600605143721635,
+    "precision": 0.013344739093242087,
+    "recall": 0.10196078431372549,
+    "alerts": 5845,
+    "tp": 78,
+    "fp": 5767,
+    "fn": 687,
+    "tn": 67666,
+    "roc_auc": 0.5230489328718928,
+    "pr_auc": 0.016091366777213224
+   },
+   "recall_by_type": {
+    "amount_spike": 0.2570093457943925,
+    "frequency_shift": 0.02926829268292683,
+    "off_cycle_invoice": 0.06285714285714286,
+    "slow_drift": 0.03508771929824561
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7051282051282052,
+    "slow_drift": 0.07692307692307693,
+    "frequency_shift": 0.07692307692307693,
+    "off_cycle_invoice": 0.14102564102564102
+   },
+   "history": {
+    "median": 64.0,
+    "q1": 19.0,
+    "q3": 192.0,
+    "under_8": 0.1303673953475835,
+    "under_24": 0.2844685840588695
+   },
+   "baseline": {
+    "vendor": 0.8696326046524165,
+    "peer": 0.09587859511038033,
+    "global": 0.03448880023720316
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.09591902746704763
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0031132914633817625
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.1890616997762743
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.0016442491711366883
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.023032965848136067
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.517126287098755,
+     "pr_auc": 0.010676930076459642
+    },
+    "D": {
+     "roc_auc": 0.5726197790542961,
+     "pr_auc": 0.032752076664890474
+    },
+    "F": {
+     "roc_auc": 0.47053501885004956,
+     "pr_auc": 0.009861578128410063
+    },
+    "fusion": {
+     "roc_auc": 0.5230489328718928,
+     "pr_auc": 0.016091366777213224
+    }
+   },
+   "zeros": {
+    "f_zero": 0.7321895468880563,
+    "d_zero": 0.9577616647348985,
+    "mass_share": {
+     "a": 0.6688199869539416,
+     "d": 0.025018928346531678,
+     "f": 0.30481112368696356,
+     "bonus": 0.00134996101256305
+    }
+   }
+  }
+ ],
+ "secop": [
+  {
+   "events": 164769,
+   "anomalies": 3600,
+   "overall": {
+    "f1": 0.04116982553031254,
+    "precision": 0.026593157126641804,
+    "recall": 0.09111111111111111,
+    "alerts": 12334,
+    "tp": 328,
+    "fp": 12006,
+    "fn": 3272,
+    "tn": 149163,
+    "roc_auc": 0.5106042897689864,
+    "pr_auc": 0.025089022386964577
+   },
+   "recall_by_type": {
+    "amount_spike": 0.1994459833795014,
+    "frequency_shift": 0.0389908256880734,
+    "off_cycle_invoice": 0.03780487804878049,
+    "slow_drift": 0.05696969696969697
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.6585365853658537,
+    "slow_drift": 0.14329268292682926,
+    "frequency_shift": 0.10365853658536585,
+    "off_cycle_invoice": 0.09451219512195122
+   },
+   "history": {
+    "median": 20.0,
+    "q1": 9.0,
+    "q3": 45.0,
+    "under_8": 0.2150161741589741,
+    "under_24": 0.5573196414374063
+   },
+   "baseline": {
+    "vendor": 0.7849838258410259,
+    "peer": 0.21388732103733105,
+    "global": 0.0011288531216430274
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": true,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.017090593497563256
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 3.641461682719444e-05
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.1481225230474179
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": true,
+     "fires": 0.16270050798390473
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.001389824542237921
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.0163683702638239
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5031152151537276,
+     "pr_auc": 0.022088474026255085
+    },
+    "D": {
+     "roc_auc": 0.5757646924794608,
+     "pr_auc": 0.03378901912573632
+    },
+    "F": {
+     "roc_auc": 0.46926099656606146,
+     "pr_auc": 0.020680681890093398
+    },
+    "fusion": {
+     "roc_auc": 0.5106042897689864,
+     "pr_auc": 0.025089022386964577
+    }
+   },
+   "zeros": {
+    "f_zero": 0.6896139443706037,
+    "d_zero": 0.8983850117437139,
+    "mass_share": {
+     "a": 0.6617020113180866,
+     "d": 0.05999092061534491,
+     "f": 0.2736162422496278,
+     "bonus": 0.004690825816940711
+    }
+   }
+  },
+  {
+   "events": 164769,
+   "anomalies": 3667,
+   "overall": {
+    "f1": 0.046145258326614154,
+    "precision": 0.029865125240847785,
+    "recall": 0.10144532315244069,
+    "alerts": 12456,
+    "tp": 372,
+    "fp": 12084,
+    "fn": 3295,
+    "tn": 149018,
+    "roc_auc": 0.5063958263706336,
+    "pr_auc": 0.02608028567316295
+   },
+   "recall_by_type": {
+    "amount_spike": 0.23255813953488372,
+    "frequency_shift": 0.037756202804746494,
+    "off_cycle_invoice": 0.04292929292929293,
+    "slow_drift": 0.06071019473081329
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.6720430107526881,
+    "slow_drift": 0.1424731182795699,
+    "frequency_shift": 0.09408602150537634,
+    "off_cycle_invoice": 0.0913978494623656
+   },
+   "history": {
+    "median": 20.0,
+    "q1": 9.0,
+    "q3": 45.0,
+    "under_8": 0.2150161741589741,
+    "under_24": 0.5572953650261881
+   },
+   "baseline": {
+    "vendor": 0.7849838258410259,
+    "peer": 0.21388732103733105,
+    "global": 0.0011288531216430274
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": true,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.017218044656458435
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 3.641461682719444e-05
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.14800114099132725
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": true,
+     "fires": 0.16248202028294156
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.001432308261869648
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.016441199497478288
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.49957109222609974,
+     "pr_auc": 0.02235033410985389
+    },
+    "D": {
+     "roc_auc": 0.5714568066789592,
+     "pr_auc": 0.03405270722836594
+    },
+    "F": {
+     "roc_auc": 0.4683428477444232,
+     "pr_auc": 0.020932740344080825
+    },
+    "fusion": {
+     "roc_auc": 0.5063958263706336,
+     "pr_auc": 0.02608028567316295
+    }
+   },
+   "zeros": {
+    "f_zero": 0.6897413955294989,
+    "d_zero": 0.8986763286783315,
+    "mass_share": {
+     "a": 0.6625753506550613,
+     "d": 0.05996505722162312,
+     "f": 0.2727320937096211,
+     "bonus": 0.0047274984136944295
+    }
+   }
+  },
+  {
+   "events": 164768,
+   "anomalies": 3595,
+   "overall": {
+    "f1": 0.044174696533600295,
+    "precision": 0.028497618470977638,
+    "recall": 0.09819193324061196,
+    "alerts": 12387,
+    "tp": 353,
+    "fp": 12034,
+    "fn": 3242,
+    "tn": 149139,
+    "roc_auc": 0.5049448097335989,
+    "pr_auc": 0.024404132669375085
+   },
+   "recall_by_type": {
+    "amount_spike": 0.21122740247383445,
+    "frequency_shift": 0.035869565217391305,
+    "off_cycle_invoice": 0.04975124378109453,
+    "slow_drift": 0.07073170731707316
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.6288951841359773,
+    "slow_drift": 0.1643059490084986,
+    "frequency_shift": 0.09348441926345609,
+    "off_cycle_invoice": 0.11331444759206799
+   },
+   "history": {
+    "median": 20.0,
+    "q1": 9.0,
+    "q3": 45.0,
+    "under_8": 0.21501747912215965,
+    "under_24": 0.5571288114196932
+   },
+   "baseline": {
+    "vendor": 0.7849825208778404,
+    "peer": 0.2138886191493494,
+    "global": 0.0011288599728102545
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": true,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.017169596038065643
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 3.641483783258885e-05
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.14810521460477763
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": true,
+     "fires": 0.1625436978053991
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.0014141095358322004
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.016526267236356574
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.4976919840977723,
+     "pr_auc": 0.02182771178158254
+    },
+    "D": {
+     "roc_auc": 0.5730020196941603,
+     "pr_auc": 0.03291515877019477
+    },
+    "F": {
+     "roc_auc": 0.46735773610068887,
+     "pr_auc": 0.02049032994961531
+    },
+    "fusion": {
+     "roc_auc": 0.5049448097335989,
+     "pr_auc": 0.024404132669375085
+    }
+   },
+   "zeros": {
+    "f_zero": 0.6896606137114003,
+    "d_zero": 0.8985179161002136,
+    "mass_share": {
+     "a": 0.6621231956362964,
+     "d": 0.05989626537270513,
+     "f": 0.2732954876738748,
+     "bonus": 0.004685051317123636
+    }
+   }
+  }
+ ],
+ "delaware": [
+  {
+   "events": 218011,
+   "anomalies": 1993,
+   "overall": {
+    "f1": 0.02501125506477915,
+    "precision": 0.01389043227025225,
+    "recall": 0.1254390366281987,
+    "alerts": 17998,
+    "tp": 250,
+    "fp": 17748,
+    "fn": 1743,
+    "tn": 198270,
+    "roc_auc": 0.5213945301439891,
+    "pr_auc": 0.014284416801537926
+   },
+   "recall_by_type": {
+    "amount_spike": 0.338768115942029,
+    "frequency_shift": 0.034334763948497854,
+    "off_cycle_invoice": 0.03792415169660679,
+    "slow_drift": 0.05907172995780591
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.748,
+    "slow_drift": 0.112,
+    "frequency_shift": 0.064,
+    "off_cycle_invoice": 0.076
+   },
+   "history": {
+    "median": 149.0,
+    "q1": 40.0,
+    "q3": 475.0,
+    "under_8": 0.061964763245891265,
+    "under_24": 0.16957859924499222
+   },
+   "baseline": {
+    "vendor": 0.9380352367541087,
+    "peer": 0.056350367641999716,
+    "global": 0.0056143956038915465
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.1276724568943769
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0004953878474021953
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.20335212443408818
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.0002660416217530308
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.012678259353885814
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5251683347994773,
+     "pr_auc": 0.010944168804235082
+    },
+    "D": {
+     "roc_auc": 0.6050092659902061,
+     "pr_auc": 0.03267129170488248
+    },
+    "F": {
+     "roc_auc": 0.4133604690642545,
+     "pr_auc": 0.008367432415073173
+    },
+    "fusion": {
+     "roc_auc": 0.5213945301439891,
+     "pr_auc": 0.014284416801537926
+    }
+   },
+   "zeros": {
+    "f_zero": 0.6883826962859673,
+    "d_zero": 0.948144818380724,
+    "mass_share": {
+     "a": 0.6267314128329252,
+     "d": 0.03468879608708336,
+     "f": 0.33651517248618906,
+     "bonus": 0.0020646185938023157
+    }
+   }
+  },
+  {
+   "events": 218007,
+   "anomalies": 2016,
+   "overall": {
+    "f1": 0.025475171658871528,
+    "precision": 0.014157725915274859,
+    "recall": 0.12698412698412698,
+    "alerts": 18082,
+    "tp": 256,
+    "fp": 17826,
+    "fn": 1760,
+    "tn": 198165,
+    "roc_auc": 0.5313189868820225,
+    "pr_auc": 0.015227402573894721
+   },
+   "recall_by_type": {
+    "amount_spike": 0.35664335664335667,
+    "frequency_shift": 0.033203125,
+    "off_cycle_invoice": 0.037694013303769404,
+    "slow_drift": 0.037422037422037424
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.796875,
+    "slow_drift": 0.0703125,
+    "frequency_shift": 0.06640625,
+    "off_cycle_invoice": 0.06640625
+   },
+   "history": {
+    "median": 149.0,
+    "q1": 40.0,
+    "q3": 475.0,
+    "under_8": 0.061965900177517234,
+    "under_24": 0.16959088469636296
+   },
+   "baseline": {
+    "vendor": 0.9380340998224828,
+    "peer": 0.056346814551826316,
+    "global": 0.005619085625690919
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.12757847225089103
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0004816359107735073
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.20342466067603335
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.0002752205204420042
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.012710601035746559
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5341360111326655,
+     "pr_auc": 0.010912251236939063
+    },
+    "D": {
+     "roc_auc": 0.6128042344577409,
+     "pr_auc": 0.03496668577501855
+    },
+    "F": {
+     "roc_auc": 0.40956655132896846,
+     "pr_auc": 0.008461039054495583
+    },
+    "fusion": {
+     "roc_auc": 0.5313189868820225,
+     "pr_auc": 0.015227402573894721
+    }
+   },
+   "zeros": {
+    "f_zero": 0.6883127605994303,
+    "d_zero": 0.947818189324196,
+    "mass_share": {
+     "a": 0.6252413166169364,
+     "d": 0.03493554706659081,
+     "f": 0.33777813918143296,
+     "bonus": 0.002044997135039976
+    }
+   }
+  },
+  {
+   "events": 218016,
+   "anomalies": 2081,
+   "overall": {
+    "f1": 0.02646446625037169,
+    "precision": 0.014753826601094104,
+    "recall": 0.12830370014416145,
+    "alerts": 18097,
+    "tp": 267,
+    "fp": 17830,
+    "fn": 1814,
+    "tn": 198105,
+    "roc_auc": 0.5357410110609686,
+    "pr_auc": 0.015485735290762255
+   },
+   "recall_by_type": {
+    "amount_spike": 0.3456140350877193,
+    "frequency_shift": 0.04592901878914405,
+    "off_cycle_invoice": 0.04056795131845842,
+    "slow_drift": 0.05194805194805195
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7378277153558053,
+    "slow_drift": 0.10486891385767791,
+    "frequency_shift": 0.08239700374531835,
+    "off_cycle_invoice": 0.0749063670411985
+   },
+   "history": {
+    "median": 149.0,
+    "q1": 40.0,
+    "q3": 475.0,
+    "under_8": 0.06196334214002642,
+    "under_24": 0.169492147365331
+   },
+   "baseline": {
+    "vendor": 0.9380366578599736,
+    "peer": 0.056349075297225895,
+    "global": 0.005614266842800529
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.12767411566123588
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0004953764861294584
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.20312270659034198
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.00027520915896081023
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.012774291795097608
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5437812173331077,
+     "pr_auc": 0.012283453335525982
+    },
+    "D": {
+     "roc_auc": 0.6158028337745176,
+     "pr_auc": 0.03541541493520349
+    },
+    "F": {
+     "roc_auc": 0.40676812917354693,
+     "pr_auc": 0.00872943196626906
+    },
+    "fusion": {
+     "roc_auc": 0.5357410110609686,
+     "pr_auc": 0.015485735290762255
+    }
+   },
+   "zeros": {
+    "f_zero": 0.6885091002495229,
+    "d_zero": 0.9478065830030823,
+    "mass_share": {
+     "a": 0.6267586189808655,
+     "d": 0.0348135843213463,
+     "f": 0.3363663433122287,
+     "bonus": 0.0020614533855596016
+    }
+   }
+  }
+ ],
+ "ocds_assam": [
+  {
+   "events": 3972,
+   "anomalies": 26,
+   "overall": {
+    "f1": 0.023866348448687347,
+    "precision": 0.01272264631043257,
+    "recall": 0.19230769230769232,
+    "alerts": 393,
+    "tp": 5,
+    "fp": 388,
+    "fn": 21,
+    "tn": 3558,
+    "roc_auc": 0.5365803735038402,
+    "pr_auc": 0.009936852705713529
+   },
+   "recall_by_type": {
+    "amount_spike": 0.5,
+    "frequency_shift": 0.0,
+    "off_cycle_invoice": 0.25,
+    "slow_drift": 0.0
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.8,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.0,
+    "off_cycle_invoice": 0.2
+   },
+   "history": {
+    "median": 90.0,
+    "q1": 31.0,
+    "q3": 223.25,
+    "under_8": 0.09617321248741188,
+    "under_24": 0.20745216515609266
+   },
+   "baseline": {
+    "vendor": 0.9038267875125882,
+    "global": 0.09617321248741188
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.14425981873111782
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.412638469284995
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.05891238670694864
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.0042799597180261835
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.46265936293812615,
+     "pr_auc": 0.006533898210021767
+    },
+    "D": {
+     "roc_auc": 0.6047311786034544,
+     "pr_auc": 0.01396712678150383
+    },
+    "F": {
+     "roc_auc": 0.5174080860852275,
+     "pr_auc": 0.006832588745500221
+    },
+    "fusion": {
+     "roc_auc": 0.5365803735038402,
+     "pr_auc": 0.009936852705713529
+    }
+   },
+   "zeros": {
+    "f_zero": 0.5017623363544814,
+    "d_zero": 0.8924974823766365,
+    "mass_share": {
+     "a": 0.4983223364332103,
+     "d": 0.06911982291790743,
+     "f": 0.42496415767782675,
+     "bonus": 0.007593682971055576
+    }
+   }
+  },
+  {
+   "events": 3971,
+   "anomalies": 24,
+   "overall": {
+    "f1": 0.014669926650366748,
+    "precision": 0.007792207792207792,
+    "recall": 0.125,
+    "alerts": 385,
+    "tp": 3,
+    "fp": 382,
+    "fn": 21,
+    "tn": 3565,
+    "roc_auc": 0.5487923317287391,
+    "pr_auc": 0.00779210487392044
+   },
+   "recall_by_type": {
+    "amount_spike": 0.14285714285714285,
+    "frequency_shift": 0.2,
+    "off_cycle_invoice": 0.0,
+    "slow_drift": 0.0
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.3333333333333333,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.6666666666666666,
+    "off_cycle_invoice": 0.0
+   },
+   "history": {
+    "median": 90.0,
+    "q1": 31.0,
+    "q3": 224.0,
+    "under_8": 0.09619743137748678,
+    "under_24": 0.20750440695039032
+   },
+   "baseline": {
+    "vendor": 0.9038025686225132,
+    "global": 0.09619743137748678
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.1437924955930496
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.41198690506169733
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.059430873835305965
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.004281037522034752
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.5400515159192636,
+     "pr_auc": 0.008736609008471743
+    },
+    "D": {
+     "roc_auc": 0.622255299383498,
+     "pr_auc": 0.017259832719665393
+    },
+    "F": {
+     "roc_auc": 0.40359239084536774,
+     "pr_auc": 0.005361954816351651
+    },
+    "fusion": {
+     "roc_auc": 0.5487923317287391,
+     "pr_auc": 0.00779210487392044
+    }
+   },
+   "zeros": {
+    "f_zero": 0.5026441702341979,
+    "d_zero": 0.8922185847393603,
+    "mass_share": {
+     "a": 0.4977165021080364,
+     "d": 0.06992383811727675,
+     "f": 0.42461897053986347,
+     "bonus": 0.007740689234823297
+    }
+   }
+  },
+  {
+   "events": 3965,
+   "anomalies": 11,
+   "overall": {
+    "f1": 0.004914004914004914,
+    "precision": 0.0025252525252525255,
+    "recall": 0.09090909090909091,
+    "alerts": 396,
+    "tp": 1,
+    "fp": 395,
+    "fn": 10,
+    "tn": 3559,
+    "roc_auc": 0.4871936359038028,
+    "pr_auc": 0.0028144507103564703
+   },
+   "recall_by_type": {
+    "amount_spike": 0.16666666666666666,
+    "frequency_shift": 0.0
+   },
+   "tp_share_by_type": {
+    "amount_spike": 1.0,
+    "slow_drift": 0.0,
+    "frequency_shift": 0.0,
+    "off_cycle_invoice": 0.0
+   },
+   "history": {
+    "median": 90.0,
+    "q1": 31.0,
+    "q3": 224.0,
+    "under_8": 0.09634300126103405,
+    "under_24": 0.20781841109709961
+   },
+   "baseline": {
+    "vendor": 0.903656998738966,
+    "global": 0.09634300126103405
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.14350567465321565
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.41160151324085753
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.05952080706179067
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.004287515762925599
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.4702257782682669,
+     "pr_auc": 0.002674094909776838
+    },
+    "D": {
+     "roc_auc": 0.5789304271853589,
+     "pr_auc": 0.004251480669572701
+    },
+    "F": {
+     "roc_auc": 0.4884351864625005,
+     "pr_auc": 0.0030329491928717967
+    },
+    "fusion": {
+     "roc_auc": 0.4871936359038028,
+     "pr_auc": 0.0028144507103564703
+    }
+   },
+   "zeros": {
+    "f_zero": 0.5031525851197982,
+    "d_zero": 0.8923076923076924,
+    "mass_share": {
+     "a": 0.49903320849349364,
+     "d": 0.0688277060862344,
+     "f": 0.42453193165886194,
+     "bonus": 0.007607153761410062
+    }
+   }
+  }
+ ],
+ "icai": [
+  {
+   "events": 6635,
+   "anomalies": 142,
+   "overall": {
+    "f1": 0.1303030303030303,
+    "precision": 0.08301158301158301,
+    "recall": 0.3028169014084507,
+    "alerts": 518,
+    "tp": 43,
+    "fp": 475,
+    "fn": 99,
+    "tn": 6018,
+    "roc_auc": 0.6555304412335712,
+    "pr_auc": 0.06997556072322829
+   },
+   "recall_by_type": {
+    "amount_spike": 0.673469387755102,
+    "frequency_shift": 0.16216216216216217,
+    "off_cycle_invoice": 0.0,
+    "slow_drift": 0.14814814814814814
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7674418604651163,
+    "slow_drift": 0.09302325581395349,
+    "frequency_shift": 0.13953488372093023,
+    "off_cycle_invoice": 0.0
+   },
+   "history": {
+    "median": 6.0,
+    "q1": 3.0,
+    "q3": 12.0,
+    "under_8": 0.5707611152976639,
+    "under_24": 0.9807083647324792
+   },
+   "baseline": {
+    "peer": 0.5611152976639036,
+    "vendor": 0.4292388847023361,
+    "global": 0.009645817633760361
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.03089675960813866
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.0718914845516202
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.01145440844009043
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.0013564431047475508
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.6459567508237474,
+     "pr_auc": 0.05101550256795464
+    },
+    "D": {
+     "roc_auc": 0.6509079116621801,
+     "pr_auc": 0.139414338562183
+    },
+    "F": {
+     "roc_auc": 0.5497751641529448,
+     "pr_auc": 0.025063417460302963
+    },
+    "fusion": {
+     "roc_auc": 0.6555304412335712,
+     "pr_auc": 0.06997556072322829
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8901281085154484,
+    "d_zero": 0.8859080633006782,
+    "mass_share": {
+     "a": 0.739408531448081,
+     "d": 0.11359817629427553,
+     "f": 0.1413697900817405,
+     "bonus": 0.005623502175902918
+    }
+   }
+  },
+  {
+   "events": 6636,
+   "anomalies": 142,
+   "overall": {
+    "f1": 0.12557427258805512,
+    "precision": 0.08023483365949119,
+    "recall": 0.2887323943661972,
+    "alerts": 511,
+    "tp": 41,
+    "fp": 470,
+    "fn": 101,
+    "tn": 6024,
+    "roc_auc": 0.6623025804968399,
+    "pr_auc": 0.0682814449357667
+   },
+   "recall_by_type": {
+    "amount_spike": 0.7346938775510204,
+    "frequency_shift": 0.07142857142857142,
+    "off_cycle_invoice": 0.05128205128205128,
+    "slow_drift": 0.038461538461538464
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.8780487804878049,
+    "slow_drift": 0.024390243902439025,
+    "frequency_shift": 0.04878048780487805,
+    "off_cycle_invoice": 0.04878048780487805
+   },
+   "history": {
+    "median": 6.0,
+    "q1": 3.0,
+    "q3": 12.0,
+    "under_8": 0.570675105485232,
+    "under_24": 0.9805605786618445
+   },
+   "baseline": {
+    "peer": 0.5610307414104883,
+    "vendor": 0.4293248945147679,
+    "global": 0.009644364074743821
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.031193490054249547
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.07368896925858952
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.011452682338758288
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.0009041591320072332
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.6557938638916962,
+     "pr_auc": 0.050893039765801014
+    },
+    "D": {
+     "roc_auc": 0.6464829940530153,
+     "pr_auc": 0.11724742351858283
+    },
+    "F": {
+     "roc_auc": 0.555196671250168,
+     "pr_auc": 0.025800223404606373
+    },
+    "fusion": {
+     "roc_auc": 0.6623025804968399,
+     "pr_auc": 0.0682814449357667
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8881856540084389,
+    "d_zero": 0.8851717902350814,
+    "mass_share": {
+     "a": 0.7415476165714845,
+     "d": 0.11181850187442903,
+     "f": 0.14102477103802571,
+     "bonus": 0.005609110516060772
+    }
+   }
+  },
+  {
+   "events": 6636,
+   "anomalies": 132,
+   "overall": {
+    "f1": 0.1346153846153846,
+    "precision": 0.08536585365853659,
+    "recall": 0.3181818181818182,
+    "alerts": 492,
+    "tp": 42,
+    "fp": 450,
+    "fn": 90,
+    "tn": 6054,
+    "roc_auc": 0.6430518282455552,
+    "pr_auc": 0.06582657892392486
+   },
+   "recall_by_type": {
+    "amount_spike": 0.7857142857142857,
+    "frequency_shift": 0.06060606060606061,
+    "off_cycle_invoice": 0.08823529411764706,
+    "slow_drift": 0.17391304347826086
+   },
+   "tp_share_by_type": {
+    "amount_spike": 0.7857142857142857,
+    "slow_drift": 0.09523809523809523,
+    "frequency_shift": 0.047619047619047616,
+    "off_cycle_invoice": 0.07142857142857142
+   },
+   "history": {
+    "median": 6.0,
+    "q1": 3.0,
+    "q3": 12.0,
+    "under_8": 0.570675105485232,
+    "under_24": 0.9807112718505123
+   },
+   "baseline": {
+    "peer": 0.5610307414104883,
+    "vendor": 0.4293248945147679,
+    "global": 0.009644364074743821
+   },
+   "inputs": {
+    "approver_id": false,
+    "created_by": false,
+    "bank_account": false,
+    "processing_days": false,
+    "po_amount": false,
+    "vendor_created": false,
+    "approval_time": false
+   },
+   "rules": {
+    "duplicate_invoice": {
+     "can_fire": true,
+     "fires": 0.03134418324291742
+    },
+    "invoice_splitting": {
+     "can_fire": true,
+     "fires": 0.0
+    },
+    "sod_violation": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "bank_change": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "new_vendor_large": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "burst": {
+     "can_fire": true,
+     "fires": 0.07293550331525014
+    },
+    "off_hours_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "rushed_approval": {
+     "can_fire": false,
+     "fires": 0.0
+    },
+    "round_amount": {
+     "can_fire": true,
+     "fires": 0.011452682338758288
+    },
+    "near_limit": {
+     "can_fire": true,
+     "fires": 0.0009041591320072332
+    }
+   },
+   "component_auc": {
+    "A": {
+     "roc_auc": 0.6323695907413619,
+     "pr_auc": 0.0479733348681284
+    },
+    "D": {
+     "roc_auc": 0.653439375302844,
+     "pr_auc": 0.1368110480695532
+    },
+    "F": {
+     "roc_auc": 0.54905023482053,
+     "pr_auc": 0.023059526959260668
+    },
+    "fusion": {
+     "roc_auc": 0.6430518282455552,
+     "pr_auc": 0.06582657892392486
+    }
+   },
+   "zeros": {
+    "f_zero": 0.8886377335744424,
+    "d_zero": 0.8854731766124171,
+    "mass_share": {
+     "a": 0.7382361216405864,
+     "d": 0.11252156797154056,
+     "f": 0.14365649095287744,
+     "bonus": 0.005585819434995589
+    }
+   }
+  }
+ ]
+}
