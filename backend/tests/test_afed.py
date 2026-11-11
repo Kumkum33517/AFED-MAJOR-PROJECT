@@ -366,6 +366,24 @@ def test_label_calibration_needs_labels_of_both_kinds() -> None:
     assert t["medium"] < t["high"] < t["critical"]
 
 
+def test_sequence_features_use_only_earlier_events() -> None:
+    import tempfile
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "data"))
+    import generate_synthetic
+    from ml.sequence import SEQUENCE_FEATURES, add_sequence_features
+    path = Path(tempfile.mkdtemp()) / "d.csv"
+    generate_synthetic.generate(7).to_csv(path, index=False)
+    df = compute_features(read_csv(path), merged_settings())
+    full = add_sequence_features(df)
+    cut = df["invoice_date"].quantile(0.6)
+    early = add_sequence_features(df[df["invoice_date"] < cut])  # as if the later events had not happened yet
+    joined = full.loc[early.index, SEQUENCE_FEATURES]
+    assert len(early) > 1000 and np.allclose(joined.to_numpy(), early[SEQUENCE_FEATURES].to_numpy(), equal_nan=True)
+    assert np.isfinite(full[SEQUENCE_FEATURES].to_numpy()).all()
+    first = full.groupby("vendor_id").head(1)  # nothing earlier to compare with: neutral values
+    assert (first["seq_amt_ewma_z"] == 0).all() and (first["seq_gap_ratio"] == 1).all()
+
+
 if __name__ == "__main__":
     tests = [(k, v) for k, v in dict(globals()).items() if k.startswith("test_")]
     for name, test in tests:

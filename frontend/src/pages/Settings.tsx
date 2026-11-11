@@ -7,7 +7,7 @@ import { percent } from "../lib/format";
 interface Values {
   approval_limit: number; weights: { w1: number; w2: number; w3: number }; thresholds: { medium: number; high: number; critical: number };
   contamination: string | number; lstm: { window: number; mode: string; epochs: number }; rules: Record<string, boolean>; qwen_provider: string;
-  field_aware: boolean; calibration: { mode: "off" | "alert_budget" | "label"; target_rate: number; fit_share: number };
+  field_aware: boolean; sequence_features: boolean; calibration: { mode: "off" | "alert_budget" | "label"; target_rate: number; fit_share: number };
 }
 interface Preview { medium: number; fit_alert_rate: number; alert_rate_all: number; alerts_all: number; events: number; thresholds: Values["thresholds"] }
 interface Loaded extends Values { rule_info: { name: string; label: string; severity: number }[] }
@@ -98,7 +98,8 @@ function Form({ data, reload }: { data: Loaded; reload: () => void }) {
       </div>
       <Card title="v2 options" subtitle="Off by default. With all off, results are those of v1.">
         <div className="grid gap-3 sm:grid-cols-3">
-          <label className="flex items-center gap-2 text-sm sm:col-span-3"><input type="checkbox" {...register("field_aware")} /> Field-aware fusion</label>
+          <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register("field_aware")} /> Field-aware fusion</label>
+          <label className="flex items-center gap-2 text-sm sm:col-span-2"><input type="checkbox" {...register("sequence_features")} /> Change and trend features</label>
           <Field label="Alert threshold">
             <select className="input" {...register("calibration.mode")}>
               <option value="off">Fixed cut-offs</option><option value="alert_budget">Alert budget</option><option value="label">Label-based (evaluation only)</option>

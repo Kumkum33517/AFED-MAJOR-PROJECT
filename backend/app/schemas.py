@@ -175,3 +175,4 @@ class SettingsBody(BaseModel):
     # v2 options, off by default; older clients that omit them get v1 behaviour.
     field_aware: bool = False
     calibration: CalibrationSettings = CalibrationSettings()
+    sequence_features: bool = False

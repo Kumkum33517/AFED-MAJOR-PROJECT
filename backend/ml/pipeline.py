@@ -24,6 +24,7 @@ from .evaluate import compare_models, evaluate, print_report
 from .features import RULES, active_rules, available_inputs, compute_features, entity_baselines, read_csv, validate
 from .fusion import calibrate_medium, calibrated_thresholds, rule_share, risk_score, signals, tier
 from .lstm_seq import SEQ_FEATURES, run_lstm
+from .sequence import SEQUENCE_FEATURES, add_sequence_features
 
 MODELS_DIR = Path(__file__).resolve().parents[1] / "models_store"
 SEED = 42
@@ -42,6 +43,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "field_aware": False,        # renormalise fusion over the rule inputs the data has
     # Medium cut-off chosen per run on its earliest events: "alert_budget" (no labels) or "label" (evaluation only).
     "calibration": {"mode": "off", "target_rate": 0.02, "fit_share": 0.6},
+    "sequence_features": False,  # CUSUM, EWMA, trend and gap-ratio features for the forest (ml/sequence.py)
 }
 
 RAW_FEATURES = ["log_amount", "proc_days_f", "gap_days_f", "approval_hour", "approval_dow", "category_code",
@@ -111,6 +113,9 @@ def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, prog
     report(10, "Building features and baselines")
     df = compute_features(raw, settings)
 
+    if settings.get("sequence_features"):
+        df = add_sequence_features(df)
+
     report(25, "Training LSTM")
     lstm = settings["lstm"]
     sequence = run_lstm(df, lstm["window"], lstm["mode"], lstm["epochs"], SEED)
@@ -126,6 +131,8 @@ def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, prog
     contamination = settings["contamination"]
     sequence_columns = LSTM_FEATURES if has_lstm and lstm.get("in_forest", True) else []
     columns = RAW_FEATURES + ENTITY_FEATURES + sequence_columns + FLAG_FEATURES
+    if settings.get("sequence_features"):
+        columns = columns + SEQUENCE_FEATURES
     forest, if_score = fit_forest(df, columns, contamination)
     df["if_score"] = if_score
     df["if_percentile"] = (df["if_score"].rank() - 1) / len(df)  # the share of events below this one
