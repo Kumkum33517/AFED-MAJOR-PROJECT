@@ -75,3 +75,43 @@ def inject(frame: pd.DataFrame, seed: int, share: float = 0.025) -> pd.DataFrame
 
     out = pd.concat([df, pd.DataFrame(added)], ignore_index=True) if added else df
     return out.sort_values(["invoice_date", "event_id"], kind="stable").reset_index(drop=True)
+
+
+SUBTHRESHOLD_MULTIPLIERS = (2, 3, 5)
+
+
+def inject_subthreshold(frame: pd.DataFrame, seed: int, share: float = 0.025, limit: float = 500_000,
+                        multipliers: tuple[int, ...] = SUBTHRESHOLD_MULTIPLIERS) -> pd.DataFrame:
+    """Plant amounts that a global limit cannot see: 2x, 3x or 5x the vendor's own median, kept below `limit`.
+
+    One invoice per vendor (vendors with MIN_HISTORY or more events), chosen at a seeded random position after
+    the vendor's first 12 invoices. Its amount becomes multiplier x the median of the vendor's earlier invoices,
+    only if that is below the limit; otherwise the vendor is skipped. Multipliers are filled evenly, up to about
+    `share` of events in all. Tagged in anomaly_type as "subthreshold_<m>x"; the input frame is not changed.
+    """
+    rng = np.random.default_rng(seed)
+    df = frame.copy()
+    df["invoice_date"] = pd.to_datetime(df["invoice_date"])
+    df["amount"] = pd.to_numeric(df["amount"])
+    df = df.sort_values(["vendor_id", "invoice_date", "event_id"], kind="stable").reset_index(drop=True)
+    df["is_anomaly"], df["anomaly_type"] = 0.0, None
+    sizes = df.groupby("vendor_id").size()
+    candidates = list(sizes[sizes >= MIN_HISTORY].index)
+    rng.shuffle(candidates)
+    target = int(len(df) * share)
+    made = {m: 0 for m in multipliers}
+    positions = df.groupby("vendor_id").indices
+    for vendor in candidates:
+        if sum(made.values()) >= target:
+            break
+        multiplier = min(made, key=made.get)
+        rows = positions[vendor]
+        start = int(rng.integers(12, len(rows) - 10))
+        amount = multiplier * float(np.median(df.loc[rows[:start], "amount"]))
+        if amount >= limit:
+            continue
+        i = rows[start]
+        df.loc[i, "amount"] = round(amount, 2)
+        df.loc[i, ["is_anomaly", "anomaly_type"]] = [1.0, f"subthreshold_{multiplier}x"]
+        made[multiplier] += 1
+    return df.sort_values(["invoice_date", "event_id"], kind="stable").reset_index(drop=True)

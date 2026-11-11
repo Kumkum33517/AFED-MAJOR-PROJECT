@@ -389,6 +389,24 @@ def test_sequence_features_use_only_earlier_events() -> None:
     assert np.allclose(errors_full[: len(errors_early)], errors_early)  # the EWMA forecaster sees only earlier events too
 
 
+def test_subthreshold_planting_stays_below_the_limit_and_uses_earlier_medians() -> None:
+    from ml.inject import inject_subthreshold
+    rng = np.random.default_rng(3)
+    rows = [{"event_id": f"E{v}-{k}", "vendor_id": f"V{v}", "amount": float(rng.uniform(20_000, 60_000)),
+             "invoice_date": pd.Timestamp("2024-01-01") + pd.Timedelta(days=7 * k)} for v in range(40) for k in range(30)]
+    frame = pd.DataFrame(rows)
+    before = frame.copy()
+    out = inject_subthreshold(frame, seed=4, share=0.025)
+    planted = out[out["is_anomaly"] == 1]
+    assert frame.equals(before) and len(planted) == int(len(frame) * 0.025)
+    assert (planted["amount"] < 500_000).all() and planted["vendor_id"].is_unique
+    assert set(planted["anomaly_type"]) <= {"subthreshold_2x", "subthreshold_3x", "subthreshold_5x"}
+    for _, row in planted.iterrows():  # the planted amount is m times the median of that vendor's earlier invoices
+        earlier = out[(out["vendor_id"] == row["vendor_id"]) & (out["invoice_date"] < row["invoice_date"])]["amount"]
+        m = int(row["anomaly_type"].split("_")[1][0])
+        assert abs(row["amount"] - m * earlier.median()) < 0.01
+
+
 if __name__ == "__main__":
     tests = [(k, v) for k, v in dict(globals()).items() if k.startswith("test_")]
     for name, test in tests:

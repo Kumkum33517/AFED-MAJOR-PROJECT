@@ -36,7 +36,7 @@ EXTRA_SYNTHETIC = ["icai"]  # third-party synthetic, unlabelled, so planted like
 TYPES = ["amount_spike", "slow_drift", "frequency_shift", "off_cycle_invoice"]
 KEEP = ["event_id", "vendor_id", "invoice_date", "amount", "is_anomaly", "anomaly_type", "a_score", "d_score", "f_score",
         "if_score", "rule_score", "entity_deviation", "risk", "level", "baseline_source", "history_len", "amt_z", "freq_z",
-        "proc_z", "flag_count", *[f"flag_{r}" for r in RULES]]
+        "proc_z", "flag_count", *[f"flag_{r}" for r in RULES], *pipeline.RAW_FEATURES]
 pipeline.MODELS_DIR = Path(tempfile.mkdtemp())
 
 
