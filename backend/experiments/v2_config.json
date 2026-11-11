@@ -1,0 +1,111 @@
+{
+ "frozen": "chosen on tuning data only by v2_tuning.py; read, never changed, by the reporting experiments",
+ "per_dataset": {
+  "nspcl": {
+   "weights": {
+    "w1": 0.05,
+    "w2": 0.9,
+    "w3": 0.05
+   },
+   "medium": 0.3,
+   "tuning_f1": 0.1495
+  },
+  "mplads": {
+   "weights": {
+    "w1": 0.45,
+    "w2": 0.5,
+    "w3": 0.05
+   },
+   "medium": 0.86,
+   "tuning_f1": 0.1562
+  },
+  "chicago": {
+   "weights": {
+    "w1": 0.05,
+    "w2": 0.85,
+    "w3": 0.1
+   },
+   "medium": 0.36,
+   "tuning_f1": 0.1025
+  },
+  "delaware": {
+   "weights": {
+    "w1": 0.05,
+    "w2": 0.9,
+    "w3": 0.05
+   },
+   "medium": 0.37,
+   "tuning_f1": 0.1003
+  },
+  "afed_synthetic": {
+   "weights": {
+    "w1": 0.05,
+    "w2": 0.05,
+    "w3": 0.9
+   },
+   "medium": 0.61,
+   "tuning_f1": 0.6314
+  }
+ },
+ "global_fixed": {
+  "weights": {
+   "w1": 0.05,
+   "w2": 0.45,
+   "w3": 0.5
+  },
+  "medium": 0.4,
+  "tuning_mean_f1": 0.198
+ },
+ "global_budget": {
+  "weights": {
+   "w1": 0.05,
+   "w2": 0.45,
+   "w3": 0.5
+  },
+  "target_rate": 0.03,
+  "tuning_mean_f1": 0.1751,
+  "per_dataset_tuning_f1": {
+   "nspcl": 0.1143,
+   "mplads": 0.0663,
+   "chicago": 0.0447,
+   "delaware": 0.0545,
+   "afed_synthetic": 0.5957
+  }
+ },
+ "full_v2_settings": {
+  "field_aware": true,
+  "sequence_features": true,
+  "weights": {
+   "w1": 0.05,
+   "w2": 0.45,
+   "w3": 0.5
+  },
+  "calibration": {
+   "mode": "alert_budget",
+   "target_rate": 0.03,
+   "fit_share": 0.6
+  }
+ },
+ "reference_tuning_f1": {
+  "nspcl": {
+   "default_weights_cut_045": 0.076,
+   "default_weights_budget_2pct": 0.1059
+  },
+  "mplads": {
+   "default_weights_cut_045": 0.0353,
+   "default_weights_budget_2pct": 0.0908
+  },
+  "chicago": {
+   "default_weights_cut_045": 0.0352,
+   "default_weights_budget_2pct": 0.0544
+  },
+  "delaware": {
+   "default_weights_cut_045": 0.0324,
+   "default_weights_budget_2pct": 0.0674
+  },
+  "afed_synthetic": {
+   "default_weights_cut_045": 0.4842,
+   "default_weights_budget_2pct": 0.4613
+  }
+ }
+}
