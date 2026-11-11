@@ -14,6 +14,12 @@ captchas.
 **Labels.** No real dataset found has fraud or anomaly labels. Accuracy on real data is measured with
 injected anomalies only (`backend/ml/inject.py`), tagged and never stored with the real rows.
 
+**Evaluation coverage (11 Nov 2026).** Besides the seven real ledgers evaluated before, ocds_assam (real) and icai
+(third-party synthetic) are now evaluated with planted anomalies as extra rows (`backend/experiments/`, v2). ocds_hp
+is not: only 9 of its 34 buyers have 24 or more events, so planting reaches 12 anomalies (0.29% of events).
+Planting reaches its 2.5% target only where enough vendors have long histories: measured with seed 1, secop 2.47%,
+nspcl 1.90%, chicago 1.11%, delaware 1.01%, bbmp_2024 0.81%, ocds_assam 0.80%, bbmp_2010_2019 0.62%, mplads 0.52%.
+
 ## In use
 
 | Dataset | Source | Country | Licence | Size used | Span | Entity | Dates | Labels | Per-entity history | Verdict |

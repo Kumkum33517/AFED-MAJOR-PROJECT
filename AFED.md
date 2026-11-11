@@ -248,7 +248,9 @@ Results on it are AFED's best case.
 
 ### 5.5 Planted anomalies in real data
 
-Four types, one episode per vendor, only in vendors with 24 or more events, about 2.5% of events:
+Four types, one episode per vendor, only in vendors with 24 or more events, aiming at 2.5% of events. That target
+is reached only where enough vendors have long histories (measured with seed 1: secop 2.47%, nspcl 1.90%, chicago
+1.11%, delaware 1.01%, bbmp_2024 0.81%, bbmp_2010_2019 0.62%, mplads 0.52%):
 
 | Type | What is planted |
 |---|---|

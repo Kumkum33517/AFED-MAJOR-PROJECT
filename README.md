@@ -37,6 +37,22 @@ AFED flags events for human review. A flag is not a finding of wrongdoing.
 
 Tiers are Low < 0.45 ≤ Medium < 0.60 ≤ High < 0.75 ≤ Critical. Medium and above become alerts.
 
+## v2 options (off by default)
+
+v1 is the default and stays reproducible: with every option below off, output matches v1 exactly
+(`tests/fixtures/v1_seed42.json`, checked by `tests/test_afed.py`). Each option is a setting, also in **Model
+settings → v2 options**. Whether any of them should become the default is decided by a pre-registered rule; see
+`backend/experiments/v2_evaluation_results.md` and `backend/experiments/report_numbers_v2.md`.
+
+| Setting | What it does | Usable in a real deployment? |
+|---|---|---|
+| `field_aware` | Scales the rule weight by the share of rule severity whose inputs the data has, and renormalises: `Risk = (w1·A + w2·D + w3'·F)/(w1 + w2 + w3') + 0.10·min(D, F)`, `w3' = w3 × rule share`. Equal to v1 when every input exists. Each run records its inputs, active rules and weights (`active.json`, shown on the run's model version). | Yes |
+| `calibration.mode = "alert_budget"` | Chooses the Medium cut-off so that `target_rate` of each run's earliest 60% of events are alerts, then applies it to all. Needs no labels. Preview with `POST /settings/calibrate` (Admin, Analyst). | Yes |
+| `calibration.mode = "label"` | The cut-off with the best F1 on labelled earlier events. | **No**: it needs labels, which real data does not have. Evaluation only |
+| `sequence_features` | Six change features per vendor for the forest: EWMA z-scores of amount and gap, CUSUMs of amount and of "sooner than usual", a 6-invoice amount trend, and the gap over the median earlier gap. Earlier events only (tested). | Yes |
+| `narration_mode = "per_fact"` | Qwen rewords one fact at a time; every number must stay beside its own words (number-anchor check). | Yes, with a Qwen provider |
+| `temporal_source = "ewma"`, `lstm.fit_share` | Evidence only: an EWMA forecaster instead of the LSTM; the LSTM trained on the earliest share of events. The LSTM stays the default. | Not intended |
+
 ## Quick start
 
 Needs Python 3.11+ and Node 22+.
