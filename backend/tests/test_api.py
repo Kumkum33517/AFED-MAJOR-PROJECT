@@ -214,9 +214,9 @@ def check_settings(client: TestClient, h: dict[str, dict[str, str]]) -> None:
     assert client.put("/settings", json={**body, "approval_limit": 400000}, headers=h["Analyst"]).json()["approval_limit"] == 400000
     assert client.put("/settings", json=body, headers=h["Analyst"]).status_code == 200
     # v2 options round-trip, and an older client that omits them gets v1 behaviour.
-    legacy = {k: v for k, v in body.items() if k not in ("field_aware", "calibration", "sequence_features")}
+    legacy = {k: v for k, v in body.items() if k not in ("field_aware", "calibration", "sequence_features", "narration_mode")}
     saved = client.put("/settings", json=legacy, headers=h["Analyst"]).json()
-    assert saved["field_aware"] is False and saved["calibration"]["mode"] == "off" and saved["sequence_features"] is False
+    assert saved["field_aware"] is False and saved["calibration"]["mode"] == "off" and saved["sequence_features"] is False and saved["narration_mode"] == "paragraph"
     v2 = {**body, "field_aware": True, "calibration": {"mode": "alert_budget", "target_rate": 0.03, "fit_share": 0.6}}
     saved = client.put("/settings", json=v2, headers=h["Analyst"]).json()
     assert saved["field_aware"] is True and saved["calibration"] == {"mode": "alert_budget", "target_rate": 0.03, "fit_share": 0.6}

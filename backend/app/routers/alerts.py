@@ -151,8 +151,9 @@ def detail(alert_id: Id, db: DB, _: CurrentUser) -> dict[str, Any]:
 def explain(alert_id: Id, db: DB, _: CurrentUser, language: Language = "en") -> dict[str, Any]:
     """Re-narrate on demand. Facts are never recomputed, so the reasons cannot change."""
     alert = _get(db, alert_id)
-    wanted = get_settings(db)["qwen_provider"]
-    text, used = narrate(alert.facts, alert.level, alert.risk, language, wanted)
+    settings = get_settings(db)
+    wanted = settings["qwen_provider"]
+    text, used = narrate(alert.facts, alert.level, alert.risk, language, wanted, settings.get("narration_mode", "paragraph"))
     # The reviewer should know when the model was asked and its wording refused, not just see a template.
     return {"explanation": text, "provider": used, "language": language, "fell_back": wanted != "template" and used == "template"}
 

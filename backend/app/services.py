@@ -111,7 +111,7 @@ def _draft_alerts(result: PipelineResult, settings: dict[str, Any], keep: set[st
         facts = build_facts(row, limit)
         risk, level = float(row["risk"]), str(row["level"])
         if rank < NARRATED_PER_RUN and failures < MAX_NARRATOR_FAILURES and provider != "template":
-            text, used = narrate(facts, level, risk, "en", provider)
+            text, used = narrate(facts, level, risk, "en", provider, settings.get("narration_mode", "paragraph"))
             failures = failures + 1 if used == "template" else 0
         else:
             text, used = template_explanation(facts, level, risk), "template"

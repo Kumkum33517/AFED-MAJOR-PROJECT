@@ -176,3 +176,4 @@ class SettingsBody(BaseModel):
     field_aware: bool = False
     calibration: CalibrationSettings = CalibrationSettings()
     sequence_features: bool = False
+    narration_mode: Literal["paragraph", "per_fact"] = "paragraph"

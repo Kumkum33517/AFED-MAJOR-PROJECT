@@ -407,6 +407,29 @@ def test_subthreshold_planting_stays_below_the_limit_and_uses_earlier_medians() 
         assert abs(row["amount"] - m * earlier.median()) < 0.01
 
 
+def test_number_anchor_check_catches_a_number_moved_to_the_wrong_quantity() -> None:
+    facts = ["Amount Rs. 4,55,872 is 1.9x this vendor's usual of Rs. 2,35,735", "Amount Rs. 4,55,872 is 91% of the Rs. 5,00,000 approval limit"]
+    moved = "Amount Rs. 4,55,872 is 1.9x this vendor's usual of Rs. 2,35,735, which is 91% of the Rs. 5,00,000 approval limit."
+    assert explain.is_grounded(moved, {"facts": facts})  # the word check alone lets it through (the known failure)
+    assert not explain.numbers_anchored(moved, facts)
+    assert explain.numbers_anchored(" ".join(f + "." for f in facts), facts)
+    assert not explain.numbers_anchored("Approved in 7 days against the usual 4 days.", ["Approved in 4 days against the usual 7 days"])
+
+
+def test_per_fact_narration_checks_each_sentence_against_its_own_fact() -> None:
+    facts = _facts()
+    original = explain.PROVIDERS["ollama"]
+    try:
+        explain.PROVIDERS["ollama"] = lambda system, fact: "It reads: " + fact  # "reads" is a new word: refused
+        assert explain.narrate(facts, "High", 0.7, provider="ollama", mode="per_fact")[1] == "template"
+        explain.PROVIDERS["ollama"] = lambda system, fact: fact  # each fact kept as it is: accepted
+        text, used = explain.narrate(facts, "High", 0.7, provider="ollama", mode="per_fact")
+        assert used == "ollama" and text.startswith("Amount Rs. 4,80,000 is 9.6x") and explain.is_complete(text, facts)
+        assert explain.narrate(facts, "High", 0.7, provider="template", mode="per_fact")[1] == "template"
+    finally:
+        explain.PROVIDERS["ollama"] = original
+
+
 if __name__ == "__main__":
     tests = [(k, v) for k, v in dict(globals()).items() if k.startswith("test_")]
     for name, test in tests:

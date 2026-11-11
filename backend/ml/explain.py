@@ -301,8 +301,84 @@ def _local(system: str, user: str) -> str:
 PROVIDERS = {"hf_api": _hf_api, "ollama": _ollama, "local": _local}
 
 
-def narrate(facts: list[Fact], level: str, risk: float, language: str = "en", provider: str = "template") -> tuple[str, str]:
-    """Return (text, provider actually used). Any failure or ungrounded output falls back to the template."""
+TOKEN = re.compile(r"\d[\d,]*(?:\.\d+)?|[a-z]+|[\u0900-\u0963\u0966-\u097f]+")
+# Function words only, plus currency, the "x" of "9.6x" and the "s" of "vendor's": anchors must be words that say
+# what a number measures (amount, usual, limit, days), so these are skipped when looking for one.
+NOT_ANCHORS = frozenset(unicodedata.normalize("NFC", """
+a an the and or but so as at by for from in into of on over to under up with within without while which who whose that this
+these those it its is are was were be been being has have had do does did not no also both each than very there then too
+together whereas however same just instead times rs x s
+है हैं था थे और या का की के को में से पर ने यह ये इस इसे इन उस वह तथा लेकिन क्योंकि जो कि भी ही लिए साथ
+""").split())
+
+
+def _anchors(text: str) -> set[tuple[str, str]]:
+    """(number, nearest preceding meaningful word) pairs. "^" when nothing meaningful comes before the number."""
+    pairs, anchor = set(), "^"
+    for token in TOKEN.findall(unicodedata.normalize("NFC", text).translate(DEVANAGARI_DIGITS).lower()):
+        if token[0].isdigit():
+            value = token.replace(",", "").rstrip(".")
+            pairs.add((value.rstrip("0").rstrip(".") if "." in value else value, anchor))
+        elif token not in NOT_ANCHORS:
+            anchor = token
+    return pairs
+
+
+def numbers_anchored(output: str, sources: list[str]) -> bool:
+    """True if every number in the output follows the same meaningful word as it does in some source fact.
+
+    Catches a number moved to the wrong quantity: "usual of Rs. 2,35,735, which is 91% of the limit" puts 91 after
+    "usual", while the fact says "Amount Rs. 4,55,872 is 91% of the ... limit". The word check alone passes it.
+    """
+    allowed = set().union(*(_anchors(text) for text in sources)) if sources else set()
+    return _anchors(output) <= allowed
+
+
+FACT_PROMPT = (
+    "Rewrite this single audit fact as one short, plain sentence for a procurement reviewer. Keep its own words and "
+    "copy every number exactly, as digits. Do not add, explain, interpret, judge or advise, and never accuse anyone. "
+    "Output only the sentence.\n\nExample fact: Approved at 22:38 on a Tuesday, outside working hours\n"
+    "Example output: It was approved at 22:38 on a Tuesday, outside working hours."
+)
+
+
+def narrate_per_fact(facts: list[Fact], level: str, risk: float, language: str, provider: str) -> tuple[str, str]:
+    """Narration v2: one fact at a time, each sentence checked against its own fact only, plus the anchor check.
+
+    Each main fact is reworded on its own, so the model never has two facts' numbers to mix. Every sentence must pass
+    grounding, keep its fact's numbers, and keep each number beside its own words. Any failure: the whole template.
+    """
+    fallback = template_explanation(facts, level, risk, language)
+    key = "text_hi" if language == "hi" else "text"
+    main = main_facts([f for f in facts if f["key"] != "model_rank"], key) if any(f["key"] != "model_rank" for f in facts) else []
+    if provider not in PROVIDERS or not main:
+        return fallback, "template"
+    system = FACT_PROMPT + (" Write in Hindi using Devanagari script." if language == "hi" else " Write in English.")
+    sentences = []
+    for fact in main:
+        try:
+            sentence = PROVIDERS[provider](system, fact).strip().strip('"“”').strip()
+        except Exception as error:  # an outage must never block an alert
+            log.warning("Qwen provider %s failed: %s", provider, error)
+            return fallback, "template"
+        payload = {"facts": [fact]}
+        if not (is_grounded(sentence, payload) and _numbers(fact) <= _numbers(sentence) and numbers_anchored(sentence, [fact])):
+            log.warning("Qwen per-fact output rejected: %r", sentence[:200])
+            return fallback, "template"
+        sentences.append(sentence if sentence.endswith((".", "।")) else sentence + ("।" if language == "hi" else "."))
+    other = [f[key] for f in facts if f[key] not in main and f["key"] != "model_rank"][:1]
+    tail = (f" अन्य जानकारी: {other[0]}।" if language == "hi" else f" Also noted: {other[0]}.") if other else ""
+    return " ".join(sentences) + tail, provider
+
+
+def narrate(facts: list[Fact], level: str, risk: float, language: str = "en", provider: str = "template",
+            mode: str = "paragraph") -> tuple[str, str]:
+    """Return (text, provider actually used). Any failure or ungrounded output falls back to the template.
+
+    mode "paragraph" is v1 (all facts at once); "per_fact" is narration v2 (narrate_per_fact).
+    """
+    if mode == "per_fact":
+        return narrate_per_fact(facts, level, risk, language, provider)
     fallback = template_explanation(facts, level, risk, language)
     if provider not in PROVIDERS:
         return fallback, "template"

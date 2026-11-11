@@ -46,6 +46,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "sequence_features": False,  # CUSUM, EWMA, trend and gap-ratio features for the forest (ml/sequence.py)
     # Evidence only: "ewma" replaces the LSTM's errors with an EWMA forecaster's (and skips the LSTM).
     "temporal_source": "lstm",
+    "narration_mode": "paragraph",   # "per_fact": Qwen rewords one fact at a time, with the number-anchor check
 }
 
 RAW_FEATURES = ["log_amount", "proc_days_f", "gap_days_f", "approval_hour", "approval_dow", "category_code",
