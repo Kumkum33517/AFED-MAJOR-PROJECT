@@ -152,6 +152,18 @@ class LstmSettings(BaseModel):
     in_forest: bool = True
 
 
+class CalibrationSettings(BaseModel):
+    mode: Literal["off", "alert_budget", "label"] = "off"
+    target_rate: Finite = Field(0.02, gt=0, le=0.5)  # alert-budget mode: share of events to alert on
+    fit_share: Finite = Field(0.6, ge=0.1, le=0.9)   # earliest share of events the cut-off is chosen on
+
+
+class CalibrateBody(BaseModel):
+    mode: Literal["alert_budget", "label"]
+    target_rate: Finite = Field(0.02, gt=0, le=0.5)
+    fit_share: Finite = Field(0.6, ge=0.1, le=0.9)
+
+
 class SettingsBody(BaseModel):
     approval_limit: Finite = Field(gt=0)
     weights: Weights
@@ -160,3 +172,6 @@ class SettingsBody(BaseModel):
     lstm: LstmSettings
     rules: dict[str, bool]
     qwen_provider: Literal["template", "hf_api", "ollama", "local"]
+    # v2 options, off by default; older clients that omit them get v1 behaviour.
+    field_aware: bool = False
+    calibration: CalibrationSettings = CalibrationSettings()

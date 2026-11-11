@@ -22,7 +22,7 @@ from sklearn.ensemble import IsolationForest
 
 from .evaluate import compare_models, evaluate, print_report
 from .features import RULES, active_rules, available_inputs, compute_features, entity_baselines, read_csv, validate
-from .fusion import rule_share, risk_score, signals, tier
+from .fusion import calibrate_medium, calibrated_thresholds, rule_share, risk_score, signals, tier
 from .lstm_seq import SEQ_FEATURES, run_lstm
 
 MODELS_DIR = Path(__file__).resolve().parents[1] / "models_store"
@@ -40,6 +40,8 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "qwen_provider": "template",
     # v2 options. All off reproduces v1 exactly (tests/fixtures/v1_seed42.json).
     "field_aware": False,        # renormalise fusion over the rule inputs the data has
+    # Medium cut-off chosen per run on its earliest events: "alert_budget" (no labels) or "label" (evaluation only).
+    "calibration": {"mode": "off", "target_rate": 0.02, "fit_share": 0.6},
 }
 
 RAW_FEATURES = ["log_amount", "proc_days_f", "gap_days_f", "approval_hour", "approval_dow", "category_code",
@@ -142,7 +144,13 @@ def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, prog
     active = {"inputs": inputs, "rules": rules_on, "rule_share": round(share, 4), "field_aware": bool(settings.get("field_aware")),
               "weights_effective": {k: round(v / (w["w1"] + w["w2"] + w3), 4) for k, v in (("w1", w["w1"]), ("w2", w["w2"]), ("w3", w3))}
               if used_share < 1 else dict(w)}
-    df["level"] = tier(df["risk"].to_numpy(), settings["thresholds"])
+    calibration = settings.get("calibration") or {}
+    chosen = calibrate_medium(df["risk"].to_numpy(), df["invoice_date"], calibration.get("mode", "off"),
+                              calibration.get("target_rate", 0.02), calibration.get("fit_share", 0.6),
+                              df["is_anomaly"].to_numpy(dtype=float))
+    thresholds = calibrated_thresholds(settings["thresholds"], chosen["medium"]) if chosen else settings["thresholds"]
+    df["level"] = tier(df["risk"].to_numpy(), thresholds)
+    active["calibration"] = {**chosen, "thresholds": thresholds} if chosen else {"mode": calibration.get("mode", "off"), "applied": False}
 
     report(82, "Evaluating against labels")
     metrics = None

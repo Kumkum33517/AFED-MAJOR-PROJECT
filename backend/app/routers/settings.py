@@ -3,16 +3,17 @@ import json
 from typing import Any
 
 import numpy as np
+import pandas as pd
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import select
 
 from ml.features import RULE_LABELS, RULES
-from ml.fusion import recalibrate
+from ml.fusion import calibrate_medium, calibrated_thresholds, recalibrate
 
 from ..config import MODELS_DIR
 from ..deps import DB, CanOperate, audit
-from ..models import SEEDED_COMMENT, Alert, Setting
-from ..schemas import SettingsBody
+from ..models import SEEDED_COMMENT, Alert, Event, Setting
+from ..schemas import CalibrateBody, SettingsBody
 from ..services import get_settings, latest_feedback
 
 router = APIRouter(prefix="/settings", tags=["settings"])
@@ -52,6 +53,26 @@ def write_settings(body: SettingsBody, db: DB, user: CanOperate) -> dict[str, An
     audit(db, user, "settings_updated", "settings", 1, **data)
     db.commit()
     return read_settings(db, user)
+
+
+@router.post("/calibrate")
+def calibrate(body: CalibrateBody, db: DB, _: CanOperate) -> dict[str, Any]:
+    """Preview a calibrated Medium cut-off on the stored events, without saving anything.
+
+    Alert budget needs no labels. Label-based needs labelled events, so it only works on evaluation data.
+    """
+    rows = db.execute(select(Event.risk, Event.invoice_date, Event.is_anomaly).where(Event.risk.is_not(None))).all()
+    if not rows:
+        raise HTTPException(409, "No scored events yet. Run the detection first.")
+    risk = np.array([r[0] for r in rows], dtype=float)
+    labels = np.array([np.nan if r[2] is None else r[2] for r in rows], dtype=float)
+    chosen = calibrate_medium(risk, pd.Series([r[1] for r in rows]), body.mode, body.target_rate, body.fit_share, labels)
+    if chosen is None:
+        raise HTTPException(422, "Label-based calibration needs labelled events of both kinds, which real data does not have. "
+                                 "Use the alert budget." if body.mode == "label" else "Too few events to calibrate.")
+    thresholds = calibrated_thresholds(get_settings(db)["thresholds"], chosen["medium"])
+    return {**chosen, "thresholds": thresholds, "alerts_all": int((risk >= chosen["medium"]).sum()),
+            "alert_rate_all": round(float((risk >= chosen["medium"]).mean()), 6), "events": len(risk)}
 
 
 @router.get("/models")

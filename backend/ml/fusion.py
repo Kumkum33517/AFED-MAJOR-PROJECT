@@ -38,6 +38,48 @@ def risk_score(a: np.ndarray, d: np.ndarray, f: np.ndarray, weights: dict[str, f
     return np.clip(risk, 0, 1)
 
 
+CALIBRATION_GRID = np.round(np.arange(0.30, 0.951, 0.01), 2)
+
+
+def calibrate_medium(risk: np.ndarray, dates: pd.Series, mode: str, target_rate: float = 0.02, fit_share: float = 0.6,
+                     labels: np.ndarray | None = None) -> dict[str, Any] | None:
+    """Choose the Medium cut-off on the earliest `fit_share` of events by date; the caller applies it to all of them.
+
+    alert_budget  needs no labels: the cut-off that alerts on `target_rate` of the earlier events. Usable in a
+                  real deployment, where an audit team knows how many alerts it can review.
+    label         the cut-off with the best F1 on labelled earlier events (0.30 to 0.95, ties to the higher one).
+                  Needs labels, so it is for evaluation only: a real deployment has none.
+    Returns None when the mode cannot run (off, too few events, or no labels of both kinds).
+    """
+    if mode not in ("alert_budget", "label"):
+        return None
+    dates = pd.to_datetime(pd.Series(dates).reset_index(drop=True))
+    early = (dates < dates.quantile(fit_share)).to_numpy()
+    if early.sum() < 20:
+        return None
+    fit = np.asarray(risk, dtype=float)[early]
+    if mode == "alert_budget":
+        k = int(np.floor(target_rate * len(fit)))
+        if k < 1:
+            return None
+        cut = float(np.sort(fit)[::-1][k - 1])  # the k-th highest: alerting on risk >= cut gives about k alerts
+    else:
+        y = None if labels is None else np.asarray(labels, dtype=float)[early]
+        if y is None or np.isnan(y).any() or len(set(y.tolist())) < 2:
+            return None
+        scores = [float(f1_score(y.astype(int), fit >= t, zero_division=0)) for t in CALIBRATION_GRID]
+        best = max(scores)
+        cut = float(max(t for t, f in zip(CALIBRATION_GRID, scores) if f == best))
+    return {"mode": mode, "medium": round(cut, 6), "fit_events": int(early.sum()),
+            "fit_alert_rate": round(float((fit >= cut).mean()), 6), "target_rate": target_rate if mode == "alert_budget" else None}
+
+
+def calibrated_thresholds(thresholds: dict[str, float], medium: float) -> dict[str, float]:
+    """A new Medium cut-off, with High and Critical kept above it so the tiers stay ordered."""
+    high = min(max(thresholds["high"], medium + 0.05), 0.98)
+    return {"medium": medium, "high": high, "critical": min(max(thresholds["critical"], high + 0.05), 0.99)}
+
+
 def rule_share(active: list[str], severities: dict[str, float]) -> float:
     """Share of total rule severity carried by the rules that can fire on this data."""
     return sum(severities[r] for r in active) / sum(severities.values())

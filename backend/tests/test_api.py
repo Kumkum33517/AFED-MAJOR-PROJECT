@@ -69,7 +69,7 @@ def check_access_matrix(client: TestClient, headers: dict[str, dict[str, str]], 
         ("PATCH", f"/cases/{case}", {"status": "Investigating"}, ACT), ("POST", f"/cases/{case}/notes", {"text": "n"}, ACT),
         ("GET", "/users/assignees", None, ACT),
         ("GET", "/settings", None, OPERATE), ("GET", "/settings/models", None, OPERATE), ("GET", "/upload/runs", None, OPERATE),
-        ("POST", "/settings/recalibrate", None, OPERATE),
+        ("POST", "/settings/recalibrate", None, OPERATE), ("POST", "/settings/calibrate", {"mode": "alert_budget"}, OPERATE),
         ("GET", "/users", None, ADMIN), ("GET", "/users/audit-log", None, ADMIN),
     ]
     for method, path, body, allowed in matrix:
@@ -213,7 +213,21 @@ def check_settings(client: TestClient, h: dict[str, dict[str, str]]) -> None:
     assert client.put("/settings", json={**body, "weights": {"w1": 0.9, "w2": 0.9, "w3": 0.9}}, headers=h["Admin"]).status_code == 422
     assert client.put("/settings", json={**body, "approval_limit": 400000}, headers=h["Analyst"]).json()["approval_limit"] == 400000
     assert client.put("/settings", json=body, headers=h["Analyst"]).status_code == 200
-    print("ok   settings validation")
+    # v2 options round-trip, and an older client that omits them gets v1 behaviour.
+    legacy = {k: v for k, v in body.items() if k not in ("field_aware", "calibration")}
+    saved = client.put("/settings", json=legacy, headers=h["Analyst"]).json()
+    assert saved["field_aware"] is False and saved["calibration"]["mode"] == "off"
+    v2 = {**body, "field_aware": True, "calibration": {"mode": "alert_budget", "target_rate": 0.03, "fit_share": 0.6}}
+    saved = client.put("/settings", json=v2, headers=h["Analyst"]).json()
+    assert saved["field_aware"] is True and saved["calibration"] == {"mode": "alert_budget", "target_rate": 0.03, "fit_share": 0.6}
+    assert client.put("/settings", json={**v2, "calibration": {"mode": "magic"}}, headers=h["Analyst"]).status_code == 422
+    assert client.put("/settings", json=body, headers=h["Analyst"]).status_code == 200  # back to v1 for the tests that follow
+    budget = client.post("/settings/calibrate", json={"mode": "alert_budget", "target_rate": 0.02}, headers=h["Analyst"]).json()
+    assert 0.015 <= budget["fit_alert_rate"] <= 0.025 and budget["thresholds"]["medium"] < budget["thresholds"]["high"], budget
+    labelled = client.post("/settings/calibrate", json={"mode": "label"}, headers=h["Analyst"])
+    assert labelled.status_code == 200 and 0.30 <= labelled.json()["medium"] <= 0.95  # the test data is labelled
+    assert client.post("/settings/calibrate", json={"mode": "alert_budget", "target_rate": 0.9}, headers=h["Analyst"]).status_code == 422
+    print("ok   settings validation, v2 options, calibration preview")
 
 
 def check_notifications_are_private(client: TestClient, h: dict[str, dict[str, str]]) -> None:

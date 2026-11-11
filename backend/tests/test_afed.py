@@ -340,6 +340,32 @@ def test_field_aware_fusion_renormalises_over_the_rules_that_can_fire() -> None:
     assert abs(no_rules - (0.40 * 0.5 + 0.35 * 0.6) / 0.75) < 1e-12
 
 
+def test_alert_budget_calibration_needs_no_labels_and_uses_only_earlier_events() -> None:
+    rng = np.random.default_rng(0)
+    dates = pd.Series(pd.date_range("2024-01-01", periods=1000, freq="D"))
+    risk = rng.uniform(0, 1, 1000)
+    chosen = fusion.calibrate_medium(risk, dates, "alert_budget", target_rate=0.02, fit_share=0.6)
+    early = (dates < dates.quantile(0.6)).to_numpy()
+    assert chosen["fit_events"] == early.sum() and abs((risk[early] >= chosen["medium"]).mean() - 0.02) < 0.002
+    later = risk.copy()
+    later[~early] = 1.0  # the later events cannot move a cut-off chosen on the earlier ones
+    assert fusion.calibrate_medium(later, dates, "alert_budget", 0.02, 0.6)["medium"] == chosen["medium"]
+    assert fusion.calibrate_medium(risk, dates, "off") is None
+
+
+def test_label_calibration_needs_labels_of_both_kinds() -> None:
+    dates = pd.Series(pd.date_range("2024-01-01", periods=200, freq="D"))
+    risk = np.r_[np.full(100, 0.2), np.full(100, 0.8)]
+    labels = (risk > 0.5).astype(float)
+    assert fusion.calibrate_medium(risk, dates, "label") is None  # no labels
+    assert fusion.calibrate_medium(risk, dates, "label", labels=np.zeros(200)) is None  # one kind only
+    shuffled = np.random.default_rng(1).permutation(200)
+    chosen = fusion.calibrate_medium(risk[shuffled], dates, "label", labels=labels[shuffled])
+    assert 0.20 < chosen["medium"] <= 0.80
+    t = fusion.calibrated_thresholds({"medium": 0.45, "high": 0.60, "critical": 0.75}, 0.9)
+    assert t["medium"] < t["high"] < t["critical"]
+
+
 if __name__ == "__main__":
     tests = [(k, v) for k, v in dict(globals()).items() if k.startswith("test_")]
     for name, test in tests:

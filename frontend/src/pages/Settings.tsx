@@ -7,7 +7,9 @@ import { percent } from "../lib/format";
 interface Values {
   approval_limit: number; weights: { w1: number; w2: number; w3: number }; thresholds: { medium: number; high: number; critical: number };
   contamination: string | number; lstm: { window: number; mode: string; epochs: number }; rules: Record<string, boolean>; qwen_provider: string;
+  field_aware: boolean; calibration: { mode: "off" | "alert_budget" | "label"; target_rate: number; fit_share: number };
 }
+interface Preview { medium: number; fit_alert_rate: number; alert_rate_all: number; alerts_all: number; events: number; thresholds: Values["thresholds"] }
 interface Loaded extends Values { rule_info: { name: string; label: string; severity: number }[] }
 interface Model { version: string; has_lstm: boolean; recall: number | null; precision: number | null; roc_auc: number | null }
 interface Recalibration {
@@ -20,7 +22,9 @@ const number = { valueAsNumber: true, required: true };
 
 function Form({ data, reload }: { data: Loaded; reload: () => void }) {
   const { rule_info: rules, ...values } = data;
-  const { register, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm<Values>({ defaultValues: values });
+  const { register, handleSubmit, reset, setValue, getValues, watch, formState: { isSubmitting } } = useForm<Values>({ defaultValues: values });
+  const [preview, setPreview] = useState<Preview | null>(null);
+  const mode = watch("calibration.mode");
   const [saved, setSaved] = useState("");
   const [error, setError] = useState("");
   const [calibration, setCalibration] = useState<Recalibration | null>(null);
@@ -36,6 +40,17 @@ function Form({ data, reload }: { data: Loaded; reload: () => void }) {
       setError(toError(e).message);
     }
   }, () => { setSaved(""); setError("Every field needs a value."); });
+
+  const previewCalibration = async () => {
+    setError(""); setPreview(null);
+    const { mode: m, target_rate, fit_share } = getValues("calibration");
+    if (m === "off") return;
+    try {
+      setPreview((await api.post<Preview>("/settings/calibrate", { mode: m, target_rate, fit_share })).data);
+    } catch (e) {
+      setError(toError(e).message);
+    }
+  };
 
   const recalibrate = async () => {
     setError("");
@@ -81,6 +96,25 @@ function Form({ data, reload }: { data: Loaded; reload: () => void }) {
           </div>
         </Card>
       </div>
+      <Card title="v2 options" subtitle="Off by default. With all off, results are those of v1.">
+        <div className="grid gap-3 sm:grid-cols-3">
+          <label className="flex items-center gap-2 text-sm sm:col-span-3"><input type="checkbox" {...register("field_aware")} /> Field-aware fusion</label>
+          <Field label="Alert threshold">
+            <select className="input" {...register("calibration.mode")}>
+              <option value="off">Fixed cut-offs</option><option value="alert_budget">Alert budget</option><option value="label">Label-based (evaluation only)</option>
+            </select>
+          </Field>
+          <Field label="Alert budget (share of events)"><input className="input" type="number" step="0.005" min="0.001" max="0.5" disabled={mode !== "alert_budget"} {...register("calibration.target_rate", number)} /></Field>
+          <Field label="Chosen on the earliest"><input className="input" type="number" step="0.05" min="0.1" max="0.9" disabled={mode === "off"} {...register("calibration.fit_share", number)} /></Field>
+        </div>
+        {mode === "label" && <p className="mt-2 text-xs text-muted">Needs labelled data, so a real deployment cannot use it.</p>}
+        {mode !== "off" && <Button variant="secondary" className="mt-3" onClick={previewCalibration}>Preview on current data</Button>}
+        {preview && mode !== "off" && (
+          <p role="status" className="mt-2 text-sm">
+            Medium from {preview.medium.toFixed(3)}: {percent(preview.fit_alert_rate, 1)} of the earlier events, {preview.alerts_all.toLocaleString("en-IN")} of {preview.events.toLocaleString("en-IN")} overall.
+          </p>
+        )}
+      </Card>
       <Card title="Red-flag rules" subtitle="Severity feeds the noisy-OR rule score.">
         <div className="grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
           {rules.map((r) => (
