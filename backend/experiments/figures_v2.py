@@ -106,11 +106,13 @@ def diagnostics_figure(diag: dict) -> list[str]:
 
 
 def narration_figure(nar: dict) -> list[str]:
-    languages = list(nar["summary"])
-    outcomes = ["accepted", "new word", "new number", "misplaced number", "main fact left out", "not entailed"]
-    fig, ax = plt.subplots(figsize=(7, 3))
-    grouped(ax, languages, {o: ([nar["summary"][l].get(o, 0) for l in languages], [0] * len(languages)) for o in outcomes}, 0)
-    tidy(ax, "Qwen narration v2 on 100 new alerts: outcomes", "Narrations")
+    detail = nar["detail"]
+    outcomes = ["accepted", "new word", "new number", "misplaced number", "main fact left out"]
+    labels = [f"{'English' if l == 'en' else 'Hindi'}, {arm} {'paragraph' if arm == 'v1' else 'per fact'}" for l in detail for arm in ("v1", "v2")]
+    counts = {o: [detail[l][arm].get(o, 0) for l in detail for arm in ("v1", "v2")] for o in outcomes}
+    fig, ax = plt.subplots(figsize=(8, 3.2))
+    grouped(ax, labels, {o: (c, [0] * len(c)) for o, c in counts.items()}, 0)
+    tidy(ax, "Qwen narration on 100 new alerts: v1 paragraph against v2 per fact", "Narrations of 100")
     fig.tight_layout(); fig.savefig(FIG / "qwen_v2_outcomes.png"); plt.close(fig)
     return ["qwen_v2_outcomes.png"]
 

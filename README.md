@@ -53,6 +53,11 @@ settings → v2 options**. Whether any of them should become the default is deci
 | `narration_mode = "per_fact"` | Qwen rewords one fact at a time; every number must stay beside its own words (number-anchor check). | Yes, with a Qwen provider |
 | `temporal_source = "ewma"`, `lstm.fit_share` | Evidence only: an EWMA forecaster instead of the LSTM; the LSTM trained on the earliest share of events. The LSTM stays the default. | Not intended |
 
+**Result (reporting data: new seeds, latest 40%).** Full v2 (field-aware fusion, sequence features, weights 0.05 /
+0.45 / 0.50, a 3% alert budget) raised mean F1 on nspcl (0.044 to 0.070), mplads (0.026 to 0.083), chicago (0.015 to
+0.026) and delaware (0.020 to 0.048), mostly by alerting less, but cut synthetic recall from 0.894 to 0.664. The
+pre-registered rule therefore failed and **v1 remains the default**. Details: `AFED.md` section 10.10.
+
 ## Quick start
 
 Needs Python 3.11+ and Node 22+.

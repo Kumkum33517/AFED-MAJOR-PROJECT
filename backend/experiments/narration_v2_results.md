@@ -42,8 +42,7 @@ Of the six accepted v1 English narrations the NLI judge called a contradiction:
 - **Judge errors (4):** EV-009217 and EV-009479 copy their fact word for word; EV-007167 and EV-004716 keep each fact's
   meaning ("Amount ... and is 100% of the ... limit" keeps the amount as the subject).
 
-The one accepted v2 narration in that list (EV-007167's v2 was refused, misplaced number) is none: all 9 accepted
-English v2 narrations were judged entailed.
+None of the accepted v2 narrations is in that list: all 9 accepted English v2 narrations were judged entailed.
 
 ## What this shows
 

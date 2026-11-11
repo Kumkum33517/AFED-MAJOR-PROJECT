@@ -52,7 +52,10 @@ between 0.02 and 0.06. AFED is best on two Indian ledgers (NSPCL, MPLADS) and be
 on two US ledgers (Chicago, Delaware). A pre-registered test shows that choosing the alert threshold on each
 ledger's own past more than doubles F1 on three of them, by cutting false alarms rather than by catching more.
 On 100 held-out alerts, a small local Qwen model's wording passed AFED's checks for 46% of English and 61% of
-Hindi narrations; the checks refused every narration that added a number. The report states all of these results,
+Hindi narrations; the checks refused every narration that added a number. A second version (v2), evaluated on fresh
+seeds and the later period of each ledger, raises F1 on all four main real ledgers (for example mplads 0.026 to
+0.083, delaware 0.020 to 0.048) mainly by alerting less, but it cuts synthetic recall from 0.894 to 0.664, so by its
+pre-registered rule v1 stays the default (section 10.10). The report states all of these results,
 because the real-data ones are the more realistic.
 
 ---
@@ -802,6 +805,285 @@ The three accepted narrations not judged "entailed" were read by hand, as the pl
 
 ![Qwen wording refused, Hindi, template shown](docs/qwen_refused_hi.png)
 
+### 10.10 Version 2: diagnosis, changes and a fresh evaluation (11 Nov 2026)
+
+Everything in this section comes from files in `backend/experiments/`, named with each table. The protocol was fixed
+before any v2 result: tune only on planted seeds 1-3, synthetic seeds 42/7/123 and the earliest 60% of each run by
+date; report only on **new** planted seeds 4-6, synthetic seeds 11/12/13 and the latest 40%. Every plan was committed
+to git before its experiment ran. With every v2 option off, AFED's output is identical to v1 (a fingerprint test on
+synthetic seed 42). `report_numbers_v2.md` collects every table below, verbatim.
+
+#### Why real-data ranking was weak (tuning data, `diagnostics_results.md`)
+
+| Dataset | ROC-AUC A | ROC-AUC D | ROC-AUC F | ROC-AUC fusion | PR-AUC A | PR-AUC D | PR-AUC F | PR-AUC fusion |
+|---|---|---|---|---|---|---|---|---|
+| nspcl | 0.598 ± 0.007 | 0.640 ± 0.005 | 0.501 ± 0.004 | 0.618 ± 0.006 | 0.024 ± 0.000 | 0.066 ± 0.004 | 0.019 ± 0.000 | 0.033 ± 0.001 |
+| mplads | 0.728 ± 0.011 | 0.648 ± 0.015 | 0.316 ± 0.015 | 0.634 ± 0.013 | 0.014 ± 0.001 | 0.058 ± 0.005 | 0.004 ± 0.000 | 0.019 ± 0.002 |
+| bbmp_2024 | 0.862 ± 0.015 | 0.730 ± 0.125 | 0.605 ± 0.032 | 0.871 ± 0.035 | 0.018 ± 0.005 | 0.041 ± 0.039 | 0.006 ± 0.003 | 0.027 ± 0.018 |
+| bbmp_2010_2019 | 0.598 ± 0.024 | 0.623 ± 0.006 | 0.409 ± 0.008 | 0.568 ± 0.021 | 0.011 ± 0.002 | 0.034 ± 0.006 | 0.006 ± 0.001 | 0.030 ± 0.003 |
+| chicago | 0.525 ± 0.009 | 0.576 ± 0.003 | 0.477 ± 0.009 | 0.532 ± 0.010 | 0.011 ± 0.000 | 0.035 ± 0.004 | 0.010 ± 0.000 | 0.018 ± 0.002 |
+| secop | 0.500 ± 0.003 | 0.573 ± 0.002 | 0.468 ± 0.001 | 0.507 ± 0.003 | 0.022 ± 0.000 | 0.034 ± 0.001 | 0.021 ± 0.000 | 0.025 ± 0.001 |
+| delaware | 0.534 ± 0.009 | 0.611 ± 0.006 | 0.410 ± 0.003 | 0.529 ± 0.007 | 0.011 ± 0.001 | 0.034 ± 0.001 | 0.009 ± 0.000 | 0.015 ± 0.001 |
+| ocds_assam | 0.491 ± 0.043 | 0.602 ± 0.022 | 0.470 ± 0.059 | 0.524 ± 0.033 | 0.006 ± 0.003 | 0.012 ± 0.007 | 0.005 ± 0.002 | 0.007 ± 0.004 |
+| icai | 0.645 ± 0.012 | 0.650 ± 0.004 | 0.551 ± 0.003 | 0.654 ± 0.010 | 0.050 ± 0.002 | 0.131 ± 0.012 | 0.025 ± 0.001 | 0.068 ± 0.002 |
+
+Each cause is tied to the tables above; none of it has been tested by changing AFED yet (that is step 3).
+
+1. **The rule score F works against detection on real ledgers.** F alone ranks below chance on 6 of the 8 real
+   ledgers (ROC-AUC 0.316 mplads, 0.409 bbmp_2010_2019, 0.410 delaware, 0.468 secop, 0.470 ocds_assam, 0.477
+   chicago; 0.501 nspcl). The rules that need only amount and date fire on large shares of ordinary payments: a
+   "duplicate" (same vendor, amount within 0.2%, within 14 days) on 37.7% of mplads and 30.0% of bbmp_2010_2019
+   events, an "invoice burst" on 7.3% to 41.2% of events, a round amount on 21.6% of mplads. Yet F carries 14% to
+   50% of all risk mass (50.3% mplads, 47.9% bbmp_2010_2019, 33.7% delaware). The other five rules can never fire
+   on any real ledger (no approvals, creators, bank accounts or vendor dates), except rushed approval on secop and
+   bbmp_2024.
+2. **The forest component A carries most of the score but is close to random on the large ledgers.** A's ROC-AUC
+   is 0.500 secop, 0.525 chicago, 0.534 delaware and 0.491 ocds_assam, while A supplies 47% to 77% of all risk mass.
+   On these ledgers the forest has amount, date and category to work with; its other raw features are constant.
+3. **The best signal is diluted.** The entity deviation D is the best single component on 7 of 9 datasets (for
+   example delaware 0.611 alone against 0.529 for the fusion; chicago 0.576 against 0.532; secop 0.573 against
+   0.507), but it is zero for 89% to 96% of events and contributes only 2.5% to 11% of risk mass. Fusion ranks
+   below D alone on every dataset except mplads, bbmp_2024 and icai, where A is stronger.
+
+Also seen: planted slow drift, frequency shifts and off-cycle invoices are caught at 0% to 12% at the default
+cut-off on every real ledger (frequency shifts 3.4% to 9.8%, bbmp_2024 aside), and even amount spikes only 21% to
+37% on chicago, secop, delaware and nspcl. Short histories are common on nspcl, mplads, bbmp_2024 and icai (46% to
+80% of events have fewer than 8 earlier invoices) but are not the main cause on chicago, secop and delaware, where
+histories are long (medians of 64, 20 and 149 earlier invoices) and ranking is still near chance.
+
+![Component ROC-AUC](backend/experiments/figures_v2/component_roc_auc.png)
+
+#### What v2 changes (each behind a setting, off by default)
+
+| Change | Setting |
+|---|---|
+| Field-aware fusion: the rule weight is scaled by the share of rule severity whose inputs exist, and weights renormalised. Graded rather than all-or-nothing, because five rules need only amount and date, so F is never wholly missing. Identical to v1 when every input exists | `field_aware` |
+| Alert-budget calibration: the Medium cut-off alerts on a target share of each run's earliest 60%, then applies to all. No labels needed | `calibration.mode = "alert_budget"` |
+| Label-based calibration, for evaluation only (needs labels) | `calibration.mode = "label"` |
+| Six change features for the forest: EWMA z-scores of amount and gap, CUSUMs, a 6-invoice trend, gap over the earlier median gap. Earlier events only (tested by truncation) | `sequence_features` |
+| Narration one fact at a time, with a check that each number stays beside its own words | `narration_mode = "per_fact"` |
+| Evidence only: EWMA forecaster instead of the LSTM; LSTM trained on the earliest share | `temporal_source`, `lstm.fit_share` |
+
+#### The frozen v2 configuration (tuning data, `v2_tuning_results.md`)
+
+Searched per dataset, real ledgers chose almost all weight on the entity deviation (w2 = 0.85 to 0.90) and the
+synthetic set almost all on the rules (w3 = 0.90). One global setting had to serve all five:
+
+| Setting | w1 | w2 | w3 | Cut-off or budget | Tuning mean F1 |
+|---|---|---|---|---|---|
+| G, fixed cut-off | 0.05 | 0.45 | 0.50 | Medium 0.40 | 0.1980 |
+| GB, alert budget | 0.05 | 0.45 | 0.50 | 3.0% of events | 0.1751 |
+
+GB tuning F1 per dataset: nspcl 0.1143, mplads 0.0663, chicago 0.0447, delaware 0.0545, afed_synthetic 0.5957.
+
+**Full v2**, frozen in `v2_config.json`: field-aware fusion, sequence features, weights 0.05 / 0.45 / 0.50, alert budget 3.0% chosen on each run's earliest 60%.
+
+Note: the plan states 153 weight sets. The grid it defines (each weight 0.05 to 0.90 in steps of 0.05, summing to 1) has 171, and all 171 were searched. The miscount was in the plan, not the search.
+
+#### v1 against v2 on fresh data (`v2_evaluation_results.md`)
+
+Mean F1 of full v2 above v1 on 4 of 4 main ledgers (nspcl, mplads, chicago, delaware); synthetic recall change -0.2303 (allowed: no worse than −0.03). **FAIL**: v1 stays the default; v2 stays available as an option.
+
+Consistency: full v2 computed from cached components against a live pipeline run (nspcl, seed 4): largest risk difference 0.00e+00, alerts identical: True.
+
+| Dataset | Late events | Planted | F1 v1 | F1 v2 | Recall v1 | Recall v2 | Precision v1 | Precision v2 | ROC-AUC v1 | ROC-AUC v2 | Alerts v1 | Alerts v2 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| nspcl | 17,622 | 345 | 0.044 ± 0.003 | 0.070 ± 0.010 | 0.121 ± 0.011 | 0.118 ± 0.017 | 0.027 ± 0.002 | 0.049 ± 0.007 | 0.524 ± 0.026 | 0.570 ± 0.021 | 1554 ± 28 | 824 ± 10 |
+| mplads | 33,474 | 190 | 0.026 ± 0.005 | 0.083 ± 0.018 | 0.285 ± 0.059 | 0.246 ± 0.065 | 0.014 ± 0.002 | 0.050 ± 0.010 | 0.647 ± 0.022 | 0.600 ± 0.036 | 3973 ± 92 | 933 ± 3 |
+| chicago | 49,855 | 557 | 0.015 ± 0.004 | 0.026 ± 0.005 | 0.080 ± 0.013 | 0.066 ± 0.008 | 0.008 ± 0.002 | 0.016 ± 0.003 | 0.485 ± 0.012 | 0.516 ± 0.015 | 5456 ± 93 | 2261 ± 15 |
+| delaware | 145,509 | 1,546 | 0.020 ± 0.002 | 0.048 ± 0.005 | 0.099 ± 0.009 | 0.095 ± 0.011 | 0.011 ± 0.001 | 0.032 ± 0.004 | 0.499 ± 0.015 | 0.536 ± 0.013 | 14150 ± 187 | 4595 ± 34 |
+| afed_synthetic | 4,000 | 123 | 0.536 ± 0.032 | 0.602 ± 0.028 | 0.894 ± 0.012 | 0.664 ± 0.082 | 0.384 ± 0.035 | 0.555 ± 0.031 | 0.982 ± 0.002 | 0.985 ± 0.002 | 286 ± 20 | 147 ± 19 |
+| bbmp_2024 | 3,399 | 34 | 0.039 ± 0.015 | 0.045 ± 0.022 | 0.205 ± 0.074 | 0.137 ± 0.069 | 0.022 ± 0.008 | 0.027 ± 0.014 | 0.720 ± 0.030 | 0.731 ± 0.020 | 321 ± 3 | 171 ± 2 |
+| bbmp_2010_2019 | 13,290 | 109 | 0.029 ± 0.004 | 0.067 ± 0.003 | 0.196 ± 0.007 | 0.166 ± 0.012 | 0.016 ± 0.002 | 0.042 ± 0.002 | 0.559 ± 0.011 | 0.544 ± 0.002 | 1365 ± 26 | 429 ± 8 |
+| secop | 109,847 | 3,144 | 0.041 ± 0.002 | 0.046 ± 0.005 | 0.078 ± 0.004 | 0.044 ± 0.005 | 0.028 ± 0.002 | 0.049 ± 0.005 | 0.481 ± 0.002 | 0.494 ± 0.004 | 8799 ± 41 | 2826 ± 15 |
+| ocds_assam | 2,646 | 16 | 0.009 ± 0.003 | 0.047 ± 0.018 | 0.110 ± 0.048 | 0.084 ± 0.030 | 0.005 ± 0.002 | 0.033 ± 0.013 | 0.399 ± 0.020 | 0.420 ± 0.021 | 338 ± 2 | 41 ± 2 |
+| icai | 4,452 | 144 | 0.091 ± 0.002 | 0.099 ± 0.014 | 0.183 ± 0.009 | 0.102 ± 0.019 | 0.061 ± 0.001 | 0.097 ± 0.010 | 0.532 ± 0.012 | 0.533 ± 0.022 | 432 ± 4 | 151 ± 11 |
+
+Recall by planted type, v1 → v2:
+
+| Dataset | amount_spike | slow_drift | frequency_shift | off_cycle_invoice |
+|---|---|---|---|---|
+| nspcl | 0.329 ± 0.026 → 0.345 ± 0.009 | 0.109 ± 0.058 → 0.093 ± 0.038 | 0.045 ± 0.031 → 0.042 ± 0.037 | 0.033 ± 0.040 → 0.034 ± 0.031 |
+| mplads | 0.782 ± 0.021 → 0.747 ± 0.052 | 0.199 ± 0.060 → 0.185 ± 0.144 | 0.102 ± 0.058 → 0.055 ± 0.014 | 0.102 ± 0.017 → 0.071 ± 0.024 |
+| chicago | 0.268 ± 0.052 → 0.265 ± 0.047 | 0.045 ± 0.028 → 0.026 ± 0.026 | 0.031 ± 0.020 → 0.016 ± 0.017 | 0.033 ± 0.017 → 0.017 ± 0.009 |
+| delaware | 0.307 ± 0.031 → 0.300 ± 0.041 | 0.038 ± 0.001 → 0.041 ± 0.008 | 0.032 ± 0.013 → 0.023 ± 0.004 | 0.036 ± 0.009 → 0.031 ± 0.007 |
+| bbmp_2024 | 0.746 ± 0.099 → 0.635 ± 0.271 | 0.052 ± 0.045 → 0.000 ± 0.000 | 0.067 ± 0.115 → 0.000 ± 0.000 | 0.149 ± 0.092 → 0.083 ± 0.072 |
+| bbmp_2010_2019 | 0.672 ± 0.021 → 0.672 ± 0.021 | 0.048 ± 0.054 → 0.012 ± 0.021 | 0.032 ± 0.006 → 0.010 ± 0.018 | 0.063 ± 0.029 → 0.010 ± 0.017 |
+| secop | 0.198 ± 0.009 → 0.146 ± 0.010 | 0.064 ± 0.004 → 0.026 ± 0.006 | 0.046 ± 0.003 → 0.016 ± 0.003 | 0.036 ± 0.005 → 0.014 ± 0.005 |
+| ocds_assam | 0.272 ± 0.118 → 0.206 ± 0.042 | 0.125 ± 0.000 → 0.125 ± 0.000 | 0.000 ± 0.000 → 0.000 ± 0.000 | 0.000 ± 0.000 → 0.000 ± 0.000 |
+| icai | 0.827 ± 0.212 → 0.771 ± 0.201 | 0.085 ± 0.039 → 0.006 ± 0.010 | 0.134 ± 0.043 → 0.020 ± 0.034 | 0.063 ± 0.048 → 0.000 ± 0.000 |
+
+![F1 v1 against v2](backend/experiments/figures_v2/f1_v1_v2_real.png)
+
+![Recall by type](backend/experiments/figures_v2/recall_by_type_v1_v2.png)
+
+**What this shows.** v2 raises F1 on every main real ledger, but mainly by alerting less (58% to 88% fewer alerts):
+precision roughly doubles while recall falls slightly on every real ledger, and recall on slow drift, frequency
+shifts and off-cycle invoices falls on most. On the synthetic data the 3% budget cuts recall from 0.894 to 0.664,
+which fails the pre-registered rule. **v1 therefore stays the default**; v2 is available as options.
+
+#### Which change does what: cumulative ablation, F1 (`v2_evaluation_results.md`)
+
+| Row | nspcl | mplads | chicago | delaware | afed_synthetic | bbmp_2024 | bbmp_2010_2019 | secop | ocds_assam | icai |
+|---|---|---|---|---|---|---|---|---|---|---|
+| R0 v1 | 0.044 ± 0.003 | 0.026 ± 0.005 | 0.015 ± 0.004 | 0.020 ± 0.002 | 0.536 ± 0.032 | 0.039 ± 0.015 | 0.029 ± 0.004 | 0.041 ± 0.002 | 0.009 ± 0.003 | 0.091 ± 0.002 |
+| R1 + field-aware fusion | 0.047 ± 0.002 | 0.035 ± 0.006 | 0.017 ± 0.004 | 0.026 ± 0.002 | 0.536 ± 0.032 | 0.042 ± 0.020 | 0.036 ± 0.006 | 0.046 ± 0.001 | 0.018 ± 0.004 | 0.080 ± 0.012 |
+| R2 + alert budget (2%) | 0.067 ± 0.016 | 0.087 ± 0.019 | 0.026 ± 0.006 | 0.050 ± 0.006 | 0.509 ± 0.073 | 0.076 ± 0.036 | 0.082 ± 0.015 | 0.039 ± 0.003 | 0.029 ± 0.025 | 0.107 ± 0.016 |
+| R3 + sequence features | 0.070 ± 0.012 | 0.090 ± 0.016 | 0.025 ± 0.004 | 0.058 ± 0.008 | 0.513 ± 0.072 | 0.071 ± 0.034 | 0.082 ± 0.011 | 0.040 ± 0.004 | 0.032 ± 0.028 | 0.117 ± 0.028 |
+| R4 + weight search (P) | 0.100 ± 0.012 | 0.167 ± 0.030 | 0.073 ± 0.006 | 0.100 ± 0.005 | 0.587 ± 0.005 | n/a | n/a | n/a | n/a | n/a |
+| R5 full v2 | 0.070 ± 0.010 | 0.083 ± 0.018 | 0.026 ± 0.005 | 0.048 ± 0.005 | 0.602 ± 0.028 | 0.045 ± 0.022 | 0.067 ± 0.003 | 0.046 ± 0.005 | 0.047 ± 0.018 | 0.099 ± 0.014 |
+
+![Cumulative ablation](backend/experiments/figures_v2/cumulative_ablation.png)
+
+The alert budget is the largest single gain on real ledgers; field-aware fusion helps a little; sequence features
+add little. Per-dataset weights (R4) are best on every main ledger, but they are tuned with labels from that
+dataset, which a real organisation does not have.
+
+| Dataset | F1 P (per dataset) | F1 G (global, fixed cut) | F1 GB (full v2) | F1 v1 |
+|---|---|---|---|---|
+| nspcl | 0.100 ± 0.012 | 0.082 ± 0.015 | 0.070 ± 0.010 | 0.044 ± 0.003 |
+| mplads | 0.167 ± 0.030 | 0.131 ± 0.028 | 0.083 ± 0.018 | 0.026 ± 0.005 |
+| chicago | 0.073 ± 0.006 | 0.059 ± 0.011 | 0.026 ± 0.005 | 0.015 ± 0.004 |
+| delaware | 0.100 ± 0.005 | 0.072 ± 0.009 | 0.048 ± 0.005 | 0.020 ± 0.002 |
+| afed_synthetic | 0.587 ± 0.005 | 0.600 ± 0.036 | 0.602 ± 0.028 | 0.536 ± 0.032 |
+
+#### The central claim: anomalies below the approval limit (`subthreshold_benchmark_results.md`)
+
+Each planted invoice is 2x, 3x or 5x its vendor's earlier median and stays below Rs. 5,00,000, so a fixed limit
+cannot see any of them. Planting yields far fewer than 2.5% of events; chicago has too few to conclude from.
+
+##### nspcl
+
+Planted invoices in the measured period: 73.0 ± 4.6 per seed, of 17,446 events.
+
+| Model | Recall | Precision | F1 | PR-AUC | Alerts | Recall 2x | Recall 3x | Recall 5x |
+|---|---|---|---|---|---|---|---|---|
+| Rule-based | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.004 ± 0.000 | 4428 ± 2 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
+| Global IF | 0.005 ± 0.008 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.003 ± 0.000 | 3393 ± 30 | 0.016 ± 0.027 | 0.000 ± 0.000 | 0.000 ± 0.000 |
+| LOF | 0.042 ± 0.016 | 0.003 ± 0.001 | 0.006 ± 0.002 | 0.004 ± 0.000 | 924 ± 9 | 0.031 ± 0.027 | 0.064 ± 0.023 | 0.029 ± 0.025 |
+| AFED v1 | 0.155 ± 0.034 | 0.007 ± 0.002 | 0.014 ± 0.003 | 0.007 ± 0.001 | 1521 ± 17 | 0.066 ± 0.079 | 0.240 ± 0.050 | 0.144 ± 0.092 |
+| AFED v2 | 0.196 ± 0.024 | 0.017 ± 0.003 | 0.032 ± 0.005 | 0.011 ± 0.002 | 823 ± 1 | 0.136 ± 0.117 | 0.253 ± 0.039 | 0.186 ± 0.094 |
+
+##### mplads
+
+Planted invoices in the measured period: 49.0 ± 5.3 per seed, of 33,373 events.
+
+| Model | Recall | Precision | F1 | PR-AUC | Alerts | Recall 2x | Recall 3x | Recall 5x |
+|---|---|---|---|---|---|---|---|---|
+| Rule-based | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.002 ± 0.000 | 6196 ± 0 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
+| Global IF | 0.171 ± 0.007 | 0.001 ± 0.000 | 0.003 ± 0.000 | 0.001 ± 0.000 | 6263 ± 14 | 0.185 ± 0.170 | 0.120 ± 0.026 | 0.225 ± 0.139 |
+| LOF | 0.422 ± 0.004 | 0.004 ± 0.000 | 0.007 ± 0.001 | 0.004 ± 0.002 | 5701 ± 18 | 0.472 ± 0.048 | 0.447 ± 0.046 | 0.339 ± 0.034 |
+| AFED v1 | 0.701 ± 0.019 | 0.009 ± 0.001 | 0.017 ± 0.001 | 0.035 ± 0.008 | 4031 ± 86 | 0.583 ± 0.083 | 0.759 ± 0.027 | 0.740 ± 0.044 |
+| AFED v2 | 0.606 ± 0.035 | 0.032 ± 0.003 | 0.061 ± 0.006 | 0.044 ± 0.007 | 918 ± 9 | 0.574 ± 0.181 | 0.603 ± 0.163 | 0.661 ± 0.034 |
+
+##### chicago
+
+Planted invoices in the measured period: 14.0 ± 4.0 per seed, of 49,645 events. Too few to draw conclusions from.
+
+| Model | Recall | Precision | F1 | PR-AUC | Alerts | Recall 2x | Recall 3x | Recall 5x |
+|---|---|---|---|---|---|---|---|---|
+| Rule-based | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 28208 ± 3 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
+| Global IF | 0.142 ± 0.063 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 9368 ± 22 | 0.083 ± 0.144 | 0.153 ± 0.168 | 0.222 ± 0.255 |
+| LOF | 0.057 ± 0.052 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 3289 ± 1 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.222 ± 0.255 |
+| AFED v1 | 0.122 ± 0.113 | 0.000 ± 0.000 | 0.001 ± 0.001 | 0.001 ± 0.001 | 5341 ± 43 | 0.000 ± 0.000 | 0.125 ± 0.217 | 0.167 ± 0.167 |
+| AFED v2 | 0.061 ± 0.056 | 0.000 ± 0.000 | 0.001 ± 0.001 | 0.001 ± 0.001 | 2297 ± 13 | 0.000 ± 0.000 | 0.083 ± 0.144 | 0.056 ± 0.096 |
+
+##### delaware
+
+Planted invoices in the measured period: 467.0 ± 13.2 per seed, of 144,769 events.
+
+| Model | Recall | Precision | F1 | PR-AUC | Alerts | Recall 2x | Recall 3x | Recall 5x |
+|---|---|---|---|---|---|---|---|---|
+| Rule-based | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.003 ± 0.000 | 27421 ± 5 | 0.000 ± 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
+| Global IF | 0.284 ± 0.025 | 0.005 ± 0.001 | 0.011 ± 0.001 | 0.005 ± 0.000 | 24763 ± 84 | 0.295 ± 0.064 | 0.282 ± 0.008 | 0.275 ± 0.036 |
+| LOF | 0.081 ± 0.003 | 0.003 ± 0.000 | 0.006 ± 0.000 | 0.004 ± 0.000 | 11872 ± 9 | 0.060 ± 0.018 | 0.067 ± 0.004 | 0.114 ± 0.010 |
+| AFED v1 | 0.184 ± 0.019 | 0.007 ± 0.001 | 0.013 ± 0.002 | 0.007 ± 0.001 | 13067 ± 69 | 0.121 ± 0.027 | 0.153 ± 0.030 | 0.276 ± 0.015 |
+| AFED v2 | 0.180 ± 0.017 | 0.018 ± 0.002 | 0.033 ± 0.003 | 0.011 ± 0.001 | 4650 ± 26 | 0.141 ± 0.028 | 0.149 ± 0.013 | 0.249 ± 0.021 |
+
+![Sub-threshold benchmark](backend/experiments/figures_v2/subthreshold_benchmark.png)
+
+AFED has the highest recall on nspcl and mplads; on delaware the global Isolation Forest finds more (0.284 against
+0.184 and 0.180), with more than five times as many alerts as v2. v2 has the best F1 and PR-AUC on nspcl, mplads and
+delaware.
+
+#### The LSTM, re-tested on fresh data (`lstm_retest_results.md`)
+
+| Dataset | Recall with | Recall without | Alerts with | Alerts without | Seeds with higher recall | Verdict |
+|---|---|---|---|---|---|---|
+| nspcl | 0.121 ± 0.011 | 0.100 ± 0.004 | 1554 ± 28 | 1548 ± 9 | 3 of 3 | FAIL |
+| mplads | 0.285 ± 0.059 | 0.303 ± 0.037 | 3973 ± 92 | 4370 ± 50 | 0 of 3 | FAIL |
+| chicago | 0.080 ± 0.013 | 0.066 ± 0.013 | 5456 ± 93 | 5923 ± 32 | 3 of 3 | PASS |
+| delaware | 0.099 ± 0.009 | 0.078 ± 0.009 | 14150 ± 187 | 16394 ± 409 | 3 of 3 | PASS |
+| afed_synthetic | 0.894 ± 0.012 | 0.949 ± 0.024 | 286 ± 20 | 280 ± 19 | 0 of 3 | FAIL |
+
+| Dataset | with | without | lstm60 | ewma |
+|---|---|---|---|---|
+| nspcl | 0.044 ± 0.003 | 0.037 ± 0.001 | 0.045 ± 0.001 | 0.043 ± 0.004 |
+| mplads | 0.026 ± 0.005 | 0.025 ± 0.002 | 0.027 ± 0.005 | 0.027 ± 0.004 |
+| chicago | 0.015 ± 0.004 | 0.011 ± 0.003 | 0.016 ± 0.004 | 0.014 ± 0.004 |
+| delaware | 0.020 ± 0.002 | 0.013 ± 0.001 | 0.021 ± 0.002 | 0.020 ± 0.002 |
+| afed_synthetic | 0.536 ± 0.032 | 0.579 ± 0.046 | 0.539 ± 0.036 | 0.540 ± 0.026 |
+
+An EWMA forecaster gives F1 within the seed spread of the LSTM on every dataset, and an LSTM trained only on the
+earliest 60% matches one trained on everything, so the earlier LSTM results were not inflated by training on the
+judged period. The LSTM stays in the default pipeline (the user's decision of 10 Nov 2026; the supervisor requires
+it).
+
+#### NSPCL case study for human review (`nspcl_top50_for_review.csv`)
+
+The 50 highest-risk v2 alerts in the latest 40% of the real NSPCL ledger (of 827 alerts there), with their facts and
+empty columns for two reviewers. No result is claimed from it until people have labelled it.
+
+#### Qwen narration v2: one fact at a time (`narration_v2_results.md`)
+
+100 new alerts (synthetic seed 11; none used before), each in English and Hindi, Qwen2.5-1.5B local.
+
+| Language | Arm | accepted | new word | new number | misplaced number | main fact left out | accusing term | empty or failed | Median seconds |
+|---|---|---|---|---|---|---|---|---|---|
+| English | v1 paragraph | 54 | 46 | 0 | 0 | 0 | 0 | 0 | 1.8 |
+| English | v2 per fact | 9 | 80 | 1 | 10 | 0 | 0 | 0 | 1.5 |
+| Hindi | v1 paragraph | 60 | 33 | 2 | 0 | 5 | 0 | 0 | 2.8 |
+| Hindi | v2 per fact | 37 | 63 | 0 | 0 | 0 | 0 | 0 | 2.6 |
+
+English v2 accepted that the NLI gate also passes: **9 of 100**.
+
+v1 narrations that pass the v1 checks but fail the anchor check: English 3, Hindi 1.
+
+| Arm | Narrations | Entailed | Neutral | Contradiction |
+|---|---|---|---|---|
+| v1, accepted | 54 | 47 | 1 | 6 |
+| v1, refused | 46 | 19 | 22 | 5 |
+| v2, accepted | 9 | 9 | 0 | 0 |
+| v2, refused | 91 | 83 | 1 | 7 |
+
+**Read by hand.**
+
+Of the six accepted v1 English narrations the NLI judge called a contradiction:
+
+- **Real errors (2):** EV-008468, "...usual of Rs. 76,833, which is 93% of the Rs. 5,00,000 approval limit": the 93%
+  belongs to the invoice amount, the known failure of attaching a number to the wrong quantity. EV-007168, "raised 1
+  day earlier than usual": the fact says the matching invoice was raised 1 day earlier; "than usual" adds a comparison
+  the facts do not make.
+- **Judge errors (4):** EV-009217 and EV-009479 copy their fact word for word; EV-007167 and EV-004716 keep each fact's
+  meaning ("Amount ... and is 100% of the ... limit" keeps the amount as the subject).
+
+None of the accepted v2 narrations is in that list: all 9 accepted English v2 narrations were judged entailed.
+
+**What this shows.**
+
+- Per-fact narration removed errors from what it accepted (9 of 9 English accepted were entailed), but acceptance
+  fell from 54 to 9 in English and from 60 to 37 in Hindi.
+- The v2 checks refuse mostly faithful wording: of the 91 refused English v2 narrations, the NLI judge called 83
+  entailed. The per-fact prompt makes Qwen rephrase ("2.9 times the usual amount from this vendor, which is
+  Rs. 75,549"), which the word check and the anchor check refuse even when the meaning is kept.
+- The anchor check alone flags 3 English v1 narrations that the v1 checks accept, including EV-008468. Adding it to
+  paragraph mode was not an arm of this test, so no acceptance figure is claimed for it.
+- No default changes: the template stays the default provider and paragraph mode stays the default.
+
+
+![Qwen narration v1 against v2](backend/experiments/figures_v2/qwen_v2_outcomes.png)
+
+
 ---
 
 ## 11. Security and privacy
@@ -826,7 +1108,7 @@ The three accepted narrations not judged "entailed" were read by hand, as the pl
 
 | Suite | What it covers | Result |
 |---|---|---|
-| `backend/tests/test_afed.py` | Date and number parsing, baselines, rules, fusion and tiers, recalibration with its held-back check, the grounding and completeness checks (English and Hindi), fallback when a provider fails or invents, prompt injection through ids, metrics, injection | 27 passed |
+| `backend/tests/test_afed.py` | Date and number parsing, baselines, rules, fusion and tiers, recalibration with its held-back check, the grounding and completeness checks (English and Hindi), fallback when a provider fails or invents, prompt injection through ids, metrics, injection; v2: the v1 output fingerprint, field-aware fusion with and without inputs, alert-budget and label calibration, no leakage in the sequence features and the EWMA forecaster, sub-threshold planting, the number-anchor check, per-fact narration | 35 passed |
 | `backend/experiments/narration_evaluation.py` | Qwen on 100 held-out alerts in two languages, with an NLI judge | Section 10.9 |
 | `backend/tests/test_api.py` | The access matrix for every route and role, review and rerun workflows, uploads (including hostile files), automatic intake, exports, sessions ending on password change, lockout, forged headers, oversized unsigned bodies, a failed run leaving nothing behind; also runs on Postgres | All checks pass |
 | `frontend/e2e/smoke.py` | Signs in as each role through the real form, opens every page it may reach (37 visits), checks refused pages, runs the sample upload; fails on any console error | All checks pass |
@@ -886,6 +1168,11 @@ The three accepted narrations not judged "entailed" were read by hand, as the pl
 - **One currency rate per currency** for all years; matching vendors by normalised name can merge or split firms.
 - **Mixed event kinds.** Some datasets record awards, contracts or work orders rather than payments.
 - **Deployment untested.** Docker, Render and Vercel configurations exist but have not been run in production.
+- **Planted shares are below target.** One episode per vendor reaches 2.5% of events only on secop; elsewhere 0.5%
+  to 1.9%, and the sub-threshold benchmark 0.03% to 0.44%. Chicago's sub-threshold numbers rest on 14 invoices per seed.
+- **v2's gains are precision, not detection.** On real ledgers v2 alerts 58% to 88% less and recall falls slightly;
+  subtle planted types are found less often. Its best variant (per-dataset weights) needs labels a deployment lacks.
+- **The LSTM is not better than a simple EWMA forecaster** on any dataset tested (section 10.10).
 - **Narration.** The word check cannot see a correctly worded sentence that attaches a number to the wrong thing
   (alert 248). Hindi narrations were not judged by the NLI model, which is English only. Only the 1.5B local model
   was tested.
@@ -894,7 +1181,9 @@ The three accepted narrations not judged "entailed" were read by hand, as the pl
 
 ## 15. Future work
 
-1. **Calibrate on deployment.** The threshold test passed (section 10.6): set the Medium cut-off from each
+1. **Learn weights per organisation from reviews.** Per-dataset weights (R4 in section 10.10) were the best
+   variant on every main ledger; recalibration from reviewer decisions is the deployable route to them.
+2. **Calibrate on deployment.** The threshold test passed (section 10.6): set the Medium cut-off from each
    organisation's own reviewed history, through recalibration, before relying on the default.
 2. **Better sequence detection**: seasonal baselines, change-point detection, and training the LSTM per
    category on longer histories.
@@ -914,7 +1203,7 @@ The three accepted narrations not judged "entailed" were read by hand, as the pl
 
 | Decision | Status |
 |---|---|
-| LSTM errors as Isolation Forest inputs | **Open.** The supervisor decides. Temporal ablation: FAIL on alerts. Real data: PASS on 5 of 7. Default unchanged (`lstm.in_forest = true`). |
+| LSTM errors as Isolation Forest inputs | **Kept** (user's decision, 10 Nov 2026; the supervisor requires the LSTM pipeline). Temporal ablation: FAIL on alerts. Real data: PASS on 5 of 7. Fresh-data re-test: PASS on chicago and delaware, FAIL on nspcl, mplads and synthetic; an EWMA forecaster does as well. |
 | Which datasets to headline in the paper | **Open.** Recommended: fitness criteria fixed in advance (daily dates, enough vendors with long histories), not results. The comparison uses NSPCL, MPLADS, Chicago and Delaware on that basis. |
 | CPPP awards dataset | Dropped: even trimmed to the needed columns it would take hours to download. |
 | data.gov.in | Not pursued, at the project's request. |
@@ -924,6 +1213,7 @@ The three accepted narrations not judged "entailed" were read by hand, as the pl
 | Recalibration checked on held-back reviews | Adopted. |
 | Per-dataset thresholds | Pre-registered test PASSED (F1 up on all 4 real ledgers, by precision; recall falls). Served by recalibration; default unchanged. |
 | Explanations without a repeated level | Adopted; the level is shown beside every explanation. |
+| v2 as the default | **Not adopted.** Pre-registered rule FAIL: F1 higher on 4 of 4 main ledgers, but synthetic recall down 0.230 (allowed 0.03). v2 stays available as options (section 10.10). |
 | Narration provider | Template by default. Qwen (local 1.5B) available and tested: 46% English and 61% Hindi accepted, errors caught by the checks (section 10.9). |
 
 ---
@@ -963,6 +1253,10 @@ python experiments/model_comparison.py        # four models, six datasets, figur
 python experiments/real_data_evaluation.py    # real ledgers with planted anomalies, LSTM rule
 python experiments/temporal_ablation.py       # pre-registered LSTM ablation
 python experiments/threshold_calibration.py   # pre-registered threshold test
+python experiments/diagnostics.py             # v2 step 1: why real-data ranking is weak
+python experiments/v2_tuning.py && python experiments/v2_evaluation.py   # v2: tune, freeze, then report
+python experiments/lstm_retest.py && python experiments/subthreshold_benchmark.py && python experiments/nspcl_case_study.py
+python experiments/figures_v2.py && python experiments/report_numbers_v2.py
 pip install -r requirements-qwen.txt && python experiments/narration_evaluation.py   # Qwen narration, about 15 minutes
 ```
 
