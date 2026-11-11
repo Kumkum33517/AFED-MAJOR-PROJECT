@@ -1,0 +1,4375 @@
+{
+ "decision": {
+  "verdict": "FAIL",
+  "main_ledgers_with_higher_f1": [
+   "nspcl",
+   "mplads",
+   "chicago",
+   "delaware"
+  ],
+  "synthetic_recall_drop": 0.23028273809523814
+ },
+ "consistency_check": {
+  "dataset": "nspcl",
+  "seed": 4,
+  "max_risk_difference": 0.0,
+  "alerts_equal": true
+ },
+ "config": {
+  "frozen": "chosen on tuning data only by v2_tuning.py; read, never changed, by the reporting experiments",
+  "per_dataset": {
+   "nspcl": {
+    "weights": {
+     "w1": 0.05,
+     "w2": 0.9,
+     "w3": 0.05
+    },
+    "medium": 0.3,
+    "tuning_f1": 0.1495
+   },
+   "mplads": {
+    "weights": {
+     "w1": 0.45,
+     "w2": 0.5,
+     "w3": 0.05
+    },
+    "medium": 0.86,
+    "tuning_f1": 0.1562
+   },
+   "chicago": {
+    "weights": {
+     "w1": 0.05,
+     "w2": 0.85,
+     "w3": 0.1
+    },
+    "medium": 0.36,
+    "tuning_f1": 0.1025
+   },
+   "delaware": {
+    "weights": {
+     "w1": 0.05,
+     "w2": 0.9,
+     "w3": 0.05
+    },
+    "medium": 0.37,
+    "tuning_f1": 0.1003
+   },
+   "afed_synthetic": {
+    "weights": {
+     "w1": 0.05,
+     "w2": 0.05,
+     "w3": 0.9
+    },
+    "medium": 0.61,
+    "tuning_f1": 0.6314
+   }
+  },
+  "global_fixed": {
+   "weights": {
+    "w1": 0.05,
+    "w2": 0.45,
+    "w3": 0.5
+   },
+   "medium": 0.4,
+   "tuning_mean_f1": 0.198
+  },
+  "global_budget": {
+   "weights": {
+    "w1": 0.05,
+    "w2": 0.45,
+    "w3": 0.5
+   },
+   "target_rate": 0.03,
+   "tuning_mean_f1": 0.1751,
+   "per_dataset_tuning_f1": {
+    "nspcl": 0.1143,
+    "mplads": 0.0663,
+    "chicago": 0.0447,
+    "delaware": 0.0545,
+    "afed_synthetic": 0.5957
+   }
+  },
+  "full_v2_settings": {
+   "field_aware": true,
+   "sequence_features": true,
+   "weights": {
+    "w1": 0.05,
+    "w2": 0.45,
+    "w3": 0.5
+   },
+   "calibration": {
+    "mode": "alert_budget",
+    "target_rate": 0.03,
+    "fit_share": 0.6
+   }
+  },
+  "reference_tuning_f1": {
+   "nspcl": {
+    "default_weights_cut_045": 0.076,
+    "default_weights_budget_2pct": 0.1059
+   },
+   "mplads": {
+    "default_weights_cut_045": 0.0353,
+    "default_weights_budget_2pct": 0.0908
+   },
+   "chicago": {
+    "default_weights_cut_045": 0.0352,
+    "default_weights_budget_2pct": 0.0544
+   },
+   "delaware": {
+    "default_weights_cut_045": 0.0324,
+    "default_weights_budget_2pct": 0.0674
+   },
+   "afed_synthetic": {
+    "default_weights_cut_045": 0.4842,
+    "default_weights_budget_2pct": 0.4613
+   }
+  }
+ },
+ "results": {
+  "nspcl": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.045430533544638135,
+       "precision": 0.027688345138441726,
+       "recall": 0.1264705882352941,
+       "alerts": 1553,
+       "tp": 43,
+       "fp": 1510,
+       "fn": 297,
+       "tn": 15776,
+       "roc_auc": 0.5410241882244047,
+       "pr_auc": 0.025066266743261068
+      },
+      "by_type": {
+       "amount_spike": 0.3116883116883117,
+       "frequency_shift": 0.08045977011494253,
+       "off_cycle_invoice": 0.010752688172043012,
+       "slow_drift": 0.13253012048192772
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.04566683964711988,
+       "precision": 0.027725267800882167,
+       "recall": 0.12941176470588237,
+       "alerts": 1587,
+       "tp": 44,
+       "fp": 1543,
+       "fn": 296,
+       "tn": 15743,
+       "roc_auc": 0.5450218129598247,
+       "pr_auc": 0.02794953766355839
+      },
+      "by_type": {
+       "amount_spike": 0.3246753246753247,
+       "frequency_shift": 0.06896551724137931,
+       "off_cycle_invoice": 0.021505376344086023,
+       "slow_drift": 0.13253012048192772
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.07710280373831777,
+       "precision": 0.06395348837209303,
+       "recall": 0.09705882352941177,
+       "alerts": 516,
+       "tp": 33,
+       "fp": 483,
+       "fn": 307,
+       "tn": 16803,
+       "roc_auc": 0.5450218129598247,
+       "pr_auc": 0.02794953766355839
+      },
+      "by_type": {
+       "amount_spike": 0.2597402597402597,
+       "frequency_shift": 0.04597701149425287,
+       "off_cycle_invoice": 0.010752688172043012,
+       "slow_drift": 0.0963855421686747
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.07789232531500573,
+       "precision": 0.06378986866791744,
+       "recall": 0.1,
+       "alerts": 533,
+       "tp": 34,
+       "fp": 499,
+       "fn": 306,
+       "tn": 16787,
+       "roc_auc": 0.5698508143278138,
+       "pr_auc": 0.03092944085843826
+      },
+      "by_type": {
+       "amount_spike": 0.2857142857142857,
+       "frequency_shift": 0.034482758620689655,
+       "off_cycle_invoice": 0.010752688172043012,
+       "slow_drift": 0.0963855421686747
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.10701754385964912,
+       "precision": 0.07625,
+       "recall": 0.17941176470588235,
+       "alerts": 800,
+       "tp": 61,
+       "fp": 739,
+       "fn": 279,
+       "tn": 16547,
+       "roc_auc": 0.6060928258842586,
+       "pr_auc": 0.04601057123137897
+      },
+      "by_type": {
+       "amount_spike": 0.45454545454545453,
+       "frequency_shift": 0.09195402298850575,
+       "off_cycle_invoice": 0.053763440860215055,
+       "slow_drift": 0.1566265060240964
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.07228915662650602,
+       "precision": 0.051094890510948905,
+       "recall": 0.12352941176470589,
+       "alerts": 822,
+       "tp": 42,
+       "fp": 780,
+       "fn": 298,
+       "tn": 16506,
+       "roc_auc": 0.588106492162988,
+       "pr_auc": 0.034156015646965084
+      },
+      "by_type": {
+       "amount_spike": 0.33766233766233766,
+       "frequency_shift": 0.06896551724137931,
+       "off_cycle_invoice": 0.021505376344086023,
+       "slow_drift": 0.0963855421686747
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.09137055837563453,
+       "precision": 0.08035714285714286,
+       "recall": 0.10588235294117647,
+       "alerts": 448,
+       "tp": 36,
+       "fp": 412,
+       "fn": 304,
+       "tn": 16874,
+       "roc_auc": 0.588106492162988,
+       "pr_auc": 0.034156015646965084
+      },
+      "by_type": {
+       "amount_spike": 0.3116883116883117,
+       "frequency_shift": 0.034482758620689655,
+       "off_cycle_invoice": 0.010752688172043012,
+       "slow_drift": 0.0963855421686747
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 17626,
+    "late_anomalies": 340
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.04561949196474857,
+       "precision": 0.027795325331648767,
+       "recall": 0.12716763005780346,
+       "alerts": 1583,
+       "tp": 44,
+       "fp": 1539,
+       "fn": 302,
+       "tn": 15727,
+       "roc_auc": 0.4942265999066628,
+       "pr_auc": 0.021732802904599422
+      },
+      "by_type": {
+       "amount_spike": 0.3582089552238806,
+       "frequency_shift": 0.028985507246376812,
+       "off_cycle_invoice": 0.010309278350515464,
+       "slow_drift": 0.1504424778761062
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.04979674796747968,
+       "precision": 0.03020961775585697,
+       "recall": 0.1416184971098266,
+       "alerts": 1622,
+       "tp": 49,
+       "fp": 1573,
+       "fn": 297,
+       "tn": 15693,
+       "roc_auc": 0.49760739640671736,
+       "pr_auc": 0.023457655771321476
+      },
+      "by_type": {
+       "amount_spike": 0.40298507462686567,
+       "frequency_shift": 0.057971014492753624,
+       "off_cycle_invoice": 0.010309278350515464,
+       "slow_drift": 0.1504424778761062
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.04878048780487805,
+       "precision": 0.040776699029126215,
+       "recall": 0.06069364161849711,
+       "alerts": 515,
+       "tp": 21,
+       "fp": 494,
+       "fn": 325,
+       "tn": 16772,
+       "roc_auc": 0.49760739640671736,
+       "pr_auc": 0.023457655771321476
+      },
+      "by_type": {
+       "amount_spike": 0.22388059701492538,
+       "frequency_shift": 0.028985507246376812,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.035398230088495575
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.05700712589073634,
+       "precision": 0.04838709677419355,
+       "recall": 0.06936416184971098,
+       "alerts": 496,
+       "tp": 24,
+       "fp": 472,
+       "fn": 322,
+       "tn": 16794,
+       "roc_auc": 0.5266658922041982,
+       "pr_auc": 0.025911724490232435
+      },
+      "by_type": {
+       "amount_spike": 0.26865671641791045,
+       "frequency_shift": 0.028985507246376812,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.035398230088495575
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.08626760563380281,
+       "precision": 0.0620253164556962,
+       "recall": 0.1416184971098266,
+       "alerts": 790,
+       "tp": 49,
+       "fp": 741,
+       "fn": 297,
+       "tn": 16525,
+       "roc_auc": 0.5623183388918312,
+       "pr_auc": 0.036723668142473895
+      },
+      "by_type": {
+       "amount_spike": 0.40298507462686567,
+       "frequency_shift": 0.10144927536231885,
+       "off_cycle_invoice": 0.07216494845360824,
+       "slow_drift": 0.07079646017699115
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.05857019810508182,
+       "precision": 0.04171779141104295,
+       "recall": 0.09826589595375723,
+       "alerts": 815,
+       "tp": 34,
+       "fp": 781,
+       "fn": 312,
+       "tn": 16485,
+       "roc_auc": 0.5464409655382056,
+       "pr_auc": 0.028755263223940678
+      },
+      "by_type": {
+       "amount_spike": 0.34328358208955223,
+       "frequency_shift": 0.057971014492753624,
+       "off_cycle_invoice": 0.010309278350515464,
+       "slow_drift": 0.05309734513274336
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.06557377049180327,
+       "precision": 0.058165548098434,
+       "recall": 0.07514450867052024,
+       "alerts": 447,
+       "tp": 26,
+       "fp": 421,
+       "fn": 320,
+       "tn": 16845,
+       "roc_auc": 0.5464409655382056,
+       "pr_auc": 0.028755263223940678
+      },
+      "by_type": {
+       "amount_spike": 0.29850746268656714,
+       "frequency_shift": 0.028985507246376812,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.035398230088495575
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 17612,
+    "late_anomalies": 346
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.040490143846563666,
+       "precision": 0.024885396201702686,
+       "recall": 0.10857142857142857,
+       "alerts": 1527,
+       "tp": 38,
+       "fp": 1489,
+       "fn": 312,
+       "tn": 15788,
+       "roc_auc": 0.5378751271302061,
+       "pr_auc": 0.026038985138655005
+      },
+      "by_type": {
+       "amount_spike": 0.3157894736842105,
+       "frequency_shift": 0.025,
+       "off_cycle_invoice": 0.07920792079207921,
+       "slow_drift": 0.043010752688172046
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.04552509053285049,
+       "precision": 0.027795325331648767,
+       "recall": 0.12571428571428572,
+       "alerts": 1583,
+       "tp": 44,
+       "fp": 1539,
+       "fn": 306,
+       "tn": 15738,
+       "roc_auc": 0.5426641530027534,
+       "pr_auc": 0.029005621944319444
+      },
+      "by_type": {
+       "amount_spike": 0.34210526315789475,
+       "frequency_shift": 0.025,
+       "off_cycle_invoice": 0.0891089108910891,
+       "slow_drift": 0.07526881720430108
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.07398843930635837,
+       "precision": 0.062135922330097085,
+       "recall": 0.09142857142857143,
+       "alerts": 515,
+       "tp": 32,
+       "fp": 483,
+       "fn": 318,
+       "tn": 16794,
+       "roc_auc": 0.5426641530027534,
+       "pr_auc": 0.029005621944319444
+      },
+      "by_type": {
+       "amount_spike": 0.3026315789473684,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.04950495049504951,
+       "slow_drift": 0.043010752688172046
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.0759493670886076,
+       "precision": 0.06358381502890173,
+       "recall": 0.09428571428571429,
+       "alerts": 519,
+       "tp": 33,
+       "fp": 486,
+       "fn": 317,
+       "tn": 16791,
+       "roc_auc": 0.5580765509885148,
+       "pr_auc": 0.03107661020325824
+      },
+      "by_type": {
+       "amount_spike": 0.3026315789473684,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.04950495049504951,
+       "slow_drift": 0.053763440860215055
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.10820244328097732,
+       "precision": 0.07788944723618091,
+       "recall": 0.17714285714285713,
+       "alerts": 796,
+       "tp": 62,
+       "fp": 734,
+       "fn": 288,
+       "tn": 16543,
+       "roc_auc": 0.589320897311868,
+       "pr_auc": 0.04610250807118241
+      },
+      "by_type": {
+       "amount_spike": 0.4473684210526316,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.09900990099009901,
+       "slow_drift": 0.1935483870967742
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.0777027027027027,
+       "precision": 0.05515587529976019,
+       "recall": 0.13142857142857142,
+       "alerts": 834,
+       "tp": 46,
+       "fp": 788,
+       "fn": 304,
+       "tn": 16489,
+       "roc_auc": 0.5741823563945461,
+       "pr_auc": 0.035523527252666484
+      },
+      "by_type": {
+       "amount_spike": 0.35526315789473684,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.06930693069306931,
+       "slow_drift": 0.12903225806451613
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.09022556390977443,
+       "precision": 0.08035714285714286,
+       "recall": 0.10285714285714286,
+       "alerts": 448,
+       "tp": 36,
+       "fp": 412,
+       "fn": 314,
+       "tn": 16865,
+       "roc_auc": 0.5741823563945461,
+       "pr_auc": 0.035523527252666484
+      },
+      "by_type": {
+       "amount_spike": 0.3026315789473684,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0594059405940594,
+       "slow_drift": 0.07526881720430108
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 17627,
+    "late_anomalies": 350
+   }
+  ],
+  "mplads": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.030594621268196398,
+       "precision": 0.016020671834625324,
+       "recall": 0.33879781420765026,
+       "alerts": 3870,
+       "tp": 62,
+       "fp": 3808,
+       "fn": 121,
+       "tn": 29482,
+       "roc_auc": 0.6553545839099025,
+       "pr_auc": 0.033034790664501365
+      },
+      "by_type": {
+       "amount_spike": 0.7678571428571429,
+       "frequency_shift": 0.15384615384615385,
+       "off_cycle_invoice": 0.08333333333333333,
+       "slow_drift": 0.25925925925925924
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.04028132992327366,
+       "precision": 0.021392190152801357,
+       "recall": 0.3442622950819672,
+       "alerts": 2945,
+       "tp": 63,
+       "fp": 2882,
+       "fn": 120,
+       "tn": 30408,
+       "roc_auc": 0.6822497115102092,
+       "pr_auc": 0.045192399668513475
+      },
+      "by_type": {
+       "amount_spike": 0.7857142857142857,
+       "frequency_shift": 0.15384615384615385,
+       "off_cycle_invoice": 0.08333333333333333,
+       "slow_drift": 0.25925925925925924
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.10817031070195626,
+       "precision": 0.06851311953352769,
+       "recall": 0.2568306010928962,
+       "alerts": 686,
+       "tp": 47,
+       "fp": 639,
+       "fn": 136,
+       "tn": 32651,
+       "roc_auc": 0.6822497115102092,
+       "pr_auc": 0.045192399668513475
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.038461538461538464,
+       "off_cycle_invoice": 0.0625,
+       "slow_drift": 0.07407407407407407
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.10733844468784227,
+       "precision": 0.06712328767123288,
+       "recall": 0.2677595628415301,
+       "alerts": 730,
+       "tp": 49,
+       "fp": 681,
+       "fn": 134,
+       "tn": 32609,
+       "roc_auc": 0.7095854118550837,
+       "pr_auc": 0.04834052268115985
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.057692307692307696,
+       "off_cycle_invoice": 0.0625,
+       "slow_drift": 0.1111111111111111
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.192,
+       "precision": 0.1875,
+       "recall": 0.19672131147540983,
+       "alerts": 192,
+       "tp": 36,
+       "fp": 156,
+       "fn": 147,
+       "tn": 33134,
+       "roc_auc": 0.7452340501668562,
+       "pr_auc": 0.06623678944793429
+      },
+      "by_type": {
+       "amount_spike": 0.5714285714285714,
+       "frequency_shift": 0.038461538461538464,
+       "off_cycle_invoice": 0.041666666666666664,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.10035842293906809,
+       "precision": 0.06002143622722401,
+       "recall": 0.30601092896174864,
+       "alerts": 933,
+       "tp": 56,
+       "fp": 877,
+       "fn": 127,
+       "tn": 32413,
+       "roc_auc": 0.625296491996973,
+       "pr_auc": 0.040677403581741815
+      },
+      "by_type": {
+       "amount_spike": 0.7321428571428571,
+       "frequency_shift": 0.057692307692307696,
+       "off_cycle_invoice": 0.0625,
+       "slow_drift": 0.3333333333333333
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.1582089552238806,
+       "precision": 0.10882956878850103,
+       "recall": 0.2896174863387978,
+       "alerts": 487,
+       "tp": 53,
+       "fp": 434,
+       "fn": 130,
+       "tn": 32856,
+       "roc_auc": 0.625296491996973,
+       "pr_auc": 0.040677403581741815
+      },
+      "by_type": {
+       "amount_spike": 0.7321428571428571,
+       "frequency_shift": 0.057692307692307696,
+       "off_cycle_invoice": 0.0625,
+       "slow_drift": 0.2222222222222222
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 33473,
+    "late_anomalies": 183
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.02161654135338346,
+       "precision": 0.011363636363636364,
+       "recall": 0.22115384615384615,
+       "alerts": 4048,
+       "tp": 46,
+       "fp": 4002,
+       "fn": 162,
+       "tn": 29270,
+       "roc_auc": 0.6221622304270626,
+       "pr_auc": 0.019470992448626906
+      },
+      "by_type": {
+       "amount_spike": 0.8055555555555556,
+       "frequency_shift": 0.04,
+       "off_cycle_invoice": 0.10526315789473684,
+       "slow_drift": 0.13846153846153847
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.028438948995363218,
+       "precision": 0.015196564255037992,
+       "recall": 0.22115384615384615,
+       "alerts": 3027,
+       "tp": 46,
+       "fp": 2981,
+       "fn": 162,
+       "tn": 30291,
+       "roc_auc": 0.6528687785525367,
+       "pr_auc": 0.025925747093379244
+      },
+      "by_type": {
+       "amount_spike": 0.8333333333333334,
+       "frequency_shift": 0.06,
+       "off_cycle_invoice": 0.10526315789473684,
+       "slow_drift": 0.1076923076923077
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.07180570221752904,
+       "precision": 0.046008119079837616,
+       "recall": 0.16346153846153846,
+       "alerts": 739,
+       "tp": 34,
+       "fp": 705,
+       "fn": 174,
+       "tn": 32567,
+       "roc_auc": 0.6528687785525367,
+       "pr_auc": 0.025925747093379244
+      },
+      "by_type": {
+       "amount_spike": 0.75,
+       "frequency_shift": 0.02,
+       "off_cycle_invoice": 0.05263157894736842,
+       "slow_drift": 0.046153846153846156
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.077007700770077,
+       "precision": 0.04992867332382311,
+       "recall": 0.16826923076923078,
+       "alerts": 701,
+       "tp": 35,
+       "fp": 666,
+       "fn": 173,
+       "tn": 32606,
+       "roc_auc": 0.6789693516840217,
+       "pr_auc": 0.028095063527733662
+      },
+      "by_type": {
+       "amount_spike": 0.75,
+       "frequency_shift": 0.04,
+       "off_cycle_invoice": 0.05263157894736842,
+       "slow_drift": 0.046153846153846156
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.13432835820895522,
+       "precision": 0.13917525773195877,
+       "recall": 0.12980769230769232,
+       "alerts": 194,
+       "tp": 27,
+       "fp": 167,
+       "fn": 181,
+       "tn": 33105,
+       "roc_auc": 0.71361690125215,
+       "pr_auc": 0.03581200376680002
+      },
+      "by_type": {
+       "amount_spike": 0.6666666666666666,
+       "frequency_shift": 0.02,
+       "off_cycle_invoice": 0.03508771929824561,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.06502636203866433,
+       "precision": 0.03978494623655914,
+       "recall": 0.1778846153846154,
+       "alerts": 930,
+       "tp": 37,
+       "fp": 893,
+       "fn": 171,
+       "tn": 32379,
+       "roc_auc": 0.5591473888878613,
+       "pr_auc": 0.02230644782019577
+      },
+      "by_type": {
+       "amount_spike": 0.8055555555555556,
+       "frequency_shift": 0.04,
+       "off_cycle_invoice": 0.05263157894736842,
+       "slow_drift": 0.046153846153846156
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.10204081632653061,
+       "precision": 0.07322175732217573,
+       "recall": 0.16826923076923078,
+       "alerts": 478,
+       "tp": 35,
+       "fp": 443,
+       "fn": 173,
+       "tn": 32829,
+       "roc_auc": 0.5591473888878613,
+       "pr_auc": 0.02230644782019577
+      },
+      "by_type": {
+       "amount_spike": 0.75,
+       "frequency_shift": 0.04,
+       "off_cycle_invoice": 0.05263157894736842,
+       "slow_drift": 0.046153846153846156
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 33480,
+    "late_anomalies": 208
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.025358851674641147,
+       "precision": 0.01325,
+       "recall": 0.29444444444444445,
+       "alerts": 4000,
+       "tp": 53,
+       "fp": 3947,
+       "fn": 127,
+       "tn": 29342,
+       "roc_auc": 0.6648754510165186,
+       "pr_auc": 0.025113961709779285
+      },
+      "by_type": {
+       "amount_spike": 0.7727272727272727,
+       "frequency_shift": 0.1111111111111111,
+       "off_cycle_invoice": 0.11764705882352941,
+       "slow_drift": 0.2
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.03628262253341821,
+       "precision": 0.01924375422012154,
+       "recall": 0.31666666666666665,
+       "alerts": 2962,
+       "tp": 57,
+       "fp": 2905,
+       "fn": 123,
+       "tn": 30384,
+       "roc_auc": 0.6953209435215504,
+       "pr_auc": 0.034464124064540066
+      },
+      "by_type": {
+       "amount_spike": 0.7954545454545454,
+       "frequency_shift": 0.13333333333333333,
+       "off_cycle_invoice": 0.1568627450980392,
+       "slow_drift": 0.2
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.08026030368763558,
+       "precision": 0.04986522911051213,
+       "recall": 0.20555555555555555,
+       "alerts": 742,
+       "tp": 37,
+       "fp": 705,
+       "fn": 143,
+       "tn": 32584,
+       "roc_auc": 0.6953209435215504,
+       "pr_auc": 0.034464124064540066
+      },
+      "by_type": {
+       "amount_spike": 0.6818181818181818,
+       "frequency_shift": 0.044444444444444446,
+       "off_cycle_invoice": 0.058823529411764705,
+       "slow_drift": 0.05
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.08650875386199793,
+       "precision": 0.05309734513274336,
+       "recall": 0.23333333333333334,
+       "alerts": 791,
+       "tp": 42,
+       "fp": 749,
+       "fn": 138,
+       "tn": 32540,
+       "roc_auc": 0.7247198774369912,
+       "pr_auc": 0.03754251550993053
+      },
+      "by_type": {
+       "amount_spike": 0.7045454545454546,
+       "frequency_shift": 0.08888888888888889,
+       "off_cycle_invoice": 0.0784313725490196,
+       "slow_drift": 0.075
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.17438692098092642,
+       "precision": 0.1711229946524064,
+       "recall": 0.17777777777777778,
+       "alerts": 187,
+       "tp": 32,
+       "fp": 155,
+       "fn": 148,
+       "tn": 33134,
+       "roc_auc": 0.7597770034145414,
+       "pr_auc": 0.05147117554346677
+      },
+      "by_type": {
+       "amount_spike": 0.6136363636363636,
+       "frequency_shift": 0.044444444444444446,
+       "off_cycle_invoice": 0.0196078431372549,
+       "slow_drift": 0.05
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.08251121076233184,
+       "precision": 0.04919786096256684,
+       "recall": 0.25555555555555554,
+       "alerts": 935,
+       "tp": 46,
+       "fp": 889,
+       "fn": 134,
+       "tn": 32400,
+       "roc_auc": 0.6160575231724861,
+       "pr_auc": 0.031904867949240044
+      },
+      "by_type": {
+       "amount_spike": 0.7045454545454546,
+       "frequency_shift": 0.06666666666666667,
+       "off_cycle_invoice": 0.09803921568627451,
+       "slow_drift": 0.175
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.13313161875945537,
+       "precision": 0.09147609147609148,
+       "recall": 0.24444444444444444,
+       "alerts": 481,
+       "tp": 44,
+       "fp": 437,
+       "fn": 136,
+       "tn": 32852,
+       "roc_auc": 0.6160575231724861,
+       "pr_auc": 0.031904867949240044
+      },
+      "by_type": {
+       "amount_spike": 0.7045454545454546,
+       "frequency_shift": 0.06666666666666667,
+       "off_cycle_invoice": 0.09803921568627451,
+       "slow_drift": 0.125
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 33469,
+    "late_anomalies": 180
+   }
+  ],
+  "chicago": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.0175054704595186,
+       "precision": 0.00972144326042251,
+       "recall": 0.08783783783783784,
+       "alerts": 5349,
+       "tp": 52,
+       "fp": 5297,
+       "fn": 540,
+       "tn": 43775,
+       "roc_auc": 0.4947426602609293,
+       "pr_auc": 0.013711699109511682
+      },
+      "by_type": {
+       "amount_spike": 0.2222222222222222,
+       "frequency_shift": 0.05172413793103448,
+       "off_cycle_invoice": 0.04790419161676647,
+       "slow_drift": 0.07692307692307693
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.020224719101123594,
+       "precision": 0.011373209772535805,
+       "recall": 0.09121621621621621,
+       "alerts": 4748,
+       "tp": 54,
+       "fp": 4694,
+       "fn": 538,
+       "tn": 44378,
+       "roc_auc": 0.49767936137963853,
+       "pr_auc": 0.016022458933305245
+      },
+      "by_type": {
+       "amount_spike": 0.24074074074074073,
+       "frequency_shift": 0.05172413793103448,
+       "off_cycle_invoice": 0.041916167664670656,
+       "slow_drift": 0.08391608391608392
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.03156996587030717,
+       "precision": 0.021118721461187213,
+       "recall": 0.0625,
+       "alerts": 1752,
+       "tp": 37,
+       "fp": 1715,
+       "fn": 555,
+       "tn": 47357,
+       "roc_auc": 0.49767936137963853,
+       "pr_auc": 0.016022458933305245
+      },
+      "by_type": {
+       "amount_spike": 0.21296296296296297,
+       "frequency_shift": 0.017241379310344827,
+       "off_cycle_invoice": 0.017964071856287425,
+       "slow_drift": 0.055944055944055944
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.028221314519123658,
+       "precision": 0.018086625416468348,
+       "recall": 0.06418918918918919,
+       "alerts": 2101,
+       "tp": 38,
+       "fp": 2063,
+       "fn": 554,
+       "tn": 47009,
+       "roc_auc": 0.5270708815067104,
+       "pr_auc": 0.016539123331735843
+      },
+      "by_type": {
+       "amount_spike": 0.23148148148148148,
+       "frequency_shift": 0.017241379310344827,
+       "off_cycle_invoice": 0.011976047904191617,
+       "slow_drift": 0.055944055944055944
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.07782805429864252,
+       "precision": 0.08382066276803118,
+       "recall": 0.07263513513513513,
+       "alerts": 513,
+       "tp": 43,
+       "fp": 470,
+       "fn": 549,
+       "tn": 48602,
+       "roc_auc": 0.5345017201695909,
+       "pr_auc": 0.02244799837811019
+      },
+      "by_type": {
+       "amount_spike": 0.24074074074074073,
+       "frequency_shift": 0.022988505747126436,
+       "off_cycle_invoice": 0.017964071856287425,
+       "slow_drift": 0.06993006993006994
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.028802247980330174,
+       "precision": 0.01818181818181818,
+       "recall": 0.06925675675675676,
+       "alerts": 2255,
+       "tp": 41,
+       "fp": 2214,
+       "fn": 551,
+       "tn": 46858,
+       "roc_auc": 0.5219541583685087,
+       "pr_auc": 0.017375751089105627
+      },
+      "by_type": {
+       "amount_spike": 0.2222222222222222,
+       "frequency_shift": 0.034482758620689655,
+       "off_cycle_invoice": 0.017964071856287425,
+       "slow_drift": 0.055944055944055944
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.0674373795761079,
+       "precision": 0.07847533632286996,
+       "recall": 0.05912162162162162,
+       "alerts": 446,
+       "tp": 35,
+       "fp": 411,
+       "fn": 557,
+       "tn": 48661,
+       "roc_auc": 0.5219541583685087,
+       "pr_auc": 0.017375751089105627
+      },
+      "by_type": {
+       "amount_spike": 0.2037037037037037,
+       "frequency_shift": 0.017241379310344827,
+       "off_cycle_invoice": 0.017964071856287425,
+       "slow_drift": 0.04895104895104895
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 49664,
+    "late_anomalies": 592
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.016707616707616706,
+       "precision": 0.00923913043478261,
+       "recall": 0.08717948717948718,
+       "alerts": 5520,
+       "tp": 51,
+       "fp": 5469,
+       "fn": 534,
+       "tn": 43895,
+       "roc_auc": 0.4884075872447965,
+       "pr_auc": 0.014578978008352134
+      },
+      "by_type": {
+       "amount_spike": 0.32407407407407407,
+       "frequency_shift": 0.027586206896551724,
+       "off_cycle_invoice": 0.03773584905660377,
+       "slow_drift": 0.03468208092485549
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.01889191643960036,
+       "precision": 0.01056910569105691,
+       "recall": 0.08888888888888889,
+       "alerts": 4920,
+       "tp": 52,
+       "fp": 4868,
+       "fn": 533,
+       "tn": 44496,
+       "roc_auc": 0.49054984531445106,
+       "pr_auc": 0.016769550017562845
+      },
+      "by_type": {
+       "amount_spike": 0.3425925925925926,
+       "frequency_shift": 0.027586206896551724,
+       "off_cycle_invoice": 0.031446540880503145,
+       "slow_drift": 0.03468208092485549
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.027095681625740897,
+       "precision": 0.018007878446820485,
+       "recall": 0.0547008547008547,
+       "alerts": 1777,
+       "tp": 32,
+       "fp": 1745,
+       "fn": 553,
+       "tn": 47619,
+       "roc_auc": 0.49054984531445106,
+       "pr_auc": 0.016769550017562845
+      },
+      "by_type": {
+       "amount_spike": 0.25,
+       "frequency_shift": 0.013793103448275862,
+       "off_cycle_invoice": 0.012578616352201259,
+       "slow_drift": 0.005780346820809248
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.026470588235294117,
+       "precision": 0.01686182669789227,
+       "recall": 0.06153846153846154,
+       "alerts": 2135,
+       "tp": 36,
+       "fp": 2099,
+       "fn": 549,
+       "tn": 47265,
+       "roc_auc": 0.5348139098564509,
+       "pr_auc": 0.018308764639408417
+      },
+      "by_type": {
+       "amount_spike": 0.26851851851851855,
+       "frequency_shift": 0.013793103448275862,
+       "off_cycle_invoice": 0.025157232704402517,
+       "slow_drift": 0.005780346820809248
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.0762942779291553,
+       "precision": 0.08139534883720931,
+       "recall": 0.07179487179487179,
+       "alerts": 516,
+       "tp": 42,
+       "fp": 474,
+       "fn": 543,
+       "tn": 48890,
+       "roc_auc": 0.5383272144758248,
+       "pr_auc": 0.023170706703969056
+      },
+      "by_type": {
+       "amount_spike": 0.3333333333333333,
+       "frequency_shift": 0.013793103448275862,
+       "off_cycle_invoice": 0.018867924528301886,
+       "slow_drift": 0.005780346820809248
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.029339853300733496,
+       "precision": 0.018437225636523266,
+       "recall": 0.07179487179487179,
+       "alerts": 2278,
+       "tp": 42,
+       "fp": 2236,
+       "fn": 543,
+       "tn": 47128,
+       "roc_auc": 0.5277167969737453,
+       "pr_auc": 0.018596032389577834
+      },
+      "by_type": {
+       "amount_spike": 0.3148148148148148,
+       "frequency_shift": 0.013793103448275862,
+       "off_cycle_invoice": 0.025157232704402517,
+       "slow_drift": 0.011560693641618497
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.06352261790182868,
+       "precision": 0.07268722466960352,
+       "recall": 0.05641025641025641,
+       "alerts": 454,
+       "tp": 33,
+       "fp": 421,
+       "fn": 552,
+       "tn": 48943,
+       "roc_auc": 0.5277167969737453,
+       "pr_auc": 0.018596032389577834
+      },
+      "by_type": {
+       "amount_spike": 0.25925925925925924,
+       "frequency_shift": 0.013793103448275862,
+       "off_cycle_invoice": 0.012578616352201259,
+       "slow_drift": 0.005780346820809248
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 49949,
+    "late_anomalies": 585
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.010675562969140951,
+       "precision": 0.005818181818181818,
+       "recall": 0.06464646464646465,
+       "alerts": 5500,
+       "tp": 32,
+       "fp": 5468,
+       "fn": 463,
+       "tn": 43989,
+       "roc_auc": 0.4712895989843641,
+       "pr_auc": 0.009759537114374491
+      },
+      "by_type": {
+       "amount_spike": 0.25742574257425743,
+       "frequency_shift": 0.012195121951219513,
+       "off_cycle_invoice": 0.013986013986013986,
+       "slow_drift": 0.022988505747126436
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.01259959236612933,
+       "precision": 0.0069359445124439,
+       "recall": 0.06868686868686869,
+       "alerts": 4902,
+       "tp": 34,
+       "fp": 4868,
+       "fn": 461,
+       "tn": 44589,
+       "roc_auc": 0.4766486058800595,
+       "pr_auc": 0.011346791934979592
+      },
+      "by_type": {
+       "amount_spike": 0.26732673267326734,
+       "frequency_shift": 0.012195121951219513,
+       "off_cycle_invoice": 0.02097902097902098,
+       "slow_drift": 0.022988505747126436
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.02,
+       "precision": 0.012903225806451613,
+       "recall": 0.044444444444444446,
+       "alerts": 1705,
+       "tp": 22,
+       "fp": 1683,
+       "fn": 473,
+       "tn": 47774,
+       "roc_auc": 0.4766486058800595,
+       "pr_auc": 0.011346791934979592
+      },
+      "by_type": {
+       "amount_spike": 0.19801980198019803,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.006993006993006993,
+       "slow_drift": 0.011494252873563218
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.020841683366733463,
+       "precision": 0.013,
+       "recall": 0.052525252525252523,
+       "alerts": 2000,
+       "tp": 26,
+       "fp": 1974,
+       "fn": 469,
+       "tn": 47483,
+       "roc_auc": 0.5102222254900339,
+       "pr_auc": 0.012826750190406164
+      },
+      "by_type": {
+       "amount_spike": 0.2376237623762376,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.006993006993006993,
+       "slow_drift": 0.011494252873563218
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.06593406593406594,
+       "precision": 0.06521739130434782,
+       "recall": 0.06666666666666667,
+       "alerts": 506,
+       "tp": 33,
+       "fp": 473,
+       "fn": 462,
+       "tn": 48984,
+       "roc_auc": 0.5214043502334341,
+       "pr_auc": 0.01832076491541872
+      },
+      "by_type": {
+       "amount_spike": 0.297029702970297,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.006993006993006993,
+       "slow_drift": 0.022988505747126436
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.02039329934450109,
+       "precision": 0.012438916037316748,
+       "recall": 0.05656565656565657,
+       "alerts": 2251,
+       "tp": 28,
+       "fp": 2223,
+       "fn": 467,
+       "tn": 47234,
+       "roc_auc": 0.49915778281429257,
+       "pr_auc": 0.012467056707208025
+      },
+      "by_type": {
+       "amount_spike": 0.25742574257425743,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.006993006993006993,
+       "slow_drift": 0.011494252873563218
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.046709129511677286,
+       "precision": 0.049217002237136466,
+       "recall": 0.044444444444444446,
+       "alerts": 447,
+       "tp": 22,
+       "fp": 425,
+       "fn": 473,
+       "tn": 49032,
+       "roc_auc": 0.49915778281429257,
+       "pr_auc": 0.012467056707208025
+      },
+      "by_type": {
+       "amount_spike": 0.19801980198019803,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.006993006993006993,
+       "slow_drift": 0.011494252873563218
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 49952,
+    "late_anomalies": 495
+   }
+  ],
+  "delaware": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.02178536899774412,
+       "precision": 0.012097351467430208,
+       "recall": 0.10938511326860842,
+       "alerts": 13970,
+       "tp": 169,
+       "fp": 13801,
+       "fn": 1376,
+       "tn": 130201,
+       "roc_auc": 0.4979708682578977,
+       "pr_auc": 0.014930175913785582
+      },
+      "by_type": {
+       "amount_spike": 0.33062330623306235,
+       "frequency_shift": 0.04619565217391304,
+       "off_cycle_invoice": 0.036585365853658534,
+       "slow_drift": 0.03768844221105527
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.02849441663457836,
+       "precision": 0.016171328671328672,
+       "recall": 0.11974110032362459,
+       "alerts": 11440,
+       "tp": 185,
+       "fp": 11255,
+       "fn": 1360,
+       "tn": 132747,
+       "roc_auc": 0.5082379451849577,
+       "pr_auc": 0.018388321790238218
+      },
+      "by_type": {
+       "amount_spike": 0.3712737127371274,
+       "frequency_shift": 0.03804347826086957,
+       "off_cycle_invoice": 0.041463414634146344,
+       "slow_drift": 0.04271356783919598
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.056676685272649206,
+       "precision": 0.04240282685512368,
+       "recall": 0.0854368932038835,
+       "alerts": 3113,
+       "tp": 132,
+       "fp": 2981,
+       "fn": 1413,
+       "tn": 141021,
+       "roc_auc": 0.5082379451849577,
+       "pr_auc": 0.018388321790238218
+      },
+      "by_type": {
+       "amount_spike": 0.2899728997289973,
+       "frequency_shift": 0.021739130434782608,
+       "off_cycle_invoice": 0.014634146341463415,
+       "slow_drift": 0.02763819095477387
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.06695842450765865,
+       "precision": 0.05057851239669422,
+       "recall": 0.09902912621359224,
+       "alerts": 3025,
+       "tp": 153,
+       "fp": 2872,
+       "fn": 1392,
+       "tn": 141130,
+       "roc_auc": 0.5438104734162044,
+       "pr_auc": 0.020424240978781354
+      },
+      "by_type": {
+       "amount_spike": 0.3333333333333333,
+       "frequency_shift": 0.02717391304347826,
+       "off_cycle_invoice": 0.014634146341463415,
+       "slow_drift": 0.035175879396984924
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.10499719258843347,
+       "precision": 0.09271194843827467,
+       "recall": 0.12103559870550162,
+       "alerts": 2017,
+       "tp": 187,
+       "fp": 1830,
+       "fn": 1358,
+       "tn": 142172,
+       "roc_auc": 0.5665355263629249,
+       "pr_auc": 0.03357311024627671
+      },
+      "by_type": {
+       "amount_spike": 0.38482384823848237,
+       "frequency_shift": 0.029891304347826088,
+       "off_cycle_invoice": 0.03414634146341464,
+       "slow_drift": 0.05025125628140704
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.05374777400032378,
+       "precision": 0.035837651122625214,
+       "recall": 0.10744336569579288,
+       "alerts": 4632,
+       "tp": 166,
+       "fp": 4466,
+       "fn": 1379,
+       "tn": 139536,
+       "roc_auc": 0.5255428603585108,
+       "pr_auc": 0.01926379369718664
+      },
+      "by_type": {
+       "amount_spike": 0.34688346883468835,
+       "frequency_shift": 0.02717391304347826,
+       "off_cycle_invoice": 0.03170731707317073,
+       "slow_drift": 0.03768844221105527
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.08233815210559396,
+       "precision": 0.08002443494196701,
+       "recall": 0.08478964401294499,
+       "alerts": 1637,
+       "tp": 131,
+       "fp": 1506,
+       "fn": 1414,
+       "tn": 142496,
+       "roc_auc": 0.5255428603585108,
+       "pr_auc": 0.01926379369718664
+      },
+      "by_type": {
+       "amount_spike": 0.2872628726287263,
+       "frequency_shift": 0.021739130434782608,
+       "off_cycle_invoice": 0.01707317073170732,
+       "slow_drift": 0.02512562814070352
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 145547,
+    "late_anomalies": 1545
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.019286892526329147,
+       "precision": 0.010752688172043012,
+       "recall": 0.09348093480934809,
+       "alerts": 14136,
+       "tp": 152,
+       "fp": 13984,
+       "fn": 1474,
+       "tn": 129807,
+       "roc_auc": 0.4853814174551535,
+       "pr_auc": 0.012650151670876204
+      },
+      "by_type": {
+       "amount_spike": 0.3178082191780822,
+       "frequency_shift": 0.02112676056338028,
+       "off_cycle_invoice": 0.02570093457943925,
+       "slow_drift": 0.03931203931203931
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.025736128983422906,
+       "precision": 0.0146741476046612,
+       "recall": 0.1045510455104551,
+       "alerts": 11585,
+       "tp": 170,
+       "fp": 11415,
+       "fn": 1456,
+       "tn": 132376,
+       "roc_auc": 0.4962602441395334,
+       "pr_auc": 0.015663152037032706
+      },
+      "by_type": {
+       "amount_spike": 0.3561643835616438,
+       "frequency_shift": 0.025821596244131457,
+       "off_cycle_invoice": 0.02570093457943925,
+       "slow_drift": 0.044226044226044224
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.048457237523296746,
+       "precision": 0.03652825476116141,
+       "recall": 0.07195571955719557,
+       "alerts": 3203,
+       "tp": 117,
+       "fp": 3086,
+       "fn": 1509,
+       "tn": 140705,
+       "roc_auc": 0.4962602441395334,
+       "pr_auc": 0.015663152037032706
+      },
+      "by_type": {
+       "amount_spike": 0.25205479452054796,
+       "frequency_shift": 0.014084507042253521,
+       "off_cycle_invoice": 0.014018691588785047,
+       "slow_drift": 0.03194103194103194
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.05362162162162162,
+       "precision": 0.041347115705235075,
+       "recall": 0.07626076260762607,
+       "alerts": 2999,
+       "tp": 124,
+       "fp": 2875,
+       "fn": 1502,
+       "tn": 140916,
+       "roc_auc": 0.5572506180236327,
+       "pr_auc": 0.018535372406114973
+      },
+      "by_type": {
+       "amount_spike": 0.26301369863013696,
+       "frequency_shift": 0.014084507042253521,
+       "off_cycle_invoice": 0.014018691588785047,
+       "slow_drift": 0.03931203931203931
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.09568325543029971,
+       "precision": 0.08652411735454997,
+       "recall": 0.1070110701107011,
+       "alerts": 2011,
+       "tp": 174,
+       "fp": 1837,
+       "fn": 1452,
+       "tn": 141954,
+       "roc_auc": 0.577042538668879,
+       "pr_auc": 0.030869671493539662
+      },
+      "by_type": {
+       "amount_spike": 0.3232876712328767,
+       "frequency_shift": 0.028169014084507043,
+       "off_cycle_invoice": 0.037383177570093455,
+       "slow_drift": 0.0687960687960688
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.045234248788368334,
+       "precision": 0.03067484662576687,
+       "recall": 0.08610086100861009,
+       "alerts": 4564,
+       "tp": 140,
+       "fp": 4424,
+       "fn": 1486,
+       "tn": 139367,
+       "roc_auc": 0.5322942620278204,
+       "pr_auc": 0.01744865919313466
+      },
+      "by_type": {
+       "amount_spike": 0.27945205479452057,
+       "frequency_shift": 0.018779342723004695,
+       "off_cycle_invoice": 0.02336448598130841,
+       "slow_drift": 0.04914004914004914
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.06892269481527476,
+       "precision": 0.06959247648902821,
+       "recall": 0.06826568265682657,
+       "alerts": 1595,
+       "tp": 111,
+       "fp": 1484,
+       "fn": 1515,
+       "tn": 142307,
+       "roc_auc": 0.5322942620278204,
+       "pr_auc": 0.01744865919313466
+      },
+      "by_type": {
+       "amount_spike": 0.23013698630136986,
+       "frequency_shift": 0.01643192488262911,
+       "off_cycle_invoice": 0.016355140186915886,
+       "slow_drift": 0.03194103194103194
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 145417,
+    "late_anomalies": 1626
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.017582695591676682,
+       "precision": 0.009690462911321807,
+       "recall": 0.09475119291070211,
+       "alerts": 14344,
+       "tp": 139,
+       "fp": 14205,
+       "fn": 1328,
+       "tn": 129891,
+       "roc_auc": 0.5150529522770626,
+       "pr_auc": 0.011620396631004646
+      },
+      "by_type": {
+       "amount_spike": 0.27247191011235955,
+       "frequency_shift": 0.030054644808743168,
+       "off_cycle_invoice": 0.04439252336448598,
+       "slow_drift": 0.03785488958990536
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.023729572419968658,
+       "precision": 0.013323278029160382,
+       "recall": 0.1083844580777096,
+       "alerts": 11934,
+       "tp": 159,
+       "fp": 11775,
+       "fn": 1308,
+       "tn": 132321,
+       "roc_auc": 0.5291780362360865,
+       "pr_auc": 0.014392523604440991
+      },
+      "by_type": {
+       "amount_spike": 0.31179775280898875,
+       "frequency_shift": 0.03551912568306011,
+       "off_cycle_invoice": 0.04906542056074766,
+       "slow_drift": 0.04416403785488959
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.04531851218469431,
+       "precision": 0.0330115228900654,
+       "recall": 0.07225630538513975,
+       "alerts": 3211,
+       "tp": 106,
+       "fp": 3105,
+       "fn": 1361,
+       "tn": 140991,
+       "roc_auc": 0.5291780362360865,
+       "pr_auc": 0.014392523604440991
+      },
+      "by_type": {
+       "amount_spike": 0.24157303370786518,
+       "frequency_shift": 0.01366120218579235,
+       "off_cycle_invoice": 0.018691588785046728,
+       "slow_drift": 0.022082018927444796
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.052780806979280254,
+       "precision": 0.03880692751763951,
+       "recall": 0.08248125426039536,
+       "alerts": 3118,
+       "tp": 121,
+       "fp": 2997,
+       "fn": 1346,
+       "tn": 141099,
+       "roc_auc": 0.576327078622583,
+       "pr_auc": 0.017575020929768127
+      },
+      "by_type": {
+       "amount_spike": 0.2696629213483146,
+       "frequency_shift": 0.01639344262295082,
+       "off_cycle_invoice": 0.02336448598130841,
+       "slow_drift": 0.028391167192429023
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.09897025171624714,
+       "precision": 0.08526367668802366,
+       "recall": 0.11792774369461487,
+       "alerts": 2029,
+       "tp": 173,
+       "fp": 1856,
+       "fn": 1294,
+       "tn": 142240,
+       "roc_auc": 0.6002527654819532,
+       "pr_auc": 0.031210115054863107
+      },
+      "by_type": {
+       "amount_spike": 0.31179775280898875,
+       "frequency_shift": 0.030054644808743168,
+       "off_cycle_invoice": 0.056074766355140186,
+       "slow_drift": 0.08517350157728706
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.04358593363051016,
+       "precision": 0.02875816993464052,
+       "recall": 0.08997955010224949,
+       "alerts": 4590,
+       "tp": 132,
+       "fp": 4458,
+       "fn": 1335,
+       "tn": 139638,
+       "roc_auc": 0.5505128482851923,
+       "pr_auc": 0.01629236880164515
+      },
+      "by_type": {
+       "amount_spike": 0.27247191011235955,
+       "frequency_shift": 0.02185792349726776,
+       "off_cycle_invoice": 0.037383177570093455,
+       "slow_drift": 0.03470031545741325
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.06570048309178744,
+       "precision": 0.06227106227106227,
+       "recall": 0.06952965235173825,
+       "alerts": 1638,
+       "tp": 102,
+       "fp": 1536,
+       "fn": 1365,
+       "tn": 142560,
+       "roc_auc": 0.5505128482851923,
+       "pr_auc": 0.01629236880164515
+      },
+      "by_type": {
+       "amount_spike": 0.2247191011235955,
+       "frequency_shift": 0.01366120218579235,
+       "off_cycle_invoice": 0.02336448598130841,
+       "slow_drift": 0.022082018927444796
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 145563,
+    "late_anomalies": 1467
+   }
+  ],
+  "afed_synthetic": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.5321100917431193,
+       "precision": 0.37662337662337664,
+       "recall": 0.90625,
+       "alerts": 308,
+       "tp": 116,
+       "fp": 192,
+       "fn": 12,
+       "tn": 3714,
+       "roc_auc": 0.9805287538402458,
+       "pr_auc": 0.6049841956551835
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 0.9166666666666666,
+       "round_amount": 0.16666666666666666,
+       "rushed_approval": 1.0,
+       "sod_violation": 1.0
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.5321100917431193,
+       "precision": 0.37662337662337664,
+       "recall": 0.90625,
+       "alerts": 308,
+       "tp": 116,
+       "fp": 192,
+       "fn": 12,
+       "tn": 3714,
+       "roc_auc": 0.9805287538402458,
+       "pr_auc": 0.6049841956551835
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 0.9166666666666666,
+       "round_amount": 0.16666666666666666,
+       "rushed_approval": 1.0,
+       "sod_violation": 1.0
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.48908296943231444,
+       "precision": 0.5544554455445545,
+       "recall": 0.4375,
+       "alerts": 101,
+       "tp": 56,
+       "fp": 45,
+       "fn": 72,
+       "tn": 3861,
+       "roc_auc": 0.9805287538402458,
+       "pr_auc": 0.6049841956551835
+      },
+      "by_type": {
+       "amount_spike": 0.7058823529411765,
+       "bank_change": 0.2857142857142857,
+       "duplicate_invoice": 0.2727272727272727,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.875,
+       "off_hours_approval": 0.08333333333333333,
+       "round_amount": 0.0,
+       "rushed_approval": 0.42857142857142855,
+       "sod_violation": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.4956521739130435,
+       "precision": 0.5588235294117647,
+       "recall": 0.4453125,
+       "alerts": 102,
+       "tp": 57,
+       "fp": 45,
+       "fn": 71,
+       "tn": 3861,
+       "roc_auc": 0.9800287218381976,
+       "pr_auc": 0.6058029686427574
+      },
+      "by_type": {
+       "amount_spike": 0.8235294117647058,
+       "bank_change": 0.2857142857142857,
+       "duplicate_invoice": 0.2727272727272727,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.875,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.42857142857142855,
+       "sod_violation": 0.0
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.5816733067729084,
+       "precision": 0.5934959349593496,
+       "recall": 0.5703125,
+       "alerts": 123,
+       "tp": 73,
+       "fp": 50,
+       "fn": 55,
+       "tn": 3856,
+       "roc_auc": 0.9826788914490527,
+       "pr_auc": 0.6138627497412819
+      },
+      "by_type": {
+       "amount_spike": 0.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.07142857142857142,
+       "sod_violation": 1.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.589041095890411,
+       "precision": 0.524390243902439,
+       "recall": 0.671875,
+       "alerts": 164,
+       "tp": 86,
+       "fp": 78,
+       "fn": 42,
+       "tn": 3828,
+       "roc_auc": 0.983346934203789,
+       "pr_auc": 0.6306409789079225
+      },
+      "by_type": {
+       "amount_spike": 0.5882352941176471,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.875,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.35714285714285715,
+       "sod_violation": 1.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.5910652920962199,
+       "precision": 0.5276073619631901,
+       "recall": 0.671875,
+       "alerts": 163,
+       "tp": 86,
+       "fp": 77,
+       "fn": 42,
+       "tn": 3829,
+       "roc_auc": 0.983346934203789,
+       "pr_auc": 0.6306409789079225
+      },
+      "by_type": {
+       "amount_spike": 0.5882352941176471,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.875,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.35714285714285715,
+       "sod_violation": 1.0
+      }
+     }
+    },
+    "rule_share": 1.0,
+    "late_events": 4034,
+    "late_anomalies": 128
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.5707070707070707,
+       "precision": 0.4216417910447761,
+       "recall": 0.8828125,
+       "alerts": 268,
+       "tp": 113,
+       "fp": 155,
+       "fn": 15,
+       "tn": 3669,
+       "roc_auc": 0.9821092932792886,
+       "pr_auc": 0.6088594192266753
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.95,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 1.0,
+       "round_amount": 0.17647058823529413,
+       "rushed_approval": 1.0,
+       "sod_violation": 1.0
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.5707070707070707,
+       "precision": 0.4216417910447761,
+       "recall": 0.8828125,
+       "alerts": 268,
+       "tp": 113,
+       "fp": 155,
+       "fn": 15,
+       "tn": 3669,
+       "roc_auc": 0.9821092932792886,
+       "pr_auc": 0.6088594192266753
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.95,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 1.0,
+       "round_amount": 0.17647058823529413,
+       "rushed_approval": 1.0,
+       "sod_violation": 1.0
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.4482758620689655,
+       "precision": 0.5,
+       "recall": 0.40625,
+       "alerts": 104,
+       "tp": 52,
+       "fp": 52,
+       "fn": 76,
+       "tn": 3772,
+       "roc_auc": 0.9821092932792886,
+       "pr_auc": 0.6088594192266753
+      },
+      "by_type": {
+       "amount_spike": 0.6923076923076923,
+       "bank_change": 0.08333333333333333,
+       "duplicate_invoice": 0.42857142857142855,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.46153846153846156,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.5833333333333334,
+       "sod_violation": 0.07692307692307693
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.4513274336283186,
+       "precision": 0.5204081632653061,
+       "recall": 0.3984375,
+       "alerts": 98,
+       "tp": 51,
+       "fp": 47,
+       "fn": 77,
+       "tn": 3777,
+       "roc_auc": 0.9805627288179916,
+       "pr_auc": 0.6025686072985275
+      },
+      "by_type": {
+       "amount_spike": 0.8461538461538461,
+       "bank_change": 0.08333333333333333,
+       "duplicate_invoice": 0.42857142857142855,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.46153846153846156,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.3333333333333333,
+       "sod_violation": 0.07692307692307693
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.5892857142857143,
+       "precision": 0.6875,
+       "recall": 0.515625,
+       "alerts": 96,
+       "tp": 66,
+       "fp": 30,
+       "fn": 62,
+       "tn": 3794,
+       "roc_auc": 0.9854802726202929,
+       "pr_auc": 0.6158390771186275
+      },
+      "by_type": {
+       "amount_spike": 0.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.6,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.0,
+       "sod_violation": 1.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.5826771653543307,
+       "precision": 0.5873015873015873,
+       "recall": 0.578125,
+       "alerts": 126,
+       "tp": 74,
+       "fp": 52,
+       "fn": 54,
+       "tn": 3772,
+       "roc_auc": 0.9852596266997907,
+       "pr_auc": 0.6482466056017149
+      },
+      "by_type": {
+       "amount_spike": 0.38461538461538464,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.46153846153846156,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.5,
+       "sod_violation": 1.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.5702479338842976,
+       "precision": 0.6052631578947368,
+       "recall": 0.5390625,
+       "alerts": 114,
+       "tp": 69,
+       "fp": 45,
+       "fn": 59,
+       "tn": 3779,
+       "roc_auc": 0.9852596266997907,
+       "pr_auc": 0.6482466056017149
+      },
+      "by_type": {
+       "amount_spike": 0.3076923076923077,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.75,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.46153846153846156,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.0,
+       "rushed_approval": 0.25,
+       "sod_violation": 1.0
+      }
+     }
+    },
+    "rule_share": 1.0,
+    "late_events": 3952,
+    "late_anomalies": 128
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.5063291139240507,
+       "precision": 0.35335689045936397,
+       "recall": 0.8928571428571429,
+       "alerts": 283,
+       "tp": 100,
+       "fp": 183,
+       "fn": 12,
+       "tn": 3718,
+       "roc_auc": 0.9847223239462409,
+       "pr_auc": 0.7015295270591446
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 1.0,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 0.5555555555555556,
+       "round_amount": 0.2222222222222222,
+       "rushed_approval": 0.9166666666666666,
+       "sod_violation": 1.0
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.5063291139240507,
+       "precision": 0.35335689045936397,
+       "recall": 0.8928571428571429,
+       "alerts": 283,
+       "tp": 100,
+       "fp": 183,
+       "fn": 12,
+       "tn": 3718,
+       "roc_auc": 0.9847223239462409,
+       "pr_auc": 0.7015295270591446
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 1.0,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 0.5555555555555556,
+       "round_amount": 0.2222222222222222,
+       "rushed_approval": 0.9166666666666666,
+       "sod_violation": 1.0
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.5893719806763286,
+       "precision": 0.6421052631578947,
+       "recall": 0.5446428571428571,
+       "alerts": 95,
+       "tp": 61,
+       "fp": 34,
+       "fn": 51,
+       "tn": 3867,
+       "roc_auc": 0.9847223239462409,
+       "pr_auc": 0.7015295270591446
+      },
+      "by_type": {
+       "amount_spike": 0.9166666666666666,
+       "bank_change": 0.1111111111111111,
+       "duplicate_invoice": 0.375,
+       "frequency_burst": 0.875,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.75,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.1111111111111111,
+       "rushed_approval": 0.4166666666666667,
+       "sod_violation": 0.1
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.5915492957746478,
+       "precision": 0.6237623762376238,
+       "recall": 0.5625,
+       "alerts": 101,
+       "tp": 63,
+       "fp": 38,
+       "fn": 49,
+       "tn": 3863,
+       "roc_auc": 0.9843355183652543,
+       "pr_auc": 0.7011738014206398
+      },
+      "by_type": {
+       "amount_spike": 0.9166666666666666,
+       "bank_change": 0.1111111111111111,
+       "duplicate_invoice": 0.5,
+       "frequency_burst": 0.875,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.75,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.1111111111111111,
+       "rushed_approval": 0.5,
+       "sod_violation": 0.1
+      }
+     },
+     "R4 + weight search (P)": {
+      "measures": {
+       "f1": 0.5903083700440528,
+       "precision": 0.5826086956521739,
+       "recall": 0.5982142857142857,
+       "alerts": 115,
+       "tp": 67,
+       "fp": 48,
+       "fn": 45,
+       "tn": 3853,
+       "roc_auc": 0.9848825392756435,
+       "pr_auc": 0.6456684548370015
+      },
+      "by_type": {
+       "amount_spike": 0.0,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.6875,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 1.0,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.1111111111111111,
+       "rushed_approval": 0.08333333333333333,
+       "sod_violation": 1.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.6335877862595419,
+       "precision": 0.5533333333333333,
+       "recall": 0.7410714285714286,
+       "alerts": 150,
+       "tp": 83,
+       "fp": 67,
+       "fn": 29,
+       "tn": 3834,
+       "roc_auc": 0.9876039110850697,
+       "pr_auc": 0.730059091230781
+      },
+      "by_type": {
+       "amount_spike": 0.8333333333333334,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8125,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.875,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.1111111111111111,
+       "rushed_approval": 0.5,
+       "sod_violation": 1.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.6396761133603239,
+       "precision": 0.5851851851851851,
+       "recall": 0.7053571428571429,
+       "alerts": 135,
+       "tp": 79,
+       "fp": 56,
+       "fn": 33,
+       "tn": 3845,
+       "roc_auc": 0.9876039110850697,
+       "pr_auc": 0.730059091230781
+      },
+      "by_type": {
+       "amount_spike": 0.5833333333333334,
+       "bank_change": 1.0,
+       "duplicate_invoice": 1.0,
+       "frequency_burst": 0.8125,
+       "invoice_splitting": 1.0,
+       "new_vendor_large": 0.875,
+       "off_hours_approval": 0.0,
+       "round_amount": 0.1111111111111111,
+       "rushed_approval": 0.4166666666666667,
+       "sod_violation": 1.0
+      }
+     }
+    },
+    "rule_share": 1.0,
+    "late_events": 4013,
+    "late_anomalies": 112
+   }
+  ],
+  "bbmp_2024": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.022792022792022793,
+       "precision": 0.012578616352201259,
+       "recall": 0.12121212121212122,
+       "alerts": 318,
+       "tp": 4,
+       "fp": 314,
+       "fn": 29,
+       "tn": 3051,
+       "roc_auc": 0.6857400153091089,
+       "pr_auc": 0.01653834111777974
+      },
+      "by_type": {
+       "amount_spike": 0.6666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.07142857142857142
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.01954397394136808,
+       "precision": 0.010948905109489052,
+       "recall": 0.09090909090909091,
+       "alerts": 274,
+       "tp": 3,
+       "fp": 271,
+       "fn": 30,
+       "tn": 3094,
+       "roc_auc": 0.6797694628303841,
+       "pr_auc": 0.016149885800382714
+      },
+      "by_type": {
+       "amount_spike": 0.3333333333333333,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.07142857142857142
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.034482758620689655,
+       "precision": 0.024096385542168676,
+       "recall": 0.06060606060606061,
+       "alerts": 83,
+       "tp": 2,
+       "fp": 81,
+       "fn": 31,
+       "tn": 3284,
+       "roc_auc": 0.6797694628303841,
+       "pr_auc": 0.016149885800382714
+      },
+      "by_type": {
+       "amount_spike": 0.3333333333333333,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.033057851239669415,
+       "precision": 0.022727272727272728,
+       "recall": 0.06060606060606061,
+       "alerts": 88,
+       "tp": 2,
+       "fp": 86,
+       "fn": 31,
+       "tn": 3279,
+       "roc_auc": 0.6986086721599352,
+       "pr_auc": 0.017109451151107367
+      },
+      "by_type": {
+       "amount_spike": 0.3333333333333333,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.0196078431372549,
+       "precision": 0.011695906432748537,
+       "recall": 0.06060606060606061,
+       "alerts": 171,
+       "tp": 2,
+       "fp": 169,
+       "fn": 31,
+       "tn": 3196,
+       "roc_auc": 0.7168175064163178,
+       "pr_auc": 0.018687234867681556
+      },
+      "by_type": {
+       "amount_spike": 0.3333333333333333,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.03508771929824561,
+       "precision": 0.024691358024691357,
+       "recall": 0.06060606060606061,
+       "alerts": 81,
+       "tp": 2,
+       "fp": 79,
+       "fn": 31,
+       "tn": 3286,
+       "roc_auc": 0.7168175064163178,
+       "pr_auc": 0.018687234867681556
+      },
+      "by_type": {
+       "amount_spike": 0.3333333333333333,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     }
+    },
+    "rule_share": 0.5546218487394958,
+    "late_events": 3398,
+    "late_anomalies": 33
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.04986149584487534,
+       "precision": 0.02786377708978328,
+       "recall": 0.23684210526315788,
+       "alerts": 323,
+       "tp": 9,
+       "fp": 314,
+       "fn": 29,
+       "tn": 3054,
+       "roc_auc": 0.7408660457557193,
+       "pr_auc": 0.038756109659483
+      },
+      "by_type": {
+       "amount_spike": 0.8571428571428571,
+       "frequency_shift": 0.2,
+       "off_cycle_invoice": 0.07142857142857142,
+       "slow_drift": 0.0
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.05487804878048781,
+       "precision": 0.03103448275862069,
+       "recall": 0.23684210526315788,
+       "alerts": 290,
+       "tp": 9,
+       "fp": 281,
+       "fn": 29,
+       "tn": 3087,
+       "roc_auc": 0.7397330916364545,
+       "pr_auc": 0.039740534268785085
+      },
+      "by_type": {
+       "amount_spike": 0.8571428571428571,
+       "frequency_shift": 0.2,
+       "off_cycle_invoice": 0.07142857142857142,
+       "slow_drift": 0.0
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.09448818897637795,
+       "precision": 0.06741573033707865,
+       "recall": 0.15789473684210525,
+       "alerts": 89,
+       "tp": 6,
+       "fp": 83,
+       "fn": 32,
+       "tn": 3285,
+       "roc_auc": 0.7397330916364545,
+       "pr_auc": 0.039740534268785085
+      },
+      "by_type": {
+       "amount_spike": 0.8571428571428571,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.08450704225352111,
+       "precision": 0.057692307692307696,
+       "recall": 0.15789473684210525,
+       "alerts": 104,
+       "tp": 6,
+       "fp": 98,
+       "fn": 32,
+       "tn": 3270,
+       "roc_auc": 0.7544927490936367,
+       "pr_auc": 0.06515372461457607
+      },
+      "by_type": {
+       "amount_spike": 0.8571428571428571,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.05687203791469195,
+       "precision": 0.03468208092485549,
+       "recall": 0.15789473684210525,
+       "alerts": 173,
+       "tp": 6,
+       "fp": 167,
+       "fn": 32,
+       "tn": 3201,
+       "roc_auc": 0.753789536192024,
+       "pr_auc": 0.06638566116025557
+      },
+      "by_type": {
+       "amount_spike": 0.8571428571428571,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.10084033613445378,
+       "precision": 0.07407407407407407,
+       "recall": 0.15789473684210525,
+       "alerts": 81,
+       "tp": 6,
+       "fp": 75,
+       "fn": 32,
+       "tn": 3293,
+       "roc_auc": 0.753789536192024,
+       "pr_auc": 0.06638566116025557
+      },
+      "by_type": {
+       "amount_spike": 0.8571428571428571,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     }
+    },
+    "rule_share": 0.5546218487394958,
+    "late_events": 3406,
+    "late_anomalies": 38
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.04545454545454545,
+       "precision": 0.024922118380062305,
+       "recall": 0.25806451612903225,
+       "alerts": 321,
+       "tp": 8,
+       "fp": 313,
+       "fn": 23,
+       "tn": 3050,
+       "roc_auc": 0.7335904002762511,
+       "pr_auc": 0.05552257056339143
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.25,
+       "slow_drift": 0.08333333333333333
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.05161290322580645,
+       "precision": 0.02867383512544803,
+       "recall": 0.25806451612903225,
+       "alerts": 279,
+       "tp": 8,
+       "fp": 271,
+       "fn": 23,
+       "tn": 3092,
+       "roc_auc": 0.7352690090453033,
+       "pr_auc": 0.06041923578593474
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.25,
+       "slow_drift": 0.08333333333333333
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.1,
+       "precision": 0.06741573033707865,
+       "recall": 0.1935483870967742,
+       "alerts": 89,
+       "tp": 6,
+       "fp": 83,
+       "fn": 25,
+       "tn": 3280,
+       "roc_auc": 0.7352690090453033,
+       "pr_auc": 0.06041923578593474
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.0967741935483871,
+       "precision": 0.06451612903225806,
+       "recall": 0.1935483870967742,
+       "alerts": 93,
+       "tp": 6,
+       "fp": 87,
+       "fn": 25,
+       "tn": 3276,
+       "roc_auc": 0.7141952749561163,
+       "pr_auc": 0.060783324952731636
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.06,
+       "precision": 0.03550295857988166,
+       "recall": 0.1935483870967742,
+       "alerts": 169,
+       "tp": 6,
+       "fp": 163,
+       "fn": 25,
+       "tn": 3200,
+       "roc_auc": 0.7216482978907083,
+       "pr_auc": 0.0604631514786674
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.10619469026548671,
+       "precision": 0.07317073170731707,
+       "recall": 0.1935483870967742,
+       "alerts": 82,
+       "tp": 6,
+       "fp": 76,
+       "fn": 25,
+       "tn": 3287,
+       "roc_auc": 0.7216482978907083,
+       "pr_auc": 0.0604631514786674
+      },
+      "by_type": {
+       "amount_spike": 0.7142857142857143,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.125,
+       "slow_drift": 0.0
+      }
+     }
+    },
+    "rule_share": 0.5546218487394958,
+    "late_events": 3394,
+    "late_anomalies": 31
+   }
+  ],
+  "bbmp_2010_2019": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.03292181069958848,
+       "precision": 0.01791044776119403,
+       "recall": 0.2033898305084746,
+       "alerts": 1340,
+       "tp": 24,
+       "fp": 1316,
+       "fn": 94,
+       "tn": 11857,
+       "roc_auc": 0.5525136803965995,
+       "pr_auc": 0.023979266488265268
+      },
+      "by_type": {
+       "amount_spike": 0.6538461538461539,
+       "frequency_shift": 0.03125,
+       "off_cycle_invoice": 0.09375,
+       "slow_drift": 0.10714285714285714
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.040128410914927776,
+       "precision": 0.022163120567375887,
+       "recall": 0.211864406779661,
+       "alerts": 1128,
+       "tp": 25,
+       "fp": 1103,
+       "fn": 93,
+       "tn": 12070,
+       "roc_auc": 0.5785369920754703,
+       "pr_auc": 0.027384633209615043
+      },
+      "by_type": {
+       "amount_spike": 0.6923076923076923,
+       "frequency_shift": 0.0625,
+       "off_cycle_invoice": 0.09375,
+       "slow_drift": 0.07142857142857142
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.0825242718446602,
+       "precision": 0.05782312925170068,
+       "recall": 0.1440677966101695,
+       "alerts": 294,
+       "tp": 17,
+       "fp": 277,
+       "fn": 101,
+       "tn": 12896,
+       "roc_auc": 0.5785369920754703,
+       "pr_auc": 0.027384633209615043
+      },
+      "by_type": {
+       "amount_spike": 0.6538461538461539,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.08232445520581114,
+       "precision": 0.0576271186440678,
+       "recall": 0.1440677966101695,
+       "alerts": 295,
+       "tp": 17,
+       "fp": 278,
+       "fn": 101,
+       "tn": 12895,
+       "roc_auc": 0.6438683645412355,
+       "pr_auc": 0.029102476326975345
+      },
+      "by_type": {
+       "amount_spike": 0.6538461538461539,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.06666666666666668,
+       "precision": 0.04265402843601896,
+       "recall": 0.15254237288135594,
+       "alerts": 422,
+       "tp": 18,
+       "fp": 404,
+       "fn": 100,
+       "tn": 12769,
+       "roc_auc": 0.5434697577350693,
+       "pr_auc": 0.02412999463357368
+      },
+      "by_type": {
+       "amount_spike": 0.6538461538461539,
+       "frequency_shift": 0.03125,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.09350649350649351,
+       "precision": 0.06741573033707865,
+       "recall": 0.15254237288135594,
+       "alerts": 267,
+       "tp": 18,
+       "fp": 249,
+       "fn": 100,
+       "tn": 12924,
+       "roc_auc": 0.5434697577350693,
+       "pr_auc": 0.02412999463357368
+      },
+      "by_type": {
+       "amount_spike": 0.6538461538461539,
+       "frequency_shift": 0.03125,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 13291,
+    "late_anomalies": 118
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.025469168900804293,
+       "precision": 0.013649425287356323,
+       "recall": 0.19,
+       "alerts": 1392,
+       "tp": 19,
+       "fp": 1373,
+       "fn": 81,
+       "tn": 11824,
+       "roc_auc": 0.5526543911495038,
+       "pr_auc": 0.01825438870738365
+      },
+      "by_type": {
+       "amount_spike": 0.6956521739130435,
+       "frequency_shift": 0.02702702702702703,
+       "off_cycle_invoice": 0.06060606060606061,
+       "slow_drift": 0.0
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.029484029484029485,
+       "precision": 0.016057091882247992,
+       "recall": 0.18,
+       "alerts": 1121,
+       "tp": 18,
+       "fp": 1103,
+       "fn": 82,
+       "tn": 12094,
+       "roc_auc": 0.5852049708267031,
+       "pr_auc": 0.02389021270234954
+      },
+      "by_type": {
+       "amount_spike": 0.6956521739130435,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.06060606060606061,
+       "slow_drift": 0.0
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.06718346253229975,
+       "precision": 0.04529616724738676,
+       "recall": 0.13,
+       "alerts": 287,
+       "tp": 13,
+       "fp": 274,
+       "fn": 87,
+       "tn": 12923,
+       "roc_auc": 0.5852049708267031,
+       "pr_auc": 0.02389021270234954
+      },
+      "by_type": {
+       "amount_spike": 0.5217391304347826,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.030303030303030304,
+       "slow_drift": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.0707070707070707,
+       "precision": 0.0472972972972973,
+       "recall": 0.14,
+       "alerts": 296,
+       "tp": 14,
+       "fp": 282,
+       "fn": 86,
+       "tn": 12915,
+       "roc_auc": 0.6661544290369024,
+       "pr_auc": 0.026707435174710865
+      },
+      "by_type": {
+       "amount_spike": 0.5652173913043478,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.030303030303030304,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.06451612903225806,
+       "precision": 0.03981264637002342,
+       "recall": 0.17,
+       "alerts": 427,
+       "tp": 17,
+       "fp": 410,
+       "fn": 83,
+       "tn": 12787,
+       "roc_auc": 0.5420019701447298,
+       "pr_auc": 0.020954985495807706
+      },
+      "by_type": {
+       "amount_spike": 0.6956521739130435,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.030303030303030304,
+       "slow_drift": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.0862533692722372,
+       "precision": 0.05904059040590406,
+       "recall": 0.16,
+       "alerts": 271,
+       "tp": 16,
+       "fp": 255,
+       "fn": 84,
+       "tn": 12942,
+       "roc_auc": 0.5420019701447298,
+       "pr_auc": 0.020954985495807706
+      },
+      "by_type": {
+       "amount_spike": 0.6521739130434783,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.030303030303030304,
+       "slow_drift": 0.0
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 13297,
+    "late_anomalies": 100
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.02857142857142857,
+       "precision": 0.015418502202643172,
+       "recall": 0.19444444444444445,
+       "alerts": 1362,
+       "tp": 21,
+       "fp": 1341,
+       "fn": 87,
+       "tn": 11832,
+       "roc_auc": 0.5722823901864363,
+       "pr_auc": 0.025723773613308253
+      },
+      "by_type": {
+       "amount_spike": 0.6666666666666666,
+       "frequency_shift": 0.038461538461538464,
+       "off_cycle_invoice": 0.03571428571428571,
+       "slow_drift": 0.037037037037037035
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.0398671096345515,
+       "precision": 0.021897810218978103,
+       "recall": 0.2222222222222222,
+       "alerts": 1096,
+       "tp": 24,
+       "fp": 1072,
+       "fn": 84,
+       "tn": 12101,
+       "roc_auc": 0.604294418156105,
+       "pr_auc": 0.030133797334731253
+      },
+      "by_type": {
+       "amount_spike": 0.7407407407407407,
+       "frequency_shift": 0.07692307692307693,
+       "off_cycle_invoice": 0.03571428571428571,
+       "slow_drift": 0.037037037037037035
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.09693877551020408,
+       "precision": 0.06690140845070422,
+       "recall": 0.17592592592592593,
+       "alerts": 284,
+       "tp": 19,
+       "fp": 265,
+       "fn": 89,
+       "tn": 12908,
+       "roc_auc": 0.604294418156105,
+       "pr_auc": 0.030133797334731253
+      },
+      "by_type": {
+       "amount_spike": 0.6666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.037037037037037035
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.0926829268292683,
+       "precision": 0.06291390728476821,
+       "recall": 0.17592592592592593,
+       "alerts": 302,
+       "tp": 19,
+       "fp": 283,
+       "fn": 89,
+       "tn": 12890,
+       "roc_auc": 0.6509667642287394,
+       "pr_auc": 0.03097039700242478
+      },
+      "by_type": {
+       "amount_spike": 0.6666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.037037037037037035
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.06959706959706959,
+       "precision": 0.04337899543378995,
+       "recall": 0.17592592592592593,
+       "alerts": 438,
+       "tp": 19,
+       "fp": 419,
+       "fn": 89,
+       "tn": 12754,
+       "roc_auc": 0.5467412299568983,
+       "pr_auc": 0.0263662657421675
+      },
+      "by_type": {
+       "amount_spike": 0.6666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.037037037037037035
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.10052910052910054,
+       "precision": 0.07037037037037037,
+       "recall": 0.17592592592592593,
+       "alerts": 270,
+       "tp": 19,
+       "fp": 251,
+       "fn": 89,
+       "tn": 12922,
+       "roc_auc": 0.5467412299568983,
+       "pr_auc": 0.0263662657421675
+      },
+      "by_type": {
+       "amount_spike": 0.6666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.037037037037037035
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 13281,
+    "late_anomalies": 108
+   }
+  ],
+  "secop": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.04238631622861912,
+       "precision": 0.02877208880833711,
+       "recall": 0.08045612923661705,
+       "alerts": 8828,
+       "tp": 254,
+       "fp": 8574,
+       "fn": 2903,
+       "tn": 98115,
+       "roc_auc": 0.47883644133548975,
+       "pr_auc": 0.027935327268539915
+      },
+      "by_type": {
+       "amount_spike": 0.1972049689440994,
+       "frequency_shift": 0.04950495049504951,
+       "off_cycle_invoice": 0.04161849710982659,
+       "slow_drift": 0.060714285714285714
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.04657157587214298,
+       "precision": 0.0319537790354911,
+       "recall": 0.08584098828001267,
+       "alerts": 8481,
+       "tp": 271,
+       "fp": 8210,
+       "fn": 2886,
+       "tn": 98479,
+       "roc_auc": 0.4822156603636122,
+       "pr_auc": 0.02953438765347131
+      },
+      "by_type": {
+       "amount_spike": 0.21583850931677018,
+       "frequency_shift": 0.050742574257425746,
+       "off_cycle_invoice": 0.04508670520231214,
+       "slow_drift": 0.06190476190476191
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.0396700706991359,
+       "precision": 0.05219638242894057,
+       "recall": 0.031992397846056383,
+       "alerts": 1935,
+       "tp": 101,
+       "fp": 1834,
+       "fn": 3056,
+       "tn": 104855,
+       "roc_auc": 0.4822156603636122,
+       "pr_auc": 0.02953438765347131
+      },
+      "by_type": {
+       "amount_spike": 0.11024844720496894,
+       "frequency_shift": 0.007425742574257425,
+       "off_cycle_invoice": 0.009248554913294798,
+       "slow_drift": 0.01904761904761905
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.04326186830015313,
+       "precision": 0.05466860183841316,
+       "recall": 0.03579347481786506,
+       "alerts": 2067,
+       "tp": 113,
+       "fp": 1954,
+       "fn": 3044,
+       "tn": 104735,
+       "roc_auc": 0.4853956006572147,
+       "pr_auc": 0.030252044743072186
+      },
+      "by_type": {
+       "amount_spike": 0.11645962732919254,
+       "frequency_shift": 0.012376237623762377,
+       "off_cycle_invoice": 0.012716763005780347,
+       "slow_drift": 0.02023809523809524
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.049,
+       "precision": 0.05170594442490327,
+       "recall": 0.04656319290465632,
+       "alerts": 2843,
+       "tp": 147,
+       "fp": 2696,
+       "fn": 3010,
+       "tn": 103993,
+       "roc_auc": 0.49112048096193717,
+       "pr_auc": 0.03155049543950283
+      },
+      "by_type": {
+       "amount_spike": 0.14906832298136646,
+       "frequency_shift": 0.019801980198019802,
+       "off_cycle_invoice": 0.019653179190751446,
+       "slow_drift": 0.02142857142857143
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.05172779308882764,
+       "precision": 0.0782051282051282,
+       "recall": 0.03864428254672157,
+       "alerts": 1560,
+       "tp": 122,
+       "fp": 1438,
+       "fn": 3035,
+       "tn": 105251,
+       "roc_auc": 0.49112048096193717,
+       "pr_auc": 0.03155049543950283
+      },
+      "by_type": {
+       "amount_spike": 0.13043478260869565,
+       "frequency_shift": 0.011138613861386138,
+       "off_cycle_invoice": 0.013872832369942197,
+       "slow_drift": 0.02023809523809524
+      }
+     }
+    },
+    "rule_share": 0.5546218487394958,
+    "late_events": 109846,
+    "late_anomalies": 3157
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.04248173956846612,
+       "precision": 0.028907678244972576,
+       "recall": 0.0800886356441912,
+       "alerts": 8752,
+       "tp": 253,
+       "fp": 8499,
+       "fn": 2906,
+       "tn": 98189,
+       "roc_auc": 0.4801977460633229,
+       "pr_auc": 0.028062850068068763
+      },
+      "by_type": {
+       "amount_spike": 0.20766773162939298,
+       "frequency_shift": 0.04433497536945813,
+       "off_cycle_invoice": 0.03397508493771234,
+       "slow_drift": 0.06801909307875895
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.04632941577244081,
+       "precision": 0.031690551089362695,
+       "recall": 0.08610319721430833,
+       "alerts": 8583,
+       "tp": 272,
+       "fp": 8311,
+       "fn": 2887,
+       "tn": 98377,
+       "roc_auc": 0.48283079317184996,
+       "pr_auc": 0.02966106327425917
+      },
+      "by_type": {
+       "amount_spike": 0.23003194888178913,
+       "frequency_shift": 0.04556650246305419,
+       "off_cycle_invoice": 0.0362400906002265,
+       "slow_drift": 0.07040572792362769
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.042433947157726186,
+       "precision": 0.05770277626565052,
+       "recall": 0.033554922443811336,
+       "alerts": 1837,
+       "tp": 106,
+       "fp": 1731,
+       "fn": 3053,
+       "tn": 104957,
+       "roc_auc": 0.48283079317184996,
+       "pr_auc": 0.02966106327425917
+      },
+      "by_type": {
+       "amount_spike": 0.12779552715654952,
+       "frequency_shift": 0.006157635467980296,
+       "off_cycle_invoice": 0.006795016987542469,
+       "slow_drift": 0.017899761336515514
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.04087989098695737,
+       "precision": 0.05308392315470172,
+       "recall": 0.03323836657169991,
+       "alerts": 1978,
+       "tp": 105,
+       "fp": 1873,
+       "fn": 3054,
+       "tn": 104815,
+       "roc_auc": 0.4882248206104268,
+       "pr_auc": 0.03017982789396674
+      },
+      "by_type": {
+       "amount_spike": 0.11980830670926518,
+       "frequency_shift": 0.008620689655172414,
+       "off_cycle_invoice": 0.009060022650056626,
+       "slow_drift": 0.017899761336515514
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.04921325744894543,
+       "precision": 0.0522202486678508,
+       "recall": 0.04653371320037987,
+       "alerts": 2815,
+       "tp": 147,
+       "fp": 2668,
+       "fn": 3012,
+       "tn": 104020,
+       "roc_auc": 0.4925945989577013,
+       "pr_auc": 0.03133083366199407
+      },
+      "by_type": {
+       "amount_spike": 0.15335463258785942,
+       "frequency_shift": 0.014778325123152709,
+       "off_cycle_invoice": 0.01245753114382786,
+       "slow_drift": 0.03341288782816229
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.052889741949242904,
+       "precision": 0.08104575163398693,
+       "recall": 0.03925292814181703,
+       "alerts": 1530,
+       "tp": 124,
+       "fp": 1406,
+       "fn": 3035,
+       "tn": 105282,
+       "roc_auc": 0.4925945989577013,
+       "pr_auc": 0.03133083366199407
+      },
+      "by_type": {
+       "amount_spike": 0.14057507987220447,
+       "frequency_shift": 0.009852216748768473,
+       "off_cycle_invoice": 0.006795016987542469,
+       "slow_drift": 0.026252983293556086
+      }
+     }
+    },
+    "rule_share": 0.5546218487394958,
+    "late_events": 109847,
+    "late_anomalies": 3159
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.03871616525601274,
+       "precision": 0.026196416420957134,
+       "recall": 0.07415730337078652,
+       "alerts": 8818,
+       "tp": 231,
+       "fp": 8587,
+       "fn": 2884,
+       "tn": 98145,
+       "roc_auc": 0.4832429783627512,
+       "pr_auc": 0.02737188782286234
+      },
+      "by_type": {
+       "amount_spike": 0.19023569023569023,
+       "frequency_shift": 0.043316831683168314,
+       "off_cycle_invoice": 0.03341013824884793,
+       "slow_drift": 0.06390532544378698
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.044145542334885324,
+       "precision": 0.030178003064953437,
+       "recall": 0.08218298555377207,
+       "alerts": 8483,
+       "tp": 256,
+       "fp": 8227,
+       "fn": 2859,
+       "tn": 98505,
+       "roc_auc": 0.48659016276286793,
+       "pr_auc": 0.02869357121413561
+      },
+      "by_type": {
+       "amount_spike": 0.21885521885521886,
+       "frequency_shift": 0.04579207920792079,
+       "off_cycle_invoice": 0.03571428571428571,
+       "slow_drift": 0.06863905325443787
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.03635629165825086,
+       "precision": 0.049019607843137254,
+       "recall": 0.028892455858747994,
+       "alerts": 1836,
+       "tp": 90,
+       "fp": 1746,
+       "fn": 3025,
+       "tn": 104986,
+       "roc_auc": 0.48659016276286793,
+       "pr_auc": 0.02869357121413561
+      },
+      "by_type": {
+       "amount_spike": 0.1026936026936027,
+       "frequency_shift": 0.007425742574257425,
+       "off_cycle_invoice": 0.0069124423963133645,
+       "slow_drift": 0.020118343195266272
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.035321821036106746,
+       "precision": 0.04543160020191822,
+       "recall": 0.028892455858747994,
+       "alerts": 1981,
+       "tp": 90,
+       "fp": 1891,
+       "fn": 3025,
+       "tn": 104841,
+       "roc_auc": 0.49265890252172384,
+       "pr_auc": 0.028903467090935886
+      },
+      "by_type": {
+       "amount_spike": 0.10774410774410774,
+       "frequency_shift": 0.009900990099009901,
+       "off_cycle_invoice": 0.0034562211981566822,
+       "slow_drift": 0.01775147928994083
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.040438079191238416,
+       "precision": 0.0425531914893617,
+       "recall": 0.038523274478330656,
+       "alerts": 2820,
+       "tp": 120,
+       "fp": 2700,
+       "fn": 2995,
+       "tn": 104032,
+       "roc_auc": 0.49832640028047026,
+       "pr_auc": 0.030220890129696212
+      },
+      "by_type": {
+       "amount_spike": 0.13468013468013468,
+       "frequency_shift": 0.013613861386138614,
+       "off_cycle_invoice": 0.010368663594470046,
+       "slow_drift": 0.023668639053254437
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.04591289422870629,
+       "precision": 0.06921086675291074,
+       "recall": 0.03434991974317817,
+       "alerts": 1546,
+       "tp": 107,
+       "fp": 1439,
+       "fn": 3008,
+       "tn": 105293,
+       "roc_auc": 0.49832640028047026,
+       "pr_auc": 0.030220890129696212
+      },
+      "by_type": {
+       "amount_spike": 0.12457912457912458,
+       "frequency_shift": 0.009900990099009901,
+       "off_cycle_invoice": 0.009216589861751152,
+       "slow_drift": 0.020118343195266272
+      }
+     }
+    },
+    "rule_share": 0.5546218487394958,
+    "late_events": 109847,
+    "late_anomalies": 3115
+   }
+  ],
+  "ocds_assam": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.011267605633802816,
+       "precision": 0.005917159763313609,
+       "recall": 0.11764705882352941,
+       "alerts": 338,
+       "tp": 2,
+       "fp": 336,
+       "fn": 15,
+       "tn": 2292,
+       "roc_auc": 0.40634792729877334,
+       "pr_auc": 0.008922903973591387
+      },
+      "by_type": {
+       "amount_spike": 0.25,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.125
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.01574803149606299,
+       "precision": 0.008438818565400843,
+       "recall": 0.11764705882352941,
+       "alerts": 237,
+       "tp": 2,
+       "fp": 235,
+       "fn": 15,
+       "tn": 2393,
+       "roc_auc": 0.4218596114244785,
+       "pr_auc": 0.012797220977947867
+      },
+      "by_type": {
+       "amount_spike": 0.25,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.125
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.043478260869565216,
+       "precision": 0.034482758620689655,
+       "recall": 0.058823529411764705,
+       "alerts": 29,
+       "tp": 1,
+       "fp": 28,
+       "fn": 16,
+       "tn": 2600,
+       "roc_auc": 0.4218596114244785,
+       "pr_auc": 0.012797220977947867
+      },
+      "by_type": {
+       "amount_spike": 0.0,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.125
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.04651162790697675,
+       "precision": 0.038461538461538464,
+       "recall": 0.058823529411764705,
+       "alerts": 26,
+       "tp": 1,
+       "fp": 25,
+       "fn": 16,
+       "tn": 2603,
+       "roc_auc": 0.5084385352314442,
+       "pr_auc": 0.017197370331985568
+      },
+      "by_type": {
+       "amount_spike": 0.0,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.125
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.06779661016949151,
+       "precision": 0.047619047619047616,
+       "recall": 0.11764705882352941,
+       "alerts": 42,
+       "tp": 2,
+       "fp": 40,
+       "fn": 15,
+       "tn": 2588,
+       "roc_auc": 0.40413197242367266,
+       "pr_auc": 0.015180022245357689
+      },
+      "by_type": {
+       "amount_spike": 0.25,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.125
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.05714285714285715,
+       "precision": 0.03773584905660377,
+       "recall": 0.11764705882352941,
+       "alerts": 53,
+       "tp": 2,
+       "fp": 51,
+       "fn": 15,
+       "tn": 2577,
+       "roc_auc": 0.40413197242367266,
+       "pr_auc": 0.015180022245357689
+      },
+      "by_type": {
+       "amount_spike": 0.25,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.125
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 2645,
+    "late_anomalies": 17
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.005602240896358543,
+       "precision": 0.0029411764705882353,
+       "recall": 0.058823529411764705,
+       "alerts": 340,
+       "tp": 1,
+       "fp": 339,
+       "fn": 16,
+       "tn": 2290,
+       "roc_auc": 0.3756516680464502,
+       "pr_auc": 0.009120836193055159
+      },
+      "by_type": {
+       "amount_spike": 0.16666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.022222222222222223,
+       "precision": 0.011857707509881422,
+       "recall": 0.17647058823529413,
+       "alerts": 253,
+       "tp": 3,
+       "fp": 250,
+       "fn": 14,
+       "tn": 2379,
+       "roc_auc": 0.38815921956458505,
+       "pr_auc": 0.016513098133446515
+      },
+      "by_type": {
+       "amount_spike": 0.5,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.044444444444444446,
+       "precision": 0.03571428571428571,
+       "recall": 0.058823529411764705,
+       "alerts": 28,
+       "tp": 1,
+       "fp": 27,
+       "fn": 16,
+       "tn": 2602,
+       "roc_auc": 0.38815921956458505,
+       "pr_auc": 0.016513098133446515
+      },
+      "by_type": {
+       "amount_spike": 0.16666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.049999999999999996,
+       "precision": 0.043478260869565216,
+       "recall": 0.058823529411764705,
+       "alerts": 23,
+       "tp": 1,
+       "fp": 22,
+       "fn": 16,
+       "tn": 2607,
+       "roc_auc": 0.39254469379992396,
+       "pr_auc": 0.01789710278699956
+      },
+      "by_type": {
+       "amount_spike": 0.16666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.035714285714285705,
+       "precision": 0.02564102564102564,
+       "recall": 0.058823529411764705,
+       "alerts": 39,
+       "tp": 1,
+       "fp": 38,
+       "fn": 16,
+       "tn": 2591,
+       "roc_auc": 0.4128834493097353,
+       "pr_auc": 0.011016044108368686
+      },
+      "by_type": {
+       "amount_spike": 0.16666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.029411764705882353,
+       "precision": 0.0196078431372549,
+       "recall": 0.058823529411764705,
+       "alerts": 51,
+       "tp": 1,
+       "fp": 50,
+       "fn": 16,
+       "tn": 2579,
+       "roc_auc": 0.4128834493097353,
+       "pr_auc": 0.011016044108368686
+      },
+      "by_type": {
+       "amount_spike": 0.16666666666666666,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 2646,
+    "late_anomalies": 17
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.011461318051575931,
+       "precision": 0.005952380952380952,
+       "recall": 0.15384615384615385,
+       "alerts": 336,
+       "tp": 2,
+       "fp": 334,
+       "fn": 11,
+       "tn": 2301,
+       "roc_auc": 0.4138957816377171,
+       "pr_auc": 0.0048695949929870135
+      },
+      "by_type": {
+       "amount_spike": 0.4,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.01606425702811245,
+       "precision": 0.00847457627118644,
+       "recall": 0.15384615384615385,
+       "alerts": 236,
+       "tp": 2,
+       "fp": 234,
+       "fn": 11,
+       "tn": 2401,
+       "roc_auc": 0.40913735221135605,
+       "pr_auc": 0.005162816588787854
+      },
+      "by_type": {
+       "amount_spike": 0.4,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "alerts": 25,
+       "tp": 0,
+       "fp": 25,
+       "fn": 13,
+       "tn": 2610,
+       "roc_auc": 0.40913735221135605,
+       "pr_auc": 0.005162816588787854
+      },
+      "by_type": {
+       "amount_spike": 0.0,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "alerts": 22,
+       "tp": 0,
+       "fp": 22,
+       "fn": 13,
+       "tn": 2613,
+       "roc_auc": 0.4683987739016202,
+       "pr_auc": 0.006164097888671701
+      },
+      "by_type": {
+       "amount_spike": 0.0,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.03703703703703704,
+       "precision": 0.024390243902439025,
+       "recall": 0.07692307692307693,
+       "alerts": 41,
+       "tp": 1,
+       "fp": 40,
+       "fn": 12,
+       "tn": 2595,
+       "roc_auc": 0.4436140709385491,
+       "pr_auc": 0.008434587938616213
+      },
+      "by_type": {
+       "amount_spike": 0.2,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.030303030303030304,
+       "precision": 0.018867924528301886,
+       "recall": 0.07692307692307693,
+       "alerts": 53,
+       "tp": 1,
+       "fp": 52,
+       "fn": 12,
+       "tn": 2583,
+       "roc_auc": 0.4436140709385491,
+       "pr_auc": 0.008434587938616213
+      },
+      "by_type": {
+       "amount_spike": 0.2,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 2648,
+    "late_anomalies": 13
+   }
+  ],
+  "icai": [
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.08981001727115716,
+       "precision": 0.06060606060606061,
+       "recall": 0.17333333333333334,
+       "alerts": 429,
+       "tp": 26,
+       "fp": 403,
+       "fn": 124,
+       "tn": 3905,
+       "roc_auc": 0.5300835654596101,
+       "pr_auc": 0.043838723679632215
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "frequency_shift": 0.09090909090909091,
+       "off_cycle_invoice": 0.023255813953488372,
+       "slow_drift": 0.11864406779661017
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.06927710843373494,
+       "precision": 0.04474708171206226,
+       "recall": 0.15333333333333332,
+       "alerts": 514,
+       "tp": 23,
+       "fp": 491,
+       "fn": 127,
+       "tn": 3817,
+       "roc_auc": 0.5279681213246672,
+       "pr_auc": 0.04739665702802569
+      },
+      "by_type": {
+       "amount_spike": 1.0,
+       "frequency_shift": 0.06060606060606061,
+       "off_cycle_invoice": 0.023255813953488372,
+       "slow_drift": 0.0847457627118644
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.10358565737051793,
+       "precision": 0.12871287128712872,
+       "recall": 0.08666666666666667,
+       "alerts": 101,
+       "tp": 13,
+       "fp": 88,
+       "fn": 137,
+       "tn": 4220,
+       "roc_auc": 0.5279681213246672,
+       "pr_auc": 0.04739665702802569
+      },
+      "by_type": {
+       "amount_spike": 0.8,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.01694915254237288
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.10655737704918032,
+       "precision": 0.13829787234042554,
+       "recall": 0.08666666666666667,
+       "alerts": 94,
+       "tp": 13,
+       "fp": 81,
+       "fn": 137,
+       "tn": 4227,
+       "roc_auc": 0.5141473228102754,
+       "pr_auc": 0.04739717599059466
+      },
+      "by_type": {
+       "amount_spike": 0.8666666666666667,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.1003344481605351,
+       "precision": 0.10067114093959731,
+       "recall": 0.1,
+       "alerts": 149,
+       "tp": 15,
+       "fp": 134,
+       "fn": 135,
+       "tn": 4174,
+       "roc_auc": 0.5198839368616528,
+       "pr_auc": 0.04648219769773938
+      },
+      "by_type": {
+       "amount_spike": 0.9333333333333333,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.01694915254237288
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.10600706713780918,
+       "precision": 0.11278195488721804,
+       "recall": 0.1,
+       "alerts": 133,
+       "tp": 15,
+       "fp": 118,
+       "fn": 135,
+       "tn": 4190,
+       "roc_auc": 0.5198839368616528,
+       "pr_auc": 0.04648219769773938
+      },
+      "by_type": {
+       "amount_spike": 0.9333333333333333,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.01694915254237288
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 4458,
+    "late_anomalies": 150
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.09326424870466321,
+       "precision": 0.06178489702517163,
+       "recall": 0.19014084507042253,
+       "alerts": 437,
+       "tp": 27,
+       "fp": 410,
+       "fn": 115,
+       "tn": 3891,
+       "roc_auc": 0.5213920116841482,
+       "pr_auc": 0.04267574112170706
+      },
+      "by_type": {
+       "amount_spike": 0.5909090909090909,
+       "frequency_shift": 0.13333333333333333,
+       "off_cycle_invoice": 0.11627906976744186,
+       "slow_drift": 0.09375
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.09230769230769231,
+       "precision": 0.05905511811023622,
+       "recall": 0.2112676056338028,
+       "alerts": 508,
+       "tp": 30,
+       "fp": 478,
+       "fn": 112,
+       "tn": 3823,
+       "roc_auc": 0.520524214807562,
+       "pr_auc": 0.04639860892580622
+      },
+      "by_type": {
+       "amount_spike": 0.7727272727272727,
+       "frequency_shift": 0.1111111111111111,
+       "off_cycle_invoice": 0.11627906976744186,
+       "slow_drift": 0.09375
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.09243697478991597,
+       "precision": 0.11458333333333333,
+       "recall": 0.07746478873239436,
+       "alerts": 96,
+       "tp": 11,
+       "fp": 85,
+       "fn": 131,
+       "tn": 4216,
+       "roc_auc": 0.520524214807562,
+       "pr_auc": 0.04639860892580622
+      },
+      "by_type": {
+       "amount_spike": 0.5,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.09565217391304347,
+       "precision": 0.125,
+       "recall": 0.07746478873239436,
+       "alerts": 88,
+       "tp": 11,
+       "fp": 77,
+       "fn": 131,
+       "tn": 4224,
+       "roc_auc": 0.5147378107285892,
+       "pr_auc": 0.04779634804766403
+      },
+      "by_type": {
+       "amount_spike": 0.5,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.08480565371024734,
+       "precision": 0.0851063829787234,
+       "recall": 0.08450704225352113,
+       "alerts": 141,
+       "tp": 12,
+       "fp": 129,
+       "fn": 130,
+       "tn": 4172,
+       "roc_auc": 0.520342468669258,
+       "pr_auc": 0.04603158110451286
+      },
+      "by_type": {
+       "amount_spike": 0.5454545454545454,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.08664259927797834,
+       "precision": 0.08888888888888889,
+       "recall": 0.08450704225352113,
+       "alerts": 135,
+       "tp": 12,
+       "fp": 123,
+       "fn": 130,
+       "tn": 4178,
+       "roc_auc": 0.520342468669258,
+       "pr_auc": 0.04603158110451286
+      },
+      "by_type": {
+       "amount_spike": 0.5454545454545454,
+       "frequency_shift": 0.0,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 4443,
+    "late_anomalies": 142
+   },
+   {
+    "rows": {
+     "R0 v1": {
+      "measures": {
+       "f1": 0.09106830122591944,
+       "precision": 0.060324825986078884,
+       "recall": 0.18571428571428572,
+       "alerts": 431,
+       "tp": 26,
+       "fp": 405,
+       "fn": 114,
+       "tn": 3911,
+       "roc_auc": 0.5453875943333775,
+       "pr_auc": 0.042442065904266794
+      },
+      "by_type": {
+       "amount_spike": 0.8888888888888888,
+       "frequency_shift": 0.17647058823529413,
+       "off_cycle_invoice": 0.05,
+       "slow_drift": 0.041666666666666664
+      }
+     },
+     "R1 + field-aware fusion": {
+      "measures": {
+       "f1": 0.07987220447284345,
+       "precision": 0.051440329218107,
+       "recall": 0.17857142857142858,
+       "alerts": 486,
+       "tp": 25,
+       "fp": 461,
+       "fn": 115,
+       "tn": 3855,
+       "roc_auc": 0.5450350853965312,
+       "pr_auc": 0.04864241976125077
+      },
+      "by_type": {
+       "amount_spike": 0.9444444444444444,
+       "frequency_shift": 0.14705882352941177,
+       "off_cycle_invoice": 0.025,
+       "slow_drift": 0.041666666666666664
+      }
+     },
+     "R2 + alert budget (2%)": {
+      "measures": {
+       "f1": 0.12403100775193798,
+       "precision": 0.13559322033898305,
+       "recall": 0.11428571428571428,
+       "alerts": 118,
+       "tp": 16,
+       "fp": 102,
+       "fn": 124,
+       "tn": 4214,
+       "roc_auc": 0.5450350853965312,
+       "pr_auc": 0.04864241976125077
+      },
+      "by_type": {
+       "amount_spike": 0.7777777777777778,
+       "frequency_shift": 0.058823529411764705,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R3 + sequence features": {
+      "measures": {
+       "f1": 0.14785992217898833,
+       "precision": 0.1623931623931624,
+       "recall": 0.1357142857142857,
+       "alerts": 117,
+       "tp": 19,
+       "fp": 98,
+       "fn": 121,
+       "tn": 4218,
+       "roc_auc": 0.5481977359989408,
+       "pr_auc": 0.05356398639302036
+      },
+      "by_type": {
+       "amount_spike": 0.9444444444444444,
+       "frequency_shift": 0.058823529411764705,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "R5 full v2": {
+      "measures": {
+       "f1": 0.11221122112211221,
+       "precision": 0.10429447852760736,
+       "recall": 0.12142857142857143,
+       "alerts": 163,
+       "tp": 17,
+       "fp": 146,
+       "fn": 123,
+       "tn": 4170,
+       "roc_auc": 0.5577154772937906,
+       "pr_auc": 0.0510618370893739
+      },
+      "by_type": {
+       "amount_spike": 0.8333333333333334,
+       "frequency_shift": 0.058823529411764705,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     },
+     "G global fixed cut-off": {
+      "measures": {
+       "f1": 0.125,
+       "precision": 0.12878787878787878,
+       "recall": 0.12142857142857143,
+       "alerts": 132,
+       "tp": 17,
+       "fp": 115,
+       "fn": 123,
+       "tn": 4201,
+       "roc_auc": 0.5577154772937906,
+       "pr_auc": 0.0510618370893739
+      },
+      "by_type": {
+       "amount_spike": 0.8333333333333334,
+       "frequency_shift": 0.058823529411764705,
+       "off_cycle_invoice": 0.0,
+       "slow_drift": 0.0
+      }
+     }
+    },
+    "rule_share": 0.4789915966386555,
+    "late_events": 4456,
+    "late_anomalies": 140
+   }
+  ]
+ }
+}
