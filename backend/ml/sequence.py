@@ -64,3 +64,16 @@ def add_sequence_features(df: pd.DataFrame) -> pd.DataFrame:
     earlier_median = df["gap_days"].groupby(vendors).transform(lambda s: s.shift(1).expanding().median())
     df["seq_gap_ratio"] = (df["gap_days"] / earlier_median.clip(lower=0.5)).fillna(1.0).clip(0, 50)
     return df
+
+
+def ewma_forecast_errors(df: pd.DataFrame, columns: list[str], clip: float) -> np.ndarray:
+    """A simple temporal baseline to set against the LSTM (v2 evidence): forecast each of `columns` as the EWMA of
+    the vendor's earlier values and return the squared errors, on the LSTM's clipped scale. Earlier events only."""
+    errors = np.zeros((len(df), len(columns)))
+    vendors = df["vendor_id"]
+    for k, column in enumerate(columns):
+        values = df[column].astype(float).fillna(0).clip(-clip, clip)
+        forecast = values.groupby(vendors).shift(1).groupby(vendors).transform(
+            lambda s: s.ewm(alpha=ALPHA, ignore_na=True).mean()).fillna(0.0)
+        errors[:, k] = ((forecast - values) ** 2).to_numpy()
+    return errors

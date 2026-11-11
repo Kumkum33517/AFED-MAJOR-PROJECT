@@ -59,8 +59,12 @@ if torch is not None:
 
 
 def run_lstm(df: pd.DataFrame, window: int = 10, mode: str = "forecast", epochs: int = 12,
-             seed: int = 42) -> dict[str, Any]:
-    """Train on this run's events and return predictions, errors and weights."""
+             seed: int = 42, train_rows: np.ndarray | None = None) -> dict[str, Any]:
+    """Train on this run's events (or only on `train_rows`, a boolean mask) and return predictions, errors and weights.
+
+    Every event is scored either way. Training on the earlier events only (v2 evidence) keeps the later period
+    out of the model that judges it.
+    """
     n = len(SEQ_FEATURES)
     if torch is None:
         return {"available": False, "pred": np.zeros((len(df), n)), "errors": np.zeros((len(df), n)), "state": None}
@@ -76,8 +80,10 @@ def run_lstm(df: pd.DataFrame, window: int = 10, mode: str = "forecast", epochs:
     optimiser = torch.optim.Adam(model.parameters(), lr=3e-3)
     loss_fn = nn.MSELoss()
     model.train()
+    pool = None if train_rows is None else torch.from_numpy(np.flatnonzero(train_rows))
     for _ in range(epochs):
-        for batch in torch.randperm(len(x)).split(256):
+        order = torch.randperm(len(x)) if pool is None else pool[torch.randperm(len(pool))]
+        for batch in order.split(256):
             optimiser.zero_grad()
             loss_fn(model(x[batch]), target[batch]).backward()
             optimiser.step()

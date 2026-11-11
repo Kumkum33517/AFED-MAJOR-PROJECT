@@ -23,8 +23,8 @@ from sklearn.ensemble import IsolationForest
 from .evaluate import compare_models, evaluate, print_report
 from .features import RULES, active_rules, available_inputs, compute_features, entity_baselines, read_csv, validate
 from .fusion import calibrate_medium, calibrated_thresholds, rule_share, risk_score, signals, tier
-from .lstm_seq import SEQ_FEATURES, run_lstm
-from .sequence import SEQUENCE_FEATURES, add_sequence_features
+from .lstm_seq import CLIP, SEQ_FEATURES, run_lstm
+from .sequence import SEQUENCE_FEATURES, add_sequence_features, ewma_forecast_errors
 
 MODELS_DIR = Path(__file__).resolve().parents[1] / "models_store"
 SEED = 42
@@ -36,7 +36,7 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "thresholds": {"medium": 0.45, "high": 0.60, "critical": 0.75},
     "contamination": "auto",
     # in_forest: whether the LSTM's errors feed the Isolation Forest. The LSTM trains either way, for the chart.
-    "lstm": {"window": 10, "mode": "forecast", "epochs": 12, "in_forest": True},
+    "lstm": {"window": 10, "mode": "forecast", "epochs": 12, "in_forest": True, "fit_share": 1.0},
     "rules": {name: True for name in RULES},
     "qwen_provider": "template",
     # v2 options. All off reproduces v1 exactly (tests/fixtures/v1_seed42.json).
@@ -44,6 +44,8 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     # Medium cut-off chosen per run on its earliest events: "alert_budget" (no labels) or "label" (evaluation only).
     "calibration": {"mode": "off", "target_rate": 0.02, "fit_share": 0.6},
     "sequence_features": False,  # CUSUM, EWMA, trend and gap-ratio features for the forest (ml/sequence.py)
+    # Evidence only: "ewma" replaces the LSTM's errors with an EWMA forecaster's (and skips the LSTM).
+    "temporal_source": "lstm",
 }
 
 RAW_FEATURES = ["log_amount", "proc_days_f", "gap_days_f", "approval_hour", "approval_dow", "category_code",
@@ -118,7 +120,13 @@ def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, prog
 
     report(25, "Training LSTM")
     lstm = settings["lstm"]
-    sequence = run_lstm(df, lstm["window"], lstm["mode"], lstm["epochs"], SEED)
+    fit_share = float(lstm.get("fit_share", 1.0))
+    train_rows = None if fit_share >= 1.0 else (df["invoice_date"] < df["invoice_date"].quantile(fit_share)).to_numpy()
+    if settings.get("temporal_source", "lstm") == "ewma":
+        sequence = {"available": False, "pred": np.zeros((len(df), len(SEQ_FEATURES))), "state": None,
+                    "errors": ewma_forecast_errors(df, SEQ_FEATURES, CLIP)}
+    else:
+        sequence = run_lstm(df, lstm["window"], lstm["mode"], lstm["epochs"], SEED, train_rows)
     for k, column in enumerate(LSTM_FEATURES):
         df[column] = sequence["errors"][:, k]
     # Without torch these stay empty: a neutral-looking score would claim a model ran when none did.
@@ -129,7 +137,8 @@ def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, prog
 
     report(65, "Scoring with Isolation Forest")
     contamination = settings["contamination"]
-    sequence_columns = LSTM_FEATURES if has_lstm and lstm.get("in_forest", True) else []
+    use_ewma = settings.get("temporal_source", "lstm") == "ewma"
+    sequence_columns = LSTM_FEATURES if (has_lstm or use_ewma) and lstm.get("in_forest", True) else []
     columns = RAW_FEATURES + ENTITY_FEATURES + sequence_columns + FLAG_FEATURES
     if settings.get("sequence_features"):
         columns = columns + SEQUENCE_FEATURES

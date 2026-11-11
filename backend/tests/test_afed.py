@@ -382,6 +382,11 @@ def test_sequence_features_use_only_earlier_events() -> None:
     assert np.isfinite(full[SEQUENCE_FEATURES].to_numpy()).all()
     first = full.groupby("vendor_id").head(1)  # nothing earlier to compare with: neutral values
     assert (first["seq_amt_ewma_z"] == 0).all() and (first["seq_gap_ratio"] == 1).all()
+    from ml.sequence import ewma_forecast_errors
+    columns = ["amt_z", "freq_z", "proc_z"]
+    errors_full = ewma_forecast_errors(df, columns, 6.0)
+    errors_early = ewma_forecast_errors(df[df["invoice_date"] < cut], columns, 6.0)
+    assert np.allclose(errors_full[: len(errors_early)], errors_early)  # the EWMA forecaster sees only earlier events too
 
 
 if __name__ == "__main__":
