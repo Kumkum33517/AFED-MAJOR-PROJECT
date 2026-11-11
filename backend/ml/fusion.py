@@ -19,9 +19,28 @@ def signals(if_score: np.ndarray, deviation: np.ndarray, rule_score: np.ndarray)
     return a, d, np.asarray(rule_score, dtype=float)
 
 
-def risk_score(a: np.ndarray, d: np.ndarray, f: np.ndarray, weights: dict[str, float]) -> np.ndarray:
-    risk = weights["w1"] * a + weights["w2"] * d + weights["w3"] * f + SYNERGY * np.minimum(d, f)
+def risk_score(a: np.ndarray, d: np.ndarray, f: np.ndarray, weights: dict[str, float], rule_share: float = 1.0) -> np.ndarray:
+    """Risk = w1·A + w2·D + w3·F + 0.10·min(D, F)  (v1, and field-aware fusion when every rule's inputs exist).
+
+    Field-aware fusion (v2) passes rule_share < 1: the share of rule severity whose inputs the dataset has. F's
+    weight shrinks to w3·rule_share and the weights are renormalised over what is available, so a dataset without
+    approvals or bank accounts is not scored as if those rules had looked and found nothing:
+        Risk = (w1·A + w2·D + w3'·F) / (w1 + w2 + w3') + 0.10·min(D, F),  w3' = w3·rule_share,
+    with the bonus only while some rule can fire (rule_share > 0).
+    """
+    if rule_share >= 1.0:
+        risk = weights["w1"] * a + weights["w2"] * d + weights["w3"] * f + SYNERGY * np.minimum(d, f)
+        return np.clip(risk, 0, 1)
+    w3 = weights["w3"] * max(rule_share, 0.0)
+    risk = (weights["w1"] * a + weights["w2"] * d + w3 * f) / (weights["w1"] + weights["w2"] + w3)
+    if rule_share > 0:
+        risk = risk + SYNERGY * np.minimum(d, f)
     return np.clip(risk, 0, 1)
+
+
+def rule_share(active: list[str], severities: dict[str, float]) -> float:
+    """Share of total rule severity carried by the rules that can fire on this data."""
+    return sum(severities[r] for r in active) / sum(severities.values())
 
 
 def tier(risk: np.ndarray, thresholds: dict[str, float]) -> np.ndarray:

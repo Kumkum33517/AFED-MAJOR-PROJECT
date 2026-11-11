@@ -21,8 +21,8 @@ import pandas as pd
 from sklearn.ensemble import IsolationForest
 
 from .evaluate import compare_models, evaluate, print_report
-from .features import RULES, compute_features, entity_baselines, read_csv, validate
-from .fusion import risk_score, signals, tier
+from .features import RULES, active_rules, available_inputs, compute_features, entity_baselines, read_csv, validate
+from .fusion import rule_share, risk_score, signals, tier
 from .lstm_seq import SEQ_FEATURES, run_lstm
 
 MODELS_DIR = Path(__file__).resolve().parents[1] / "models_store"
@@ -38,6 +38,8 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "lstm": {"window": 10, "mode": "forecast", "epochs": 12, "in_forest": True},
     "rules": {name: True for name in RULES},
     "qwen_provider": "template",
+    # v2 options. All off reproduces v1 exactly (tests/fixtures/v1_seed42.json).
+    "field_aware": False,        # renormalise fusion over the rule inputs the data has
 }
 
 RAW_FEATURES = ["log_amount", "proc_days_f", "gap_days_f", "approval_hour", "approval_dow", "category_code",
@@ -58,6 +60,7 @@ class PipelineResult:
     metrics: dict[str, Any] | None
     lstm_available: bool
     seconds: float  # scoring time, excluding saving and narration
+    active: dict[str, Any] | None = None  # which inputs, rules and fusion weights this run used
 
 
 def merged_settings(overrides: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -90,7 +93,10 @@ def entity_deviation(df: pd.DataFrame) -> np.ndarray:
     return np.sqrt(bigger ** 2 + sooner ** 2 + faster ** 2).to_numpy()
 
 
-def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, progress: Progress | None = None) -> PipelineResult:
+def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, progress: Progress | None = None,
+                 evaluate_labels: bool = True) -> PipelineResult:
+    """Score a batch. evaluate_labels=False skips the built-in evaluation (three extra forests and an LOF), which
+    experiments do themselves; scores and tiers are the same either way."""
     settings = merged_settings(settings)
     report = progress or (lambda _pct, _stage: None)
     started = time.perf_counter()
@@ -126,12 +132,21 @@ def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, prog
     df["entity_deviation"] = entity_deviation(df)
     a, d, f = signals(if_score, df["entity_deviation"].to_numpy(), df["rule_score"].to_numpy())
     df["a_score"], df["d_score"], df["f_score"] = a, d, f
-    df["risk"] = risk_score(a, d, f, settings["weights"])
+    inputs = available_inputs(df)
+    rules_on = [r for r in active_rules(inputs) if settings["rules"].get(r, True)]
+    share = rule_share(rules_on, RULES)
+    used_share = share if settings.get("field_aware") else 1.0
+    df["risk"] = risk_score(a, d, f, settings["weights"], used_share)
+    w = settings["weights"]
+    w3 = w["w3"] * used_share
+    active = {"inputs": inputs, "rules": rules_on, "rule_share": round(share, 4), "field_aware": bool(settings.get("field_aware")),
+              "weights_effective": {k: round(v / (w["w1"] + w["w2"] + w3), 4) for k, v in (("w1", w["w1"]), ("w2", w["w2"]), ("w3", w3))}
+              if used_share < 1 else dict(w)}
     df["level"] = tier(df["risk"].to_numpy(), settings["thresholds"])
 
     report(82, "Evaluating against labels")
     metrics = None
-    if df["is_anomaly"].notna().any():
+    if evaluate_labels and df["is_anomaly"].notna().any():
         global_forest, global_score = fit_forest(df, RAW_FEATURES, contamination)
         variants = {
             "global_if": global_score,
@@ -161,8 +176,11 @@ def run_pipeline(raw: pd.DataFrame, settings: dict[str, Any] | None = None, prog
         torch.save(sequence["state"], folder / "lstm.pt")
     (folder / "settings.json").write_text(json.dumps(settings, indent=2))
     (folder / "metrics.json").write_text(json.dumps(metrics, indent=2))
+    (folder / "active.json").write_text(json.dumps(active, indent=2))
+    if metrics:
+        metrics["active"] = active
 
-    return PipelineResult(df, entity_baselines(df), version, metrics, sequence["available"], seconds)
+    return PipelineResult(df, entity_baselines(df), version, metrics, sequence["available"], seconds, active)
 
 
 if __name__ == "__main__":

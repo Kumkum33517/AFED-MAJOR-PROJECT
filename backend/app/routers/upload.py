@@ -1,4 +1,6 @@
 """CSV upload: preview, column mapping, validation, background run and history."""
+import json
+import re
 import threading
 import time
 from io import BytesIO
@@ -10,6 +12,7 @@ import pandas as pd
 from fastapi import APIRouter, BackgroundTasks, File, HTTPException, UploadFile
 from sqlalchemy import select
 
+from ml import pipeline
 from ml.features import LABELS, OPTIONAL, REQUIRED, read_csv, validate
 
 from ..config import MAX_UPLOAD_BYTES, UPLOAD_DIR, UPLOAD_MAX_AGE_HOURS
@@ -142,8 +145,18 @@ def rerun(background: BackgroundTasks, db: DB, user: CanOperate) -> dict[str, in
     return {"run_id": _start(db, user, background, "Rerun on stored events", None, None).id}
 
 
+def _active(version: str | None) -> dict[str, Any] | None:
+    """Which inputs, rules and fusion weights a run used, from its model folder (written by the pipeline)."""
+    if not version or not re.fullmatch(r"v[\w-]+", version):
+        return None
+    try:
+        return json.loads((pipeline.MODELS_DIR / version / "active.json").read_text())  # where the pipeline wrote it
+    except (OSError, ValueError):  # runs from before this was recorded
+        return None
+
+
 def run_row(run: Run) -> dict[str, Any]:
-    return {"id": run.id, "status": run.status, "stage": run.stage, "progress": run.progress, "source": run.source,
+    return {"active": _active(run.model_version),"id": run.id, "status": run.status, "stage": run.stage, "progress": run.progress, "source": run.source,
             "rows": run.rows, "new_rows": run.new_rows, "alerts": run.alerts_count, "model_version": run.model_version,
             "error": run.error, "started_at": run.started_at, "finished_at": run.finished_at,
             "duration_seconds": round((run.finished_at - run.started_at).total_seconds(), 1) if run.finished_at else None}

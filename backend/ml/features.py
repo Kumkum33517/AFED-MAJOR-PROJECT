@@ -44,6 +44,26 @@ RULE_LABELS: dict[str, str] = {
     "near_limit": "Near approval limit",
 }
 
+# The optional inputs each rule needs. A rule whose inputs a dataset lacks can never fire on it.
+OPTIONAL_INPUTS = ["approver_id", "created_by", "bank_account", "processing_days", "po_amount", "approval_time", "vendor_created"]
+RULE_INPUTS: dict[str, tuple[str, ...]] = {
+    "duplicate_invoice": (), "invoice_splitting": (), "burst": (), "round_amount": (), "near_limit": (),
+    "sod_violation": ("created_by", "approver_id"), "bank_change": ("bank_account",), "new_vendor_large": ("vendor_created",),
+    "off_hours_approval": ("approval_time",), "rushed_approval": ("processing_days",),
+}
+
+
+def available_inputs(df: pd.DataFrame) -> dict[str, bool]:
+    """Which optional inputs a prepared or featured frame actually carries (at least one value)."""
+    found = {c: c in df.columns and bool(df[c].notna().any()) for c in OPTIONAL_INPUTS if c != "approval_time"}
+    found["approval_time"] = "approval_timed" in df.columns and bool(df["approval_timed"].fillna(False).any())
+    return found
+
+
+def active_rules(inputs: dict[str, bool]) -> list[str]:
+    return [rule for rule, needs in RULE_INPUTS.items() if all(inputs.get(n, False) for n in needs)]
+
+
 _TIME_THEN_OFFSET = re.compile(r"(\d{1,2}:\d{2}(?::\d{2}(?:\.\d+)?)?)\s*(?:Z|UTC|[+-]\d{2}(?::?\d{2})?)$", re.IGNORECASE)
 _NUMERIC_DATE = r"^\s*(\d{1,2})[/.\-](\d{1,2})[/.\-]\d{2,4}"
 

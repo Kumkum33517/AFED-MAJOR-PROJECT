@@ -103,4 +103,5 @@ export interface AlertDetail extends AlertRow {
 export interface RunRow {
   id: number; status: string; stage: string; progress: number; source: string; rows: number; new_rows: number; alerts: number;
   model_version: string | null; error: string | null; started_at: string; finished_at: string | null;
+  active: { inputs: Record<string, boolean>; rules: string[]; rule_share: number; field_aware: boolean; weights_effective: Record<string, number> } | null;
 }

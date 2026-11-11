@@ -294,6 +294,52 @@ def test_injection_is_labelled_tagged_and_leaves_the_input_alone() -> None:
     assert inject(real, seed=1).equals(out) and not inject(real, seed=2).equals(out)  # seeded
 
 
+def _fingerprint(settings: dict | None = None) -> dict:
+    """Run the whole pipeline on the demo seed and hash its output, as tests/fixtures/v1_seed42.json was made."""
+    import hashlib
+    import json
+    import tempfile
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "data"))
+    import generate_synthetic
+    from ml import pipeline
+    pipeline.MODELS_DIR = Path(tempfile.mkdtemp())
+    path = Path(tempfile.mkdtemp()) / "d.csv"
+    generate_synthetic.generate(42).to_csv(path, index=False)
+    result = pipeline.run_pipeline(read_csv(path), settings, evaluate_labels=False)
+    s = result.scored.sort_values("event_id")
+    digest = lambda column: hashlib.sha256(np.round(s[column].to_numpy(dtype=float), 6).tobytes()).hexdigest()  # noqa: E731
+    return {"alerts": int((s["level"] != "Low").sum()), "risk_sha256": digest("risk"), "a_sha256": digest("a_score"),
+            "level_sha256": hashlib.sha256("".join(s["level"]).encode()).hexdigest(), "active": result.active}
+
+
+def test_v1_output_is_unchanged_and_field_aware_is_v1_when_every_field_exists() -> None:
+    import json
+    expected = json.loads((Path(__file__).parent / "fixtures" / "v1_seed42.json").read_text())
+    keys = ("alerts", "risk_sha256", "a_sha256", "level_sha256")
+    v1 = _fingerprint()
+    assert {k: v1[k] for k in keys} == {k: expected[k] for k in keys}, "v1 output changed"
+    aware = _fingerprint({"field_aware": True})  # the synthetic data has every optional input
+    assert aware["active"]["rule_share"] == 1.0 and {k: aware[k] for k in keys} == {k: expected[k] for k in keys}
+
+
+def test_field_aware_fusion_renormalises_over_the_rules_that_can_fire() -> None:
+    from ml.features import active_rules, available_inputs
+    bare = pd.DataFrame({"approver_id": [None], "created_by": [None], "bank_account": [None], "processing_days": [None],
+                         "po_amount": [None], "approval_timed": [False], "vendor_created": [None]})
+    rules = active_rules(available_inputs(bare))
+    assert sorted(rules) == sorted(["duplicate_invoice", "invoice_splitting", "burst", "round_amount", "near_limit"])
+    share = fusion.rule_share(rules, RULES)
+    assert abs(share - (0.80 + 0.85 + 0.55 + 0.45 + 0.20) / sum(RULES.values())) < 1e-12
+    w = {"w1": 0.40, "w2": 0.35, "w3": 0.25}
+    a, d, f = np.array([0.5]), np.array([0.6]), np.array([0.2])
+    w3 = 0.25 * share
+    expected = (0.40 * 0.5 + 0.35 * 0.6 + w3 * 0.2) / (0.40 + 0.35 + w3) + 0.10 * 0.2
+    assert abs(fusion.risk_score(a, d, f, w, share)[0] - expected) < 1e-12
+    assert fusion.risk_score(a, d, f, w, 1.0)[0] == fusion.risk_score(a, d, f, w)[0]  # all inputs present: v1
+    no_rules = fusion.risk_score(a, d, f, w, 0.0)[0]  # nothing can fire: A and D only, and no agreement bonus
+    assert abs(no_rules - (0.40 * 0.5 + 0.35 * 0.6) / 0.75) < 1e-12
+
+
 if __name__ == "__main__":
     tests = [(k, v) for k, v in dict(globals()).items() if k.startswith("test_")]
     for name, test in tests:

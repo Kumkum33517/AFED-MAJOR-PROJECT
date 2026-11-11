@@ -194,7 +194,7 @@ export default function Upload() {
                           <td className="table-cell tabular-nums">{count(r.rows)}</td>
                           <td className="table-cell tabular-nums">{count(r.new_rows)}</td>
                           <td className="table-cell tabular-nums">{count(r.alerts)}</td>
-                          <td className="table-cell text-muted">{r.model_version ?? "n/a"}</td>
+                          <td className="table-cell text-muted" title={r.active ? `Inputs present: ${Object.entries(r.active.inputs).filter(([, on]) => on).map(([k]) => humanise(k)).join(", ") || "amount and date only"}. Rules that can fire: ${r.active.rules.length} of 10. Fusion weights: ${Object.values(r.active.weights_effective).join(" / ")}${r.active.field_aware ? " (field-aware)" : ""}.` : undefined}>{r.model_version ?? "n/a"}</td>
                           <td className="table-cell" title={r.error ?? undefined}><StatusBadge status={humanise(r.status)} /></td>
                         </tr>
                       ))}

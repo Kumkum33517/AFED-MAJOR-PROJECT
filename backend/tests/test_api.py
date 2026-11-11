@@ -114,6 +114,9 @@ def check_upload(client: TestClient, h: dict[str, dict[str, str]]) -> None:
     run_id = client.post("/upload/run", json=body, headers=h["Analyst"]).json()["run_id"]
     run = client.get(f"/upload/runs/{run_id}", headers=h["Analyst"]).json()
     assert run["status"] == "completed" and run["new_rows"] == 31, run
+    # The run rescored the stored synthetic history too, which carries every optional input.
+    assert all(run["active"]["inputs"].values()) and len(run["active"]["rules"]) == 10, run["active"]
+    assert run["active"]["field_aware"] is False and run["active"]["weights_effective"] == {"w1": 0.4, "w2": 0.35, "w3": 0.25}
     assert client.post("/upload/validate", json={"upload_id": "../../etc/passwd", "mapping": {}}, headers=h["Analyst"]).status_code == 422
     assert client.get("/alerts", params={"entity": "NEWV"}, headers=h["Viewer"]).json()["total"] >= 1
     with SessionLocal() as db:  # unlabelled rows must not enlarge the labelled set's review budget
