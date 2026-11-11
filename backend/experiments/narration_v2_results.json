@@ -1,0 +1,4495 @@
+{
+ "summary": {
+  "en": {
+   "new word": 80,
+   "misplaced number": 10,
+   "accepted": 9,
+   "new number": 1
+  },
+  "hi": {
+   "accepted": 37,
+   "new word": 63
+  }
+ },
+ "detail": {
+  "en": {
+   "v1": {
+    "accepted": 54,
+    "new word": 46
+   },
+   "v2": {
+    "new word": 80,
+    "misplaced number": 10,
+    "accepted": 9,
+    "new number": 1
+   },
+   "v1_median_seconds": 1.771792541607283,
+   "v2_median_seconds": 1.4734521455829963,
+   "v1_accepted_but_misanchored": 3,
+   "v2_with_nli_gate": 9,
+   "v1_nli_accepted": {
+    "entailment": 47,
+    "contradiction": 6,
+    "neutral": 1
+   },
+   "v1_nli_refused": {
+    "entailment": 19,
+    "neutral": 22,
+    "contradiction": 5
+   },
+   "v2_nli_accepted": {
+    "entailment": 9
+   },
+   "v2_nli_refused": {
+    "entailment": 83,
+    "contradiction": 7,
+    "neutral": 1
+   }
+  },
+  "hi": {
+   "v1": {
+    "accepted": 60,
+    "new word": 33,
+    "main fact left out": 5,
+    "new number": 2
+   },
+   "v2": {
+    "accepted": 37,
+    "new word": 63
+   },
+   "v1_median_seconds": 2.7955587290925905,
+   "v2_median_seconds": 2.587588103953749,
+   "v1_accepted_but_misanchored": 1
+  }
+ },
+ "narrations": [
+  {
+   "event_id": "EV-004609",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 2,59,172 is 4.1x the peer group's usual of Rs. 63,801",
+    "Vendor is 30 days old and this payment is Rs. 2,59,172",
+    "Only 1 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Amount Rs. 2,59,172 is 4.1x the peer group's usual of Rs. 63,801",
+    "Vendor is 30 days old and this payment is Rs. 2,59,172"
+   ],
+   "v1": "Amount Rs. 2,59,172 is 4.1x the peer group's usual of Rs. 63,801. Vendor is 30 days old and this payment is Rs. 2,59,172. Only 1 earlier invoice, so the peer group's baseline was used.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 33.96089870808646,
+   "v2": "The amount of Rs. 2,59,172 is 4.1 times the average peer group amount of Rs. 63,801. The vendor has been active for 30 days, and this payment amount is Rs. 2,59,172.",
+   "v2_sentences": [
+    "The amount of Rs. 2,59,172 is 4.1 times the average peer group amount of Rs. 63,801.",
+    "The vendor has been active for 30 days, and this payment amount is Rs. 2,59,172."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 169.3263506658841,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006582",
+   "language": "en",
+   "facts": [
+    "Vendor is 40 days old and this payment is Rs. 3,08,224",
+    "Only 2 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Vendor is 40 days old and this payment is Rs. 3,08,224"
+   ],
+   "v1": "The vendor is 40 days old, and this payment is Rs. 3,08,224. Only two previous invoices were available, so the peer group's baseline was used.",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 2.2821451670024544,
+   "v2": "The vendor has been active for 40 days, and this payment amount is Rs. 3,08,224.",
+   "v2_sentences": [
+    "The vendor has been active for 40 days, and this payment amount is Rs. 3,08,224."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.5777426669374108,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004798",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 3,78,714 is 4.9x the peer group's usual of Rs. 77,473",
+    "Vendor is 16 days old and this payment is Rs. 3,78,714",
+    "Invoice came 1 day after the previous one, while the usual gap is 7 days",
+    "Only 1 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Amount Rs. 3,78,714 is 4.9x the peer group's usual of Rs. 77,473",
+    "Vendor is 16 days old and this payment is Rs. 3,78,714",
+    "Invoice came 1 day after the previous one, while the usual gap is 7 days"
+   ],
+   "v1": "Amount Rs. 3,78,714 is 4.9x the peer group's usual of Rs. 77,473. Vendor is 16 days old and this payment is Rs. 3,78,714. Invoice came 1 day after the previous one, while the usual gap is 7 days. Only 1 earlier invoices, so the peer group's baseline was used.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.733576874947175,
+   "v2": "The amount of Rs. 3,78,714 is 4.9 times the average of Rs. 77,473 among peers. The vendor has been active for 16 days, and this payment amount is Rs. 3,78,714. The invoice arrived 1 day after the previous one, which is different from the usual 7-day gap.",
+   "v2_sentences": [
+    "The amount of Rs. 3,78,714 is 4.9 times the average of Rs. 77,473 among peers.",
+    "The vendor has been active for 16 days, and this payment amount is Rs. 3,78,714.",
+    "The invoice arrived 1 day after the previous one, which is different from the usual 7-day gap."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 4.698690959019586,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002415",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-002398 for Rs. 8,129, raised 2 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-002398 for Rs. 8,129, raised 2 days earlier"
+   ],
+   "v1": "Matches invoice EV-002398 for Rs. 8,129, which was raised 2 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.652290582889691,
+   "v2": "Invoice EV-002398 matches with an amount of Rs. 8,129, which was raised two days prior.",
+   "v2_sentences": [
+    "Invoice EV-002398 matches with an amount of Rs. 8,129, which was raised two days prior."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.5763048329390585,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009217",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 2,20,354 is 2.9x this vendor's usual of Rs. 75,549"
+   ],
+   "main": [
+    "Amount Rs. 2,20,354 is 2.9x this vendor's usual of Rs. 75,549"
+   ],
+   "v1": "Amount Rs. 2,20,354 is 2.9x this vendor's usual of Rs. 75,549.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.9681622090283781,
+   "v2": "The amount of Rs. 2,20,354 is 2.9 times the usual amount from this vendor, which is Rs. 75,549.",
+   "v2_sentences": [
+    "The amount of Rs. 2,20,354 is 2.9 times the usual amount from this vendor, which is Rs. 75,549."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 2.2513149580918252,
+   "v1_nli": "contradiction",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006734",
+   "language": "en",
+   "facts": [
+    "Vendor is 19 days old and this payment is Rs. 3,33,480",
+    "Amount Rs. 3,33,480 is 2.1x the peer group's usual of Rs. 1,61,713",
+    "Only 1 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Vendor is 19 days old and this payment is Rs. 3,33,480",
+    "Amount Rs. 3,33,480 is 2.1x the peer group's usual of Rs. 1,61,713"
+   ],
+   "v1": "The vendor is 19 days old, and this payment is Rs. 3,33,480. It is 2.1x the peer group's usual amount of Rs. 1,61,713. Only one previous invoice exists, so the peer group's baseline was used.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 3.7397423749789596,
+   "v2": "The vendor has been active for 19 days, and this payment amount is Rs. 3,33,480. The amount of Rs. 3,33,480 is 2.1 times the average of Rs. 1,61,713 within the peer group.",
+   "v2_sentences": [
+    "The vendor has been active for 19 days, and this payment amount is Rs. 3,33,480.",
+    "The amount of Rs. 3,33,480 is 2.1 times the average of Rs. 1,61,713 within the peer group."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 6.9402289998251945,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-003598",
+   "language": "en",
+   "facts": [
+    "Approved at 06:26 on a Thursday, outside working hours"
+   ],
+   "main": [
+    "Approved at 06:26 on a Thursday, outside working hours"
+   ],
+   "v1": "Approved at 06:26 on a Thursday, outside working hours.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.320558208040893,
+   "v2": "It was approved at 06:26 on a Thursday, outside working hours.",
+   "v2_sentences": [
+    "It was approved at 06:26 on a Thursday, outside working hours."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.1651772919576615,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007952",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 3.7x the expected rate",
+    "Invoice came 1 day after the previous one, while the usual gap is 9 days"
+   ],
+   "main": [
+    "3 invoices in 7 days, 3.7x the expected rate",
+    "Invoice came 1 day after the previous one, while the usual gap is 9 days"
+   ],
+   "v1": "Invoices arrived 1 day after the previous one, which is 3.7 times faster than the usual 9-day gap.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.822767041856423,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by three point seven times. The invoice arrived 1 day after the previous one, which is 9 days less than the usual gap.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by three point seven times.",
+    "The invoice arrived 1 day after the previous one, which is 9 days less than the usual gap."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.8169030419085175,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-000372",
+   "language": "en",
+   "facts": [
+    "Invoice came 2 days after the previous one, while the usual gap is 20 days",
+    "Only 4 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Invoice came 2 days after the previous one, while the usual gap is 20 days"
+   ],
+   "v1": "The invoice arrived 2 days late compared to the usual 20-day gap. Only 4 earlier invoices were available, so the peer group's baseline was used.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.4214464160613716,
+   "v2": "The invoice arrived 2 days after the previous one, which is 20 days less than usual.",
+   "v2_sentences": [
+    "The invoice arrived 2 days after the previous one, which is 20 days less than usual."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 25.97094912501052,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006898",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-006821 for Rs. 18,402, raised 7 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-006821 for Rs. 18,402, raised 7 days earlier"
+   ],
+   "v1": "Matches invoice EV-006821 for Rs. 18,402, which was raised 7 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.7120157089084387,
+   "v2": "Invoice EV-006821 matches with an amount of Rs. 18,402, which was raised seven days prior.",
+   "v2_sentences": [
+    "Invoice EV-006821 matches with an amount of Rs. 18,402, which was raised seven days prior."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.684769625077024,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009246",
+   "language": "en",
+   "facts": [
+    "Invoice came 7 days after the previous one, while the usual gap is 26 days"
+   ],
+   "main": [
+    "Invoice came 7 days after the previous one, while the usual gap is 26 days"
+   ],
+   "v1": "The invoice arrived 7 days late compared to the usual 26-day delay.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.2933976659551263,
+   "v2": "The invoice arrived 7 days after the last one, which is 26 days behind the usual delay.",
+   "v2_sentences": [
+    "The invoice arrived 7 days after the last one, which is 26 days behind the usual delay."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.180000999942422,
+   "v1_nli": "entailment",
+   "v2_nli": "contradiction"
+  },
+  {
+   "event_id": "EV-001676",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-001629 for Rs. 57,833, raised 6 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-001629 for Rs. 57,833, raised 6 days earlier"
+   ],
+   "v1": "Matches invoice EV-001629 for Rs. 57,833, which was raised 6 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.5424972919281572,
+   "v2": "Invoice EV-001629 matches with an amount of Rs. 57,833, which was raised six days prior.",
+   "v2_sentences": [
+    "Invoice EV-001629 matches with an amount of Rs. 57,833, which was raised six days prior."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.480007833102718,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004515",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX9709, not the usual account XXXX8671"
+   ],
+   "main": [
+    "Paid to account XXXX9709, not the usual account XXXX8671"
+   ],
+   "v1": "Paid to account XXXX9709, not the usual account XXXX8671.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.6736837078351527,
+   "v2": "Payment was made to account XXXX9709, which is different from the usual account XXXX8671.",
+   "v2_sentences": [
+    "Payment was made to account XXXX9709, which is different from the usual account XXXX8671."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.6321109998971224,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007341",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 4 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.3441747911274433,
+   "v2": "It was approved the same day, while the usual process takes 4 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 4 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0108818751759827,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-005029",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX7112, not the usual account XXXX8554"
+   ],
+   "main": [
+    "Paid to account XXXX7112, not the usual account XXXX8554"
+   ],
+   "v1": "Paid to account XXXX7112, not the usual account XXXX8554.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.313784500118345,
+   "v2": "Payment was made to account XXXX7112, which is different from the usual account XXXX8554.",
+   "v2_sentences": [
+    "Payment was made to account XXXX7112, which is different from the usual account XXXX8554."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.4554559581447393,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007179",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-007060 for Rs. 2,40,108, raised 12 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-007060 for Rs. 2,40,108, raised 12 days earlier"
+   ],
+   "v1": "Matches invoice EV-007060 for Rs. 2,40,108, which was raised 12 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.1719449998345226,
+   "v2": "Invoice EV-007060 matches with an amount of Rs. 2,40,108, which was raised 12 days ago.",
+   "v2_sentences": [
+    "Invoice EV-007060 matches with an amount of Rs. 2,40,108, which was raised 12 days ago."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.9838030410464853,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007678",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX2719, not the usual account XXXX6348"
+   ],
+   "main": [
+    "Paid to account XXXX2719, not the usual account XXXX6348"
+   ],
+   "v1": "Paid to account XXXX2719, not the usual account XXXX6348.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.7878182497806847,
+   "v2": "Payment was made to account XXXX2719, not the usual account XXXX6348.",
+   "v2_sentences": [
+    "Payment was made to account XXXX2719, not the usual account XXXX6348."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.2626433749683201,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002205",
+   "language": "en",
+   "facts": [
+    "Invoice came 7 days after the previous one, while the usual gap is 25 days",
+    "Approved in 2 days against the usual 7 days"
+   ],
+   "main": [
+    "Invoice came 7 days after the previous one, while the usual gap is 25 days",
+    "Approved in 2 days against the usual 7 days"
+   ],
+   "v1": "The invoice came 7 days after the previous one, while the usual gap is 25 days. It was approved in 2 days against the usual 7 days.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.0645191250368953,
+   "v2": "The invoice arrived 7 days after the last one, which is 25 days behind the usual delay. It was approved in 2 days against the usual 7 days.",
+   "v2_sentences": [
+    "The invoice arrived 7 days after the last one, which is 25 days behind the usual delay.",
+    "It was approved in 2 days against the usual 7 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.261184375034645,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007168",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-007151 for Rs. 1,00,228, raised 1 day earlier",
+    "Invoice came 1 day after the previous one, while the usual gap is 6 days",
+    "Processing took 6 days against the usual 3 days"
+   ],
+   "main": [
+    "Matches invoice EV-007151 for Rs. 1,00,228, raised 1 day earlier",
+    "Invoice came 1 day after the previous one, while the usual gap is 6 days"
+   ],
+   "v1": "Matches invoice EV-007151 for Rs. 1,00,228, raised 1 day earlier than usual. Invoice came 1 day after the previous one, while the usual gap is 6 days. Processing took 6 days against the usual 3 days.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.723604541039094,
+   "v2": "Invoice EV-007151 matches with an amount of Rs. 1,00,228, which was raised one day prior. The invoice arrived 1 day after the previous one, which is 6 days less than usual.",
+   "v2_sentences": [
+    "Invoice EV-007151 matches with an amount of Rs. 1,00,228, which was raised one day prior.",
+    "The invoice arrived 1 day after the previous one, which is 6 days less than usual."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.142122874967754,
+   "v1_nli": "contradiction",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-003007",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-002905 for Rs. 1,45,972, raised 11 days earlier",
+    "Paid to account XXXX2159, not the usual account XXXX5529"
+   ],
+   "main": [
+    "Matches invoice EV-002905 for Rs. 1,45,972, raised 11 days earlier",
+    "Paid to account XXXX2159, not the usual account XXXX5529"
+   ],
+   "v1": "Matches invoice EV-002905 for Rs. 1,45,972, raised 11 days earlier. Paid to account XXXX2159, not the usual account XXXX5529.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.9159822082147,
+   "v2": "Invoice EV-002905 matches with an amount of Rs. 1,45,972, which was raised 11 days ago. Payment was made to account XXXX2159, not the usual account XXXX5529.",
+   "v2_sentences": [
+    "Invoice EV-002905 matches with an amount of Rs. 1,45,972, which was raised 11 days ago.",
+    "Payment was made to account XXXX2159, not the usual account XXXX5529."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.8919118749909103,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004171",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-004065 for Rs. 2,03,131, raised 11 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-004065 for Rs. 2,03,131, raised 11 days earlier"
+   ],
+   "v1": "Matches invoice EV-004065 for Rs. 2,03,131, which was raised 11 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.8142269591335207,
+   "v2": "Invoice EV-004065 matches with an amount of Rs. 2,03,131, which was raised 11 days ago.",
+   "v2_sentences": [
+    "Invoice EV-004065 matches with an amount of Rs. 2,03,131, which was raised 11 days ago."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.4374857500661165,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-001505",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-001439 for Rs. 37,467, raised 7 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-001439 for Rs. 37,467, raised 7 days earlier"
+   ],
+   "v1": "Matches invoice EV-001439 for Rs. 37,467, which was raised 7 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.436696209013462,
+   "v2": "Invoice EV-001439 matches with an amount of Rs. 37,467, which was raised seven days prior.",
+   "v2_sentences": [
+    "Invoice EV-001439 matches with an amount of Rs. 37,467, which was raised seven days prior."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.9757905839942396,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009584",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 4 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.9054807908833027,
+   "v2": "It was approved the same day, while the usual process takes 4 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 4 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.2283588328864425,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002046",
+   "language": "en",
+   "facts": [
+    "Invoice came 2 days after the previous one, while the usual gap is 20 days",
+    "Only 2 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Invoice came 2 days after the previous one, while the usual gap is 20 days"
+   ],
+   "v1": "The invoice arrived 2 days late compared to the usual 20-day gap. Only two previous invoices were available, so the peer group's baseline was used.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.5152302919887006,
+   "v2": "The invoice arrived 2 days after the previous one, which is 20 days less than usual.",
+   "v2_sentences": [
+    "The invoice arrived 2 days after the previous one, which is 20 days less than usual."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.2998130831401795,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006124",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX2923, not the usual account XXXX1569"
+   ],
+   "main": [
+    "Paid to account XXXX2923, not the usual account XXXX1569"
+   ],
+   "v1": "Paid to account XXXX2923, not the usual account XXXX1569.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.754919958068058,
+   "v2": "Payment was made to account XXXX2923, not the usual account XXXX1569.",
+   "v2_sentences": [
+    "Payment was made to account XXXX2923, not the usual account XXXX1569."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.4260642922017723,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008226",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX2206, not the usual account XXXX9196",
+    "Processing took 14 days against the usual 7 days"
+   ],
+   "main": [
+    "Paid to account XXXX2206, not the usual account XXXX9196"
+   ],
+   "v1": "Processing took 14 days against the usual 7 days. Also, Paid to account XXXX2206, not the usual account XXXX9196.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.4341300409287214,
+   "v2": "Payment was made to account XXXX2206, not the usual account XXXX9196.",
+   "v2_sentences": [
+    "Payment was made to account XXXX2206, not the usual account XXXX9196."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.4668964580632746,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008912",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 51,599 is 3.1x this vendor's usual of Rs. 16,844"
+   ],
+   "main": [
+    "Amount Rs. 51,599 is 3.1x this vendor's usual of Rs. 16,844"
+   ],
+   "v1": "Amount Rs. 51,599 is 3.1x this vendor's usual of Rs. 16,844.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.5083807080518454,
+   "v2": "The amount of Rs. 51,599 is 3.1 times the usual amount from this vendor, which is Rs. 16,844.",
+   "v2_sentences": [
+    "The amount of Rs. 51,599 is 3.1 times the usual amount from this vendor, which is Rs. 16,844."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 13.199796583037823,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002410",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 4 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.231378458905965,
+   "v2": "It was approved the same day, while the usual process takes 4 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 4 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.8877444169484079,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007359",
+   "language": "en",
+   "facts": [
+    "Approved in 4 days against the usual 7 days"
+   ],
+   "main": [
+    "Approved in 4 days against the usual 7 days"
+   ],
+   "v1": "Approved in 4 days against the usual 7 days.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.0616307922173291,
+   "v2": "It was approved in 4 days against the usual 7 days.",
+   "v2_sentences": [
+    "It was approved in 4 days against the usual 7 days."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.2995905419811606,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-001547",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 3,61,253 is 3.2x this vendor's usual of Rs. 1,11,305"
+   ],
+   "main": [
+    "Amount Rs. 3,61,253 is 3.2x this vendor's usual of Rs. 1,11,305"
+   ],
+   "v1": "Amount Rs. 3,61,253 is 3.2x this vendor's usual of Rs. 1,11,305.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 3.2421021251939237,
+   "v2": "The amount of Rs. 3,61,253 is 3.2 times the usual amount from this vendor, which is Rs. 1,11,305.",
+   "v2_sentences": [
+    "The amount of Rs. 3,61,253 is 3.2 times the usual amount from this vendor, which is Rs. 1,11,305."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 2.5424015829339623,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008866",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 2.7x the expected rate"
+   ],
+   "main": [
+    "3 invoices in 7 days, 2.7x the expected rate"
+   ],
+   "v1": "Invoices arrived three times faster than usual, at a rate of 2.7 times the expected amount.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.7269905828870833,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 2.7 times.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 2.7 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.228562500094995,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-003572",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 2.9x the expected rate"
+   ],
+   "main": [
+    "3 invoices in 7 days, 2.9x the expected rate"
+   ],
+   "v1": "Invoices arrived three times faster than usual, at an unexpected rate of 2.9 times higher.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.399474124889821,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 2.9 times.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 2.9 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.7845932089257985,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-000448",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 3.0x the expected rate",
+    "Only 5 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "3 invoices in 7 days, 3.0x the expected rate"
+   ],
+   "v1": "3 invoices were submitted within 7 days, which is 3.0 times the typical rate. Only 5 previous invoices have been received, hence the peer group's average was utilized.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.3725717500783503,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by three times.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by three times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0277492080349475,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006401",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 5 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 5 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 5 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.4043248752132058,
+   "v2": "It was approved the same day, while the usual process takes 5 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 5 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0390573751647025,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007939",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 3,51,869 is 11.0x the peer group's usual of Rs. 31,904",
+    "Vendor is 29 days old and this payment is Rs. 3,51,869",
+    "Only 1 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Amount Rs. 3,51,869 is 11.0x the peer group's usual of Rs. 31,904",
+    "Vendor is 29 days old and this payment is Rs. 3,51,869"
+   ],
+   "v1": "Amount Rs. 3,51,869 is 11.0x the peer group's usual of Rs. 31,904. Vendor is 29 days old and this payment is Rs. 3,51,869. Only 1 earlier invoice, so the peer group's baseline was used.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 10.727568499976769,
+   "v2": "The amount of Rs. 3,51,869 is 11.0 times the average peer group amount of Rs. 31,904. The vendor has been active for 29 days, and this payment amount is Rs. 3,51,869.",
+   "v2_sentences": [
+    "The amount of Rs. 3,51,869 is 11.0 times the average peer group amount of Rs. 31,904.",
+    "The vendor has been active for 29 days, and this payment amount is Rs. 3,51,869."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.3763777080457658,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007465",
+   "language": "en",
+   "facts": [
+    "Invoice came 1 day after the previous one, while the usual gap is 20 days"
+   ],
+   "main": [
+    "Invoice came 1 day after the previous one, while the usual gap is 20 days"
+   ],
+   "v1": "The invoice arrived 1 day after the previous one, which is different from the usual 20-day gap.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.5453943749889731,
+   "v2": "The invoice arrived 1 day after the previous one, which is 20 days behind the usual gap.",
+   "v2_sentences": [
+    "The invoice arrived 1 day after the previous one, which is 20 days behind the usual gap."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.2927383340429515,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006713",
+   "language": "en",
+   "facts": [
+    "Approved at 10:29 on a Saturday, outside working hours"
+   ],
+   "main": [
+    "Approved at 10:29 on a Saturday, outside working hours"
+   ],
+   "v1": "Approved at 10:29 on a Saturday, outside working hours.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.5022930421400815,
+   "v2": "It was approved at 10:29 on a Saturday, outside working hours.",
+   "v2_sentences": [
+    "It was approved at 10:29 on a Saturday, outside working hours."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.2128446660935879,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008103",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 3 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 3 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 3 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.7564658331684768,
+   "v2": "It was approved the same day, while the usual process takes 3 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 3 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.5974580419715494,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004730",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 4 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.4827171659562737,
+   "v2": "It was approved the same day, while the usual process takes 4 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 4 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.11432404210791,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007506",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX2719, not the usual account XXXX6348"
+   ],
+   "main": [
+    "Paid to account XXXX2719, not the usual account XXXX6348"
+   ],
+   "v1": "Paid to account XXXX2719, not the usual account XXXX6348.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.5601877919398248,
+   "v2": "Payment was made to account XXXX2719, not the usual account XXXX6348.",
+   "v2_sentences": [
+    "Payment was made to account XXXX2719, not the usual account XXXX6348."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.346917666029185,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-001805",
+   "language": "en",
+   "facts": [
+    "Approved at 09:34 on a Saturday, outside working hours"
+   ],
+   "main": [
+    "Approved at 09:34 on a Saturday, outside working hours"
+   ],
+   "v1": "Approved at 09:34 on a Saturday, outside working hours.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.3771307079587132,
+   "v2": "It was approved at 09:34 on a Saturday, outside working hours.",
+   "v2_sentences": [
+    "It was approved at 09:34 on a Saturday, outside working hours."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.14835812500678,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004830",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX9709, not the usual account XXXX8671",
+    "Approved the same day, while the usual is 2 days"
+   ],
+   "main": [
+    "Paid to account XXXX9709, not the usual account XXXX8671",
+    "Approved the same day, while the usual is 2 days"
+   ],
+   "v1": "Paid to account XXXX9709, not the usual account XXXX8671, and it was approved the same day, while the usual takes two days.",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 2.2900510830804706,
+   "v2": "Payment was made to account XXXX9709, which is different from the usual account XXXX8671. It was approved the same day, while the usual process takes 2 days.",
+   "v2_sentences": [
+    "Payment was made to account XXXX9709, which is different from the usual account XXXX8671.",
+    "It was approved the same day, while the usual process takes 2 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.5110724999103695,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006585",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 6 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.425523875048384,
+   "v2": "It was approved the same day, while the usual process takes 6 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 6 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0486492500640452,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-001880",
+   "language": "en",
+   "facts": [
+    "Approved at 10:29 on a Saturday, outside working hours"
+   ],
+   "main": [
+    "Approved at 10:29 on a Saturday, outside working hours"
+   ],
+   "v1": "Approved at 10:29 on a Saturday, outside working hours.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.4911107500083745,
+   "v2": "It was approved at 10:29 on a Saturday, outside working hours.",
+   "v2_sentences": [
+    "It was approved at 10:29 on a Saturday, outside working hours."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.7667545841541141,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004796",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 6 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.4105150001123548,
+   "v2": "It was approved the same day, while the usual process takes 6 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 6 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0513401250354946,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007167",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 4,58,746 is 27.2x this vendor's usual of Rs. 16,840",
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Matches invoice EV-007140 for Rs. 4,59,483, raised 1 day earlier",
+    "6 invoices in 7 days, 7.4x the expected rate",
+    "Invoice came 1 day after the previous one, while the usual gap is 8 days",
+    "Amount Rs. 4,58,746 is 92% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "Amount Rs. 4,58,746 is 27.2x this vendor's usual of Rs. 16,840",
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Matches invoice EV-007140 for Rs. 4,59,483, raised 1 day earlier"
+   ],
+   "v1": "Amount Rs. 4,58,746 is 27.2x this vendor's usual of Rs. 16,840. Also, 4 invoices just below the Rs. 5,00,000 approval limit within 3 days. Matches invoice EV-007140 for Rs. 4,59,483, raised 1 day earlier. Invoice came 1 day after the previous one, while the usual gap is 8 days.",
+   "v1_outcome": "accepted",
+   "v1_anchored": false,
+   "v1_seconds": 5.589016374899074,
+   "v2": "The amount of Rs. 4,58,746 is 27.2 times the usual amount from this vendor, which is Rs. 16,840. Four invoices were processed under the Rs. 5,00,000 threshold within three business days. Invoice EV-007140 matches with an amount of Rs. 4,59,483, which was raised one day prior.",
+   "v2_sentences": [
+    "The amount of Rs. 4,58,746 is 27.2 times the usual amount from this vendor, which is Rs. 16,840.",
+    "Four invoices were processed under the Rs. 5,00,000 threshold within three business days.",
+    "Invoice EV-007140 matches with an amount of Rs. 4,59,483, which was raised one day prior."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 5.5839677499607205,
+   "v1_nli": "contradiction",
+   "v2_nli": "contradiction"
+  },
+  {
+   "event_id": "EV-008769",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 2.6x the expected rate"
+   ],
+   "main": [
+    "3 invoices in 7 days, 2.6x the expected rate"
+   ],
+   "v1": "Invoices arrived three times faster than usual, at a rate of 2.6 times the expected amount.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.5917718331329525,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 2.6 times.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 2.6 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0992314170580357,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002929",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 7 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 7 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 7 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.3366525408346206,
+   "v2": "It was approved the same day, while the usual process takes 7 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 7 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0348407079000026,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004716",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 4,97,745 is 3.6x this vendor's usual of Rs. 1,39,816",
+    "Amount Rs. 4,97,745 is 100% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "Amount Rs. 4,97,745 is 3.6x this vendor's usual of Rs. 1,39,816",
+    "Amount Rs. 4,97,745 is 100% of the Rs. 5,00,000 approval limit"
+   ],
+   "v1": "Amount Rs. 4,97,745 is 3.6x this vendor's usual of Rs. 1,39,816 and is 100% of the Rs. 5,00,000 approval limit.",
+   "v1_outcome": "accepted",
+   "v1_anchored": false,
+   "v1_seconds": 3.3264776659198105,
+   "v2": "The amount of Rs. 4,97,745 is 3.6 times the usual amount from this vendor, which is Rs. 1,39,816. Rs. 4,97,745 represents 100% of the Rs. 5,00,000 approval limit.",
+   "v2_sentences": [
+    "The amount of Rs. 4,97,745 is 3.6 times the usual amount from this vendor, which is Rs. 1,39,816.",
+    "Rs. 4,97,745 represents 100% of the Rs. 5,00,000 approval limit."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 4.30895374994725,
+   "v1_nli": "contradiction",
+   "v2_nli": "neutral"
+  },
+  {
+   "event_id": "EV-008722",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 2.6x the expected rate",
+    "Processing took 7 days against the usual 3 days"
+   ],
+   "main": [
+    "3 invoices in 7 days, 2.6x the expected rate"
+   ],
+   "v1": "3 invoices were processed in 7 days, which is 2.6 times the usual rate. Additionally, processing time exceeded the usual 3-day limit.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.1660346251446754,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 2.6 times.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 2.6 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.1115839581470937,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007284",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX2558, not the usual account XXXX4754"
+   ],
+   "main": [
+    "Paid to account XXXX2558, not the usual account XXXX4754"
+   ],
+   "v1": "Paid to account XXXX2558, not the usual account XXXX4754.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.5342105000745505,
+   "v2": "Payment was made to account XXXX2558, not the usual account XXXX4754.",
+   "v2_sentences": [
+    "Payment was made to account XXXX2558, not the usual account XXXX4754."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.3133891250472516,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007011",
+   "language": "en",
+   "facts": [
+    "Approved at 23:26 on a Monday, outside working hours"
+   ],
+   "main": [
+    "Approved at 23:26 on a Monday, outside working hours"
+   ],
+   "v1": "Approved at 23:26 on a Monday, outside working hours.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.2832982081454247,
+   "v2": "It was approved at 23:26 on a Monday, outside working hours.",
+   "v2_sentences": [
+    "It was approved at 23:26 on a Monday, outside working hours."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.0433464159723371,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-005369",
+   "language": "en",
+   "facts": [
+    "Approved at 10:01 on a Saturday, outside working hours"
+   ],
+   "main": [
+    "Approved at 10:01 on a Saturday, outside working hours"
+   ],
+   "v1": "Approved at 10:01 on a Saturday, outside working hours.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.3250214590225369,
+   "v2": "It was approved at 10:01 on a Saturday, outside working hours.",
+   "v2_sentences": [
+    "It was approved at 10:01 on a Saturday, outside working hours."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.0822914999444038,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-003509",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 11.5x the expected rate",
+    "Invoice came 1 day after the previous one, while the usual gap is 33 days"
+   ],
+   "main": [
+    "3 invoices in 7 days, 11.5x the expected rate",
+    "Invoice came 1 day after the previous one, while the usual gap is 33 days"
+   ],
+   "v1": "3 invoices were received in just 7 days, which is 11.5 times higher than the usual rate. Additionally, the invoice arrived 1 day after the last one, whereas the typical delay is 33 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.715285916114226,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 11.5 times. The invoice arrived 1 day after the previous one, which is 33 days less than the usual gap.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 11.5 times.",
+    "The invoice arrived 1 day after the previous one, which is 33 days less than the usual gap."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.4967657499946654,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008623",
+   "language": "en",
+   "facts": [
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,66,189 is 5.7x this vendor's usual of Rs. 81,306",
+    "5 invoices in 7 days, 11.3x the expected rate",
+    "Invoice came on the same day as the previous one, while the usual gap is 15 days",
+    "Amount Rs. 4,66,189 is 93% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,66,189 is 5.7x this vendor's usual of Rs. 81,306",
+    "5 invoices in 7 days, 11.3x the expected rate"
+   ],
+   "v1": "4 invoices just below the Rs. 5,00,000 approval limit within 3 days. Also, an invoice amounting to Rs. 4,66,189 is 5.7 times this vendor's usual amount of Rs. 81,306. Additionally, there were 5 invoices in 7 days, at a rate 11.3 times higher than expected. Lastly, an invoice arrived on the same day as the previous one, whereas the usual gap is 15 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 5.750268541974947,
+   "v2": "Four invoices were processed under the Rs. 5,00,000 threshold within three business days. The amount of Rs. 4,66,189 is 5.7 times the usual amount from this vendor, which is Rs. 81,306. 5 invoices processed within 7 days, exceeding the expected rate by 11.3 times.",
+   "v2_sentences": [
+    "Four invoices were processed under the Rs. 5,00,000 threshold within three business days.",
+    "The amount of Rs. 4,66,189 is 5.7 times the usual amount from this vendor, which is Rs. 81,306.",
+    "5 invoices processed within 7 days, exceeding the expected rate by 11.3 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 4.635152415838093,
+   "v1_nli": "contradiction",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-003353",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-003271 for Rs. 61,696, raised 8 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-003271 for Rs. 61,696, raised 8 days earlier"
+   ],
+   "v1": "Matches invoice EV-003271 for Rs. 61,696, raised 8 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.7967214579693973,
+   "v2": "Invoice EV-003271 matches with an amount of Rs. 61,696, which was raised 8 days ago.",
+   "v2_sentences": [
+    "Invoice EV-003271 matches with an amount of Rs. 61,696, which was raised 8 days ago."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.8179530000779778,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007462",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 43,859 is 5.7x this vendor's usual of Rs. 7,693"
+   ],
+   "main": [
+    "Amount Rs. 43,859 is 5.7x this vendor's usual of Rs. 7,693"
+   ],
+   "v1": "Amount Rs. 43,859 is 5.7x this vendor's usual of Rs. 7,693.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 3.2541753749828786,
+   "v2": "The amount of Rs. 43,859 is 5.7 times the usual amount from this vendor, which is Rs. 7,693.",
+   "v2_sentences": [
+    "The amount of Rs. 43,859 is 5.7 times the usual amount from this vendor, which is Rs. 7,693."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 2.873460124945268,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-001627",
+   "language": "en",
+   "facts": [
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,86,892 is 2.8x this vendor's usual of Rs. 1,71,514",
+    "3 invoices in 7 days, 3.5x the expected rate",
+    "Invoice came 1 day after the previous one, while the usual gap is 8 days",
+    "Amount Rs. 4,86,892 is 97% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,86,892 is 2.8x this vendor's usual of Rs. 1,71,514",
+    "3 invoices in 7 days, 3.5x the expected rate"
+   ],
+   "v1": "4 invoices just below the Rs. 5,00,000 approval limit within 3 days. Also, an invoice amounting to Rs. 4,86,892 is 2.8x this vendor's usual of Rs. 1,71,514. Additionally, there were 3 invoices in 7 days, at 3.5x the expected rate. Lastly, an invoice arrived 1 day after the previous one, while the usual gap is 8 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 6.333715458866209,
+   "v2": "Four invoices were processed under the Rs. 5,00,000 threshold within three business days. The amount of Rs. 4,86,892 is 2.8 times the usual amount from this vendor, which is Rs. 1,71,514. Three invoices were processed within seven days, exceeding the anticipated rate by three point five times.",
+   "v2_sentences": [
+    "Four invoices were processed under the Rs. 5,00,000 threshold within three business days.",
+    "The amount of Rs. 4,86,892 is 2.8 times the usual amount from this vendor, which is Rs. 1,71,514.",
+    "Three invoices were processed within seven days, exceeding the anticipated rate by three point five times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 6.710361500037834,
+   "v1_nli": "contradiction",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-000211",
+   "language": "en",
+   "facts": [
+    "Invoice came 2 days after the previous one, while the usual gap is 8 days",
+    "Only 3 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Invoice came 2 days after the previous one, while the usual gap is 8 days"
+   ],
+   "v1": "The invoice arrived 2 days late compared to the usual 8-day gap. Only 3 previous invoices were available, so the peer group's baseline was utilized.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.1658578340429813,
+   "v2": "The invoice arrived 2 days after the previous one, which is 6 days later than usual.",
+   "v2_sentences": [
+    "The invoice arrived 2 days after the previous one, which is 6 days later than usual."
+   ],
+   "v2_outcome": "new number",
+   "v2_seconds": 1.3189070839434862,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008158",
+   "language": "en",
+   "facts": [
+    "Vendor is 34 days old and this payment is Rs. 3,99,673",
+    "Only 0 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Vendor is 34 days old and this payment is Rs. 3,99,673"
+   ],
+   "v1": "The vendor is 34 days old, and this payment amounts to Rs. 3,99,673. Only one previous invoice exists, which has been used as the baseline for comparison.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.5516592918429524,
+   "v2": "The vendor has been active for 34 days, and this payment amount is Rs. 3,99,673.",
+   "v2_sentences": [
+    "The vendor has been active for 34 days, and this payment amount is Rs. 3,99,673."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.5548086250200868,
+   "v1_nli": "contradiction",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-003068",
+   "language": "en",
+   "facts": [
+    "Invoice came 10 days after the previous one, while the usual gap is 29 days"
+   ],
+   "main": [
+    "Invoice came 10 days after the previous one, while the usual gap is 29 days"
+   ],
+   "v1": "The invoice arrived 10 days late compared to the usual 29-day delay.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.395066374912858,
+   "v2": "The invoice arrived 10 days after the last one, which is 29 days behind the usual delay.",
+   "v2_sentences": [
+    "The invoice arrived 10 days after the last one, which is 29 days behind the usual delay."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.344539332902059,
+   "v1_nli": "entailment",
+   "v2_nli": "contradiction"
+  },
+  {
+   "event_id": "EV-005954",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-005821 for Rs. 62,327, raised 14 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-005821 for Rs. 62,327, raised 14 days earlier"
+   ],
+   "v1": "Matches invoice EV-005821 for Rs. 62,327, which was raised 14 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.9254253751132637,
+   "v2": "Invoice EV-005821 matches with an amount of Rs. 62,327, which was raised 14 days ago.",
+   "v2_sentences": [
+    "Invoice EV-005821 matches with an amount of Rs. 62,327, which was raised 14 days ago."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.7418231670744717,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008426",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-008379 for Rs. 2,39,629, raised 6 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-008379 for Rs. 2,39,629, raised 6 days earlier"
+   ],
+   "v1": "Matches invoice EV-008379 for Rs. 2,39,629, raised 6 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.8863406251184642,
+   "v2": "Invoice EV-008379 matches with an amount of Rs. 2,39,629, which was raised six days prior.",
+   "v2_sentences": [
+    "Invoice EV-008379 matches with an amount of Rs. 2,39,629, which was raised six days prior."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.7558847079053521,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008109",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 3,83,081 is 13.6x the peer group's usual of Rs. 28,088",
+    "Vendor is 33 days old and this payment is Rs. 3,83,081",
+    "Only 2 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Amount Rs. 3,83,081 is 13.6x the peer group's usual of Rs. 28,088",
+    "Vendor is 33 days old and this payment is Rs. 3,83,081"
+   ],
+   "v1": "Amount Rs. 3,83,081 is 13.6x the peer group's usual of Rs. 28,088. Vendor is 33 days old and this payment is Rs. 3,83,081. Only 2 earlier invoices, so the peer group's baseline was used.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.065880999900401,
+   "v2": "The amount of Rs. 3,83,081 is 13.6 times the average of Rs. 28,088 among peers. The vendor has been active for 33 days, and this payment amount is Rs. 3,83,081.",
+   "v2_sentences": [
+    "The amount of Rs. 3,83,081 is 13.6 times the average of Rs. 28,088 among peers.",
+    "The vendor has been active for 33 days, and this payment amount is Rs. 3,83,081."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 15.631248750025406,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002894",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 3,77,064 is 2.8x this vendor's usual of Rs. 1,36,372"
+   ],
+   "main": [
+    "Amount Rs. 3,77,064 is 2.8x this vendor's usual of Rs. 1,36,372"
+   ],
+   "v1": "Amount Rs. 3,77,064 is 2.8x this vendor's usual of Rs. 1,36,372.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.8199246660806239,
+   "v2": "The amount of Rs. 3,77,064 is 2.8 times the usual amount from this vendor, which is Rs. 1,36,372.",
+   "v2_sentences": [
+    "The amount of Rs. 3,77,064 is 2.8 times the usual amount from this vendor, which is Rs. 1,36,372."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 1.8579288751352578,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009860",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 10 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 10 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 10 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.1206687088124454,
+   "v2": "It was approved the same day, while the usual process takes 10 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 10 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.8957007920835167,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006679",
+   "language": "en",
+   "facts": [
+    "Invoice came 1 day after the previous one, while the usual gap is 11 days"
+   ],
+   "main": [
+    "Invoice came 1 day after the previous one, while the usual gap is 11 days"
+   ],
+   "v1": "The invoice arrived 1 day after the previous one, which is unusual compared to the usual gap of 11 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.4253705001901835,
+   "v2": "The invoice arrived 1 day after the previous one, which is 11 days less than the usual gap.",
+   "v2_sentences": [
+    "The invoice arrived 1 day after the previous one, which is 11 days less than the usual gap."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.11910374998115,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-005320",
+   "language": "en",
+   "facts": [
+    "Approved at 14:00 on a Sunday, outside working hours",
+    "Processing took 9 days against the usual 3 days"
+   ],
+   "main": [
+    "Approved at 14:00 on a Sunday, outside working hours"
+   ],
+   "v1": "Approved at 14:00 on a Sunday, outside working hours, processing took 9 days against the usual 3 days.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.5518819999415427,
+   "v2": "It was approved at 14:00 on a Sunday, outside working hours.",
+   "v2_sentences": [
+    "It was approved at 14:00 on a Sunday, outside working hours."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 0.9546535410918295,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006591",
+   "language": "en",
+   "facts": [
+    "Approved in 3 days against the usual 7 days"
+   ],
+   "main": [
+    "Approved in 3 days against the usual 7 days"
+   ],
+   "v1": "Approved in 3 days against the usual 7 days.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 0.9196890420280397,
+   "v2": "It was approved in 3 days against the usual 7 days.",
+   "v2_sentences": [
+    "It was approved in 3 days against the usual 7 days."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 0.7794420421123505,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007116",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX3580, not the usual account XXXX0374"
+   ],
+   "main": [
+    "Paid to account XXXX3580, not the usual account XXXX0374"
+   ],
+   "v1": "Paid to account XXXX3580, not the usual account XXXX0374.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.2866315830033273,
+   "v2": "Payment was made to account XXXX3580, which is different from the usual account XXXX0374.",
+   "v2_sentences": [
+    "Payment was made to account XXXX3580, which is different from the usual account XXXX0374."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.2835507078561932,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002589",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 3 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 3 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 3 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.1413179580122232,
+   "v2": "It was approved the same day, while the usual process takes 3 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 3 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.8864253330975771,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008400",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX6863, not the usual account XXXX4405"
+   ],
+   "main": [
+    "Paid to account XXXX6863, not the usual account XXXX4405"
+   ],
+   "v1": "Paid to account XXXX6863, not the usual account XXXX4405.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.2974658331368119,
+   "v2": "Payment was made to account XXXX6863, which is different from the usual account XXXX4405.",
+   "v2_sentences": [
+    "Payment was made to account XXXX6863, which is different from the usual account XXXX4405."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.2815880419220775,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008546",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 4,55,976 is 15.3x this vendor's usual of Rs. 29,834",
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "5 invoices in 7 days, 13.3x the expected rate",
+    "Invoice came 1 day after the previous one, while the usual gap is 20 days",
+    "Amount Rs. 4,55,976 is 91% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "Amount Rs. 4,55,976 is 15.3x this vendor's usual of Rs. 29,834",
+    "4 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "5 invoices in 7 days, 13.3x the expected rate"
+   ],
+   "v1": "Amount Rs. 4,55,976 is 15.3x this vendor's usual of Rs. 29,834. Also, there were 4 invoices just below the Rs. 5,00,000 approval limit within 3 days. Additionally, 5 invoices were submitted in 7 days, at an expected rate of 13.3x. Furthermore, the invoice arrived 1 day after the previous one, while the usual gap is 20 days. Lastly, the amount is 91% of the Rs. 5,00,000 approval limit.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 12.990855416981503,
+   "v2": "The amount of Rs. 4,55,976 is 15.3 times the usual amount from this vendor, which is Rs. 29,834. Four invoices were processed under the Rs. 5,00,000 threshold within three business days. 5 invoices processed within 7 days, exceeding the expected rate by 13.3 times.",
+   "v2_sentences": [
+    "The amount of Rs. 4,55,976 is 15.3 times the usual amount from this vendor, which is Rs. 29,834.",
+    "Four invoices were processed under the Rs. 5,00,000 threshold within three business days.",
+    "5 invoices processed within 7 days, exceeding the expected rate by 13.3 times."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 6.369593374896795,
+   "v1_nli": "contradiction",
+   "v2_nli": "contradiction"
+  },
+  {
+   "event_id": "EV-006008",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 4 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 4 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.370149499969557,
+   "v2": "It was approved the same day, while the usual process takes 4 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 4 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0171373751945794,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006242",
+   "language": "en",
+   "facts": [
+    "Created and approved by the same person (APR06)"
+   ],
+   "main": [
+    "Created and approved by the same person (APR06)"
+   ],
+   "v1": "Created and approved by the same person (APR06).",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.15879675000906,
+   "v2": "The document was created and approved by the same person (APR06).",
+   "v2_sentences": [
+    "The document was created and approved by the same person (APR06)."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.9434059171471745,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-010002",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 4,94,066 is 99% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "Amount Rs. 4,94,066 is 99% of the Rs. 5,00,000 approval limit"
+   ],
+   "v1": "Amount Rs. 4,94,066 is 99% of the Rs. 5,00,000 approval limit.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.076808250043541,
+   "v2": "Rs. 4,94,066 represents 99% of the Rs. 5,00,000 approval limit.",
+   "v2_sentences": [
+    "Rs. 4,94,066 represents 99% of the Rs. 5,00,000 approval limit."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.228516000090167,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009126",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 6 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.5932508341502398,
+   "v2": "It was approved the same day, while the usual process takes 6 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 6 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.7494147499091923,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006824",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 2.7x the expected rate"
+   ],
+   "main": [
+    "3 invoices in 7 days, 2.7x the expected rate"
+   ],
+   "v1": "Invoices arrived three times faster than usual, at a rate of 2.7 times the expected amount.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 5.143834125017747,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 2.7 times.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 2.7 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.4494505419861525,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-000102",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 58,003 is 2.0x the peer group's usual of Rs. 29,062",
+    "Only 1 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Amount Rs. 58,003 is 2.0x the peer group's usual of Rs. 29,062"
+   ],
+   "v1": "Amount Rs. 58,003 is 2.0x the peer group's usual of Rs. 29,062. Only one previous invoice was available, so the peer group's baseline was used.",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 3.0399238751269877,
+   "v2": "The amount of Rs. 58,003 is 2.0 times the average peer group amount of Rs. 29,062.",
+   "v2_sentences": [
+    "The amount of Rs. 58,003 is 2.0 times the average peer group amount of Rs. 29,062."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.9916584170423448,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006569",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-006529 for Rs. 1,15,040, raised 3 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-006529 for Rs. 1,15,040, raised 3 days earlier"
+   ],
+   "v1": "Matches invoice EV-006529 for Rs. 1,15,040, raised 3 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.6883434171322733,
+   "v2": "Invoice EV-006529 matches with an amount of Rs. 1,15,040, which was raised 3 days prior.",
+   "v2_sentences": [
+    "Invoice EV-006529 matches with an amount of Rs. 1,15,040, which was raised 3 days prior."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.8267882079817355,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002330",
+   "language": "en",
+   "facts": [
+    "4 invoices in 7 days, 3.0x the expected rate"
+   ],
+   "main": [
+    "4 invoices in 7 days, 3.0x the expected rate"
+   ],
+   "v1": "4 invoices were processed in just 7 days, which is 3.0 times the usual expected rate.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.543713083025068,
+   "v2": "Four invoices were processed within seven days, exceeding the anticipated rate by three times.",
+   "v2_sentences": [
+    "Four invoices were processed within seven days, exceeding the anticipated rate by three times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.9720987919718027,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009683",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 2 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 2 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 2 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.3070395411923528,
+   "v2": "It was approved the same day, while the usual process takes 2 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 2 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.9990519999992102,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009391",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-009318 for Rs. 15,989, raised 7 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-009318 for Rs. 15,989, raised 7 days earlier"
+   ],
+   "v1": "Matches invoice EV-009318 for Rs. 15,989, which was raised 7 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.7871192500460893,
+   "v2": "Invoice EV-009318 matches with an amount of Rs. 15,989, which was raised 7 days ago.",
+   "v2_sentences": [
+    "Invoice EV-009318 matches with an amount of Rs. 15,989, which was raised 7 days ago."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.5875966250896454,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-000311",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 7 days",
+    "Only 1 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 7 days"
+   ],
+   "v1": "The approval was done on the same day, whereas the usual process takes 7 days. Only one previous invoice exists, which led to using the peer group's baseline.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.8989407499320805,
+   "v2": "It was approved the same day, while the usual process takes 7 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 7 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.97301808395423,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-001708",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 3,99,216 is 4.1x the peer group's usual of Rs. 97,748",
+    "Vendor is 23 days old and this payment is Rs. 3,99,216",
+    "Invoice came 2 days after the previous one, while the usual gap is 20 days",
+    "Only 1 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Amount Rs. 3,99,216 is 4.1x the peer group's usual of Rs. 97,748",
+    "Vendor is 23 days old and this payment is Rs. 3,99,216",
+    "Invoice came 2 days after the previous one, while the usual gap is 20 days"
+   ],
+   "v1": "Amount Rs. 3,99,216 is 4.1x the peer group's usual of Rs. 97,748. Vendor is 23 days old and this payment is Rs. 3,99,216. Invoice came 2 days after the previous one, while the usual gap is 20 days. Only 1 earlier invoices, so the peer group's baseline was used.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.320213041966781,
+   "v2": "The amount of Rs. 3,99,216 is 4.1 times the average of Rs. 97,748 among peers. The vendor has been active for 23 days, and this payment amount is Rs. 3,99,216. The invoice arrived 2 days after the previous one, which is 20 days less than usual.",
+   "v2_sentences": [
+    "The amount of Rs. 3,99,216 is 4.1 times the average of Rs. 97,748 among peers.",
+    "The vendor has been active for 23 days, and this payment amount is Rs. 3,99,216.",
+    "The invoice arrived 2 days after the previous one, which is 20 days less than usual."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 4.170085499994457,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007277",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-007148 for Rs. 86,827, raised 14 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-007148 for Rs. 86,827, raised 14 days earlier"
+   ],
+   "v1": "Matches invoice EV-007148 for Rs. 86,827, which was raised 14 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.7246291660703719,
+   "v2": "Invoice EV-007148 matches the amount of Rs. 86,827, which was raised 14 days prior.",
+   "v2_sentences": [
+    "Invoice EV-007148 matches the amount of Rs. 86,827, which was raised 14 days prior."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.5497407501097769,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-001143",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 3 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 3 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 3 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.167744250036776,
+   "v2": "It was approved the same day, while the usual process takes 3 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 3 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.8925075829029083,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-000942",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 6 days",
+    "Only 4 earlier invoices, so the peer group's baseline was used"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "v1": "The approval happened on the same day, whereas the usual process takes 6 days. Only four previous invoices were available, necessitating the use of the peer group's baseline.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.942087542032823,
+   "v2": "It was approved the same day, while the usual process takes 6 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 6 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.8663464591372758,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-009479",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 1,24,845 is 3.5x this vendor's usual of Rs. 36,040"
+   ],
+   "main": [
+    "Amount Rs. 1,24,845 is 3.5x this vendor's usual of Rs. 36,040"
+   ],
+   "v1": "Amount Rs. 1,24,845 is 3.5x this vendor's usual of Rs. 36,040.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.9181777499616146,
+   "v2": "The amount of Rs. 1,24,845 is 3.5 times the usual amount from this vendor, which is Rs. 36,040.",
+   "v2_sentences": [
+    "The amount of Rs. 1,24,845 is 3.5 times the usual amount from this vendor, which is Rs. 36,040."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 1.8538939591962844,
+   "v1_nli": "contradiction",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-008469",
+   "language": "en",
+   "facts": [
+    "3 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,81,655 is 6.1x this vendor's usual of Rs. 79,574",
+    "3 invoices in 7 days, 14.9x the expected rate",
+    "Invoice came on the same day as the previous one, while the usual gap is 33 days",
+    "Amount Rs. 4,81,655 is 96% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "3 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,81,655 is 6.1x this vendor's usual of Rs. 79,574",
+    "3 invoices in 7 days, 14.9x the expected rate"
+   ],
+   "v1": "3 invoices just below the Rs. 5,00,000 approval limit within 3 days. Also, an invoice amounting to Rs. 4,81,655 is 6.1 times this vendor's usual amount of Rs. 79,574. Additionally, there were 3 invoices in 7 days, at a rate of 14.9 times the expected rate. Lastly, an invoice arrived on the same day as the previous one, while the usual gap is 33 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 5.197833166923374,
+   "v2": "Three invoices, each under Rs. 5,00,000, were processed within three business days. The amount of Rs. 4,81,655 is 6.1 times the usual amount from this vendor, which is Rs. 79,574. Three invoices were processed within seven days, exceeding the anticipated rate by 14.9 times.",
+   "v2_sentences": [
+    "Three invoices, each under Rs. 5,00,000, were processed within three business days.",
+    "The amount of Rs. 4,81,655 is 6.1 times the usual amount from this vendor, which is Rs. 79,574.",
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 14.9 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 4.210452958010137,
+   "v1_nli": "contradiction",
+   "v2_nli": "contradiction"
+  },
+  {
+   "event_id": "EV-008541",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 2.6x the expected rate"
+   ],
+   "main": [
+    "3 invoices in 7 days, 2.6x the expected rate"
+   ],
+   "v1": "Invoices arrived three times faster than usual, at a rate of 2.6 times the expected amount.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.3744567499961704,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 2.6 times.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 2.6 times."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.0484329999890178,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-005646",
+   "language": "en",
+   "facts": [
+    "Matches invoice EV-005592 for Rs. 85,943, raised 4 days earlier"
+   ],
+   "main": [
+    "Matches invoice EV-005592 for Rs. 85,943, raised 4 days earlier"
+   ],
+   "v1": "Matches invoice EV-005592 for Rs. 85,943, which was raised 4 days earlier.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.6712287501432002,
+   "v2": "Invoice EV-005592 matches with an amount of Rs. 85,943, which was raised 4 days ago.",
+   "v2_sentences": [
+    "Invoice EV-005592 matches with an amount of Rs. 85,943, which was raised 4 days ago."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.5419548749923706,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004124",
+   "language": "en",
+   "facts": [
+    "3 invoices in 7 days, 11.7x the expected rate",
+    "Invoice came 3 days after the previous one, while the usual gap is 28 days"
+   ],
+   "main": [
+    "3 invoices in 7 days, 11.7x the expected rate",
+    "Invoice came 3 days after the previous one, while the usual gap is 28 days"
+   ],
+   "v1": "3 invoices were received in just 7 days, which is 11.7 times higher than the usual rate. Additionally, the invoice arrived 3 days later than the typical 28-day interval.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.2525909999385476,
+   "v2": "Three invoices were processed within seven days, exceeding the anticipated rate by 11.7 times. The invoice arrived 3 days after the previous one, which is 28 days later than usual.",
+   "v2_sentences": [
+    "Three invoices were processed within seven days, exceeding the anticipated rate by 11.7 times.",
+    "The invoice arrived 3 days after the previous one, which is 28 days later than usual."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.140165999997407,
+   "v1_nli": "entailment",
+   "v2_nli": "contradiction"
+  },
+  {
+   "event_id": "EV-008468",
+   "language": "en",
+   "facts": [
+    "3 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,67,312 is 6.1x this vendor's usual of Rs. 76,833",
+    "Amount Rs. 4,67,312 is 93% of the Rs. 5,00,000 approval limit"
+   ],
+   "main": [
+    "3 invoices just below the Rs. 5,00,000 approval limit within 3 days",
+    "Amount Rs. 4,67,312 is 6.1x this vendor's usual of Rs. 76,833",
+    "Amount Rs. 4,67,312 is 93% of the Rs. 5,00,000 approval limit"
+   ],
+   "v1": "3 invoices just below the Rs. 5,00,000 approval limit within 3 days. Also, amount Rs. 4,67,312 is 6.1x this vendor's usual of Rs. 76,833, which is 93% of the Rs. 5,00,000 approval limit.",
+   "v1_outcome": "accepted",
+   "v1_anchored": false,
+   "v1_seconds": 3.8028402919881046,
+   "v2": "Three invoices, each under Rs. 5,00,000, were processed within three business days. The amount of Rs. 4,67,312 is 6.1 times the usual amount from this vendor, which is Rs. 76,833. Rs. 4,67,312 represents 93% of the Rs. 5,00,000 approval limit.",
+   "v2_sentences": [
+    "Three invoices, each under Rs. 5,00,000, were processed within three business days.",
+    "The amount of Rs. 4,67,312 is 6.1 times the usual amount from this vendor, which is Rs. 76,833.",
+    "Rs. 4,67,312 represents 93% of the Rs. 5,00,000 approval limit."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 4.635021207854152,
+   "v1_nli": "contradiction",
+   "v2_nli": "contradiction"
+  },
+  {
+   "event_id": "EV-002850",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 6 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 6 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.1618614168837667,
+   "v2": "It was approved the same day, while the usual process takes 6 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 6 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.8708626669831574,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-002394",
+   "language": "en",
+   "facts": [
+    "Approved the same day, while the usual is 2 days"
+   ],
+   "main": [
+    "Approved the same day, while the usual is 2 days"
+   ],
+   "v1": "The order was approved the same day, while the usual process takes 2 days.",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 1.1580871250480413,
+   "v2": "It was approved the same day, while the usual process takes 2 days.",
+   "v2_sentences": [
+    "It was approved the same day, while the usual process takes 2 days."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.867146166972816,
+   "v1_nli": "neutral",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-006417",
+   "language": "en",
+   "facts": [
+    "Amount Rs. 5,61,226 is 2.8x this vendor's usual of Rs. 1,99,363"
+   ],
+   "main": [
+    "Amount Rs. 5,61,226 is 2.8x this vendor's usual of Rs. 1,99,363"
+   ],
+   "v1": "Amount Rs. 5,61,226 is 2.8x this vendor's usual of Rs. 1,99,363.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.901845582993701,
+   "v2": "The amount of Rs. 5,61,226 is 2.8 times the usual amount from this vendor, which is Rs. 1,99,363.",
+   "v2_sentences": [
+    "The amount of Rs. 5,61,226 is 2.8 times the usual amount from this vendor, which is Rs. 1,99,363."
+   ],
+   "v2_outcome": "misplaced number",
+   "v2_seconds": 1.9587105831597,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-007765",
+   "language": "en",
+   "facts": [
+    "Created and approved by the same person (APR04)"
+   ],
+   "main": [
+    "Created and approved by the same person (APR04)"
+   ],
+   "v1": "Created and approved by the same person (APR04).",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 0.9871059998404235,
+   "v2": "The document was created and approved by the same person (APR04).",
+   "v2_sentences": [
+    "The document was created and approved by the same person (APR04)."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 0.891769542125985,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-010021",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX7210, not the usual account XXXX4375"
+   ],
+   "main": [
+    "Paid to account XXXX7210, not the usual account XXXX4375"
+   ],
+   "v1": "Paid to account XXXX7210, not the usual account XXXX4375.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.3231752500869334,
+   "v2": "Payment was made to account XXXX7210, which is different from the usual account XXXX4375.",
+   "v2_sentences": [
+    "Payment was made to account XXXX7210, which is different from the usual account XXXX4375."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.2895438328851014,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004864",
+   "language": "en",
+   "facts": [
+    "Paid to account XXXX7112, not the usual account XXXX8554"
+   ],
+   "main": [
+    "Paid to account XXXX7112, not the usual account XXXX8554"
+   ],
+   "v1": "Paid to account XXXX7112, not the usual account XXXX8554.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.303240249864757,
+   "v2": "Payment was made to account XXXX7112, which is different from the usual account XXXX8554.",
+   "v2_sentences": [
+    "Payment was made to account XXXX7112, which is different from the usual account XXXX8554."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.3257881249301136,
+   "v1_nli": "entailment",
+   "v2_nli": "entailment"
+  },
+  {
+   "event_id": "EV-004609",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 2,59,172, समकक्ष समूह की सामान्य राशि Rs. 63,801 की 4.1x है",
+    "विक्रेता 30 दिन पुराना है और यह भुगतान Rs. 2,59,172 का है",
+    "केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "राशि Rs. 2,59,172, समकक्ष समूह की सामान्य राशि Rs. 63,801 की 4.1x है",
+    "विक्रेता 30 दिन पुराना है और यह भुगतान Rs. 2,59,172 का है"
+   ],
+   "v1": "राशि Rs. 2,59,172, समकक्ष समूह की सामान्य राशि Rs. 63,801 की 4.1x है। विक्रेता 30 दिन पुराना है और यह भुगतान Rs. 2,59,172 का है। केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 7.588790124980733,
+   "v2": "राशि Rs. 2,59,172, समकक्ष समूह की सामान्य राशि Rs. 63,801 की 4.1 times है। विक्रेता 30 दिन पुराना है और यह भुगतान ₹2,59,172 का है.",
+   "v2_sentences": [
+    "राशि Rs. 2,59,172, समकक्ष समूह की सामान्य राशि Rs. 63,801 की 4.1 times है।",
+    "विक्रेता 30 दिन पुराना है और यह भुगतान ₹2,59,172 का है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 5.234205209184438
+  },
+  {
+   "event_id": "EV-006582",
+   "language": "hi",
+   "facts": [
+    "विक्रेता 40 दिन पुराना है और यह भुगतान Rs. 3,08,224 का है",
+    "केवल 2 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "विक्रेता 40 दिन पुराना है और यह भुगतान Rs. 3,08,224 का है"
+   ],
+   "v1": "विक्रेता 40 दिन पुराना है और यह भुगतान Rs. 3,08,224 का है। इसलिए तुलनात्मक आधार का उपयोग किया गया।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.2250508749857545,
+   "v2": "विक्रेता 40 दिन पुराना है और यह भुगतान ₹3,08,224 का है.",
+   "v2_sentences": [
+    "विक्रेता 40 दिन पुराना है और यह भुगतान ₹3,08,224 का है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.4205201249569654
+  },
+  {
+   "event_id": "EV-004798",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 3,78,714, समकक्ष समूह की सामान्य राशि Rs. 77,473 की 4.9x है",
+    "विक्रेता 16 दिन पुराना है और यह भुगतान Rs. 3,78,714 का है",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 7 दिन है",
+    "केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "राशि Rs. 3,78,714, समकक्ष समूह की सामान्य राशि Rs. 77,473 की 4.9x है",
+    "विक्रेता 16 दिन पुराना है और यह भुगतान Rs. 3,78,714 का है",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 7 दिन है"
+   ],
+   "v1": "राशि Rs. 3,78,714, समकक्ष समूह की सामान्य राशि Rs. 77,473 की 4.9x है। विक्रेता 16 दिन पुराना है और यह भुगतान Rs. 3,78,714 का है। चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 7 दिन है। केवल 1 पिछले चालान, इसलिए तुलना�",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 8.851215624948964,
+   "v2": "राशि Rs. 3,78,714, समकक्ष समूह की सामान्य राशि Rs. 77,473 की 4.9 times है। विक्रेता 16 दिन पुराना है और यह भुगतान ₹3,78,714 का है. पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 7 दिन है.",
+   "v2_sentences": [
+    "राशि Rs. 3,78,714, समकक्ष समूह की सामान्य राशि Rs. 77,473 की 4.9 times है।",
+    "विक्रेता 16 दिन पुराना है और यह भुगतान ₹3,78,714 का है.",
+    "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 7 दिन है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 7.614009832963347
+  },
+  {
+   "event_id": "EV-002415",
+   "language": "hi",
+   "facts": [
+    "2 दिन पहले के चालान EV-002398 (Rs. 8,129) से मेल खाता है"
+   ],
+   "main": [
+    "2 दिन पहले के चालान EV-002398 (Rs. 8,129) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-002398 (रुपए 8,129) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.7401711670681834,
+   "v2": "व्यक्ति अपनी विशेषताओं के आधार पर इस प्रश्न को बढ़ावा दिया।",
+   "v2_sentences": [
+    "व्यक्ति अपनी विशेषताओं के आधार पर इस प्रश्न को बढ़ावा दिया।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.569554958026856
+  },
+  {
+   "event_id": "EV-009217",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 2,20,354, इस विक्रेता की सामान्य राशि Rs. 75,549 की 2.9x है"
+   ],
+   "main": [
+    "राशि Rs. 2,20,354, इस विक्रेता की सामान्य राशि Rs. 75,549 की 2.9x है"
+   ],
+   "v1": "राशि Rs. 2,20,354, इस विक्रेता की सामान्य राशि Rs. 75,549 की 2.9x है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.8787556670140475,
+   "v2": "इस विक्रेता की सामान्य राशि Rs. 75,549 की 2.9 गुना Rs. 2,20,354 है।",
+   "v2_sentences": [
+    "इस विक्रेता की सामान्य राशि Rs. 75,549 की 2.9 गुना Rs. 2,20,354 है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.5381599590182304
+  },
+  {
+   "event_id": "EV-006734",
+   "language": "hi",
+   "facts": [
+    "विक्रेता 19 दिन पुराना है और यह भुगतान Rs. 3,33,480 का है",
+    "राशि Rs. 3,33,480, समकक्ष समूह की सामान्य राशि Rs. 1,61,713 की 2.1x है",
+    "केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "विक्रेता 19 दिन पुराना है और यह भुगतान Rs. 3,33,480 का है",
+    "राशि Rs. 3,33,480, समकक्ष समूह की सामान्य राशि Rs. 1,61,713 की 2.1x है"
+   ],
+   "v1": "विक्रेता 19 दिन पुराना है और यह भुगतान Rs. 3,33,480 का है। राशि Rs. 3,33,480, समकक्ष समूह की सामान्य राशि Rs. 1,61,713 की 2.1x है। केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 7.127160375006497,
+   "v2": "विक्रेता 19 दिन पुराना है और यह भुगतान ₹3,33,480 का है. राशि Rs. 3,33,480, समकक्ष समूह की सामान्य राशि Rs. 1,61,713 की 2.1 गुना है.",
+   "v2_sentences": [
+    "विक्रेता 19 दिन पुराना है और यह भुगतान ₹3,33,480 का है.",
+    "राशि Rs. 3,33,480, समकक्ष समूह की सामान्य राशि Rs. 1,61,713 की 2.1 गुना है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 5.59492295794189
+  },
+  {
+   "event_id": "EV-003598",
+   "language": "hi",
+   "facts": [
+    "गुरुवार को 06:26 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "main": [
+    "गुरुवार को 06:26 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v1": "आधीक्रम में गुरुवार को 06:26 बजे अनुमोदित है।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 2.14609883306548,
+   "v2": "गुरुवार को 06:26 बजे अनुमोदित, कार्य समय से बाहर.",
+   "v2_sentences": [
+    "गुरुवार को 06:26 बजे अनुमोदित, कार्य समय से बाहर."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.991579500027001
+  },
+  {
+   "event_id": "EV-007952",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 3.7x",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 9 दिन है"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 3.7x",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 9 दिन है"
+   ],
+   "v1": "3 चालान दिनों में अपेक्षित दर का 3.7x है। पिछले की शुरुआत 1 दिन बाद थी, जबकि सामान्य अंतर 9 दिन है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 4.1574687079992145,
+   "v2": "3 चालान वाले एक आवश्यकता प्रस्तुति की समय औषधि का 3.7 गुना अपेक्षित है। पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 9 दिन है.",
+   "v2_sentences": [
+    "3 चालान वाले एक आवश्यकता प्रस्तुति की समय औषधि का 3.7 गुना अपेक्षित है।",
+    "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 9 दिन है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 5.143198291771114
+  },
+  {
+   "event_id": "EV-000372",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है",
+    "केवल 4 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है"
+   ],
+   "v1": "चालान पिछले के 2 दिन बाद आया। इसलिए, केवल 4 पिछले चालान और इसलिए तुलनात्मक आधार का उपयोग किया गया।",
+   "v1_outcome": "main fact left out",
+   "v1_anchored": true,
+   "v1_seconds": 4.251848249929026,
+   "v2": "पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है।",
+   "v2_sentences": [
+    "पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.328423625091091
+  },
+  {
+   "event_id": "EV-006898",
+   "language": "hi",
+   "facts": [
+    "7 दिन पहले के चालान EV-006821 (Rs. 18,402) से मेल खाता है"
+   ],
+   "main": [
+    "7 दिन पहले के चालान EV-006821 (Rs. 18,402) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-006821 (Rs. 18,402) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 2.4234301659744233,
+   "v2": "दिन पहले के चालान EV-006821 (रुपए 18,402) से मेल खाता है.",
+   "v2_sentences": [
+    "दिन पहले के चालान EV-006821 (रुपए 18,402) से मेल खाता है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.2279330829624087
+  },
+  {
+   "event_id": "EV-009246",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 7 दिन बाद आया, जबकि सामान्य अंतर 26 दिन है"
+   ],
+   "main": [
+    "चालान पिछले के 7 दिन बाद आया, जबकि सामान्य अंतर 26 दिन है"
+   ],
+   "v1": "चालान पिछले के 7 दिन बाद आया। सामान्य अंतर 26 दिन है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.49128424981609,
+   "v2": "पिछले के 7 दिन बाद चालान आया, जबकि सामान्य अंतर 26 दिन है।",
+   "v2_sentences": [
+    "पिछले के 7 दिन बाद चालान आया, जबकि सामान्य अंतर 26 दिन है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.389326832955703
+  },
+  {
+   "event_id": "EV-001676",
+   "language": "hi",
+   "facts": [
+    "6 दिन पहले के चालान EV-001629 (Rs. 57,833) से मेल खाता है"
+   ],
+   "main": [
+    "6 दिन पहले के चालान EV-001629 (Rs. 57,833) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-001629 (रुपए 57,833) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.415088332956657,
+   "v2": "6 दिन पहले के चालान EV-001629 (रुपए 57,833) से मेल खाता है.",
+   "v2_sentences": [
+    "6 दिन पहले के चालान EV-001629 (रुपए 57,833) से मेल खाता है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.17642904096283
+  },
+  {
+   "event_id": "EV-004515",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX9709 में गया। सामान्य खाता XXXX8671 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.354639875004068,
+   "v2": "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं।",
+   "v2_sentences": [
+    "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.1680139580275863
+  },
+  {
+   "event_id": "EV-007341",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 4 दिन लगते हैं।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.345734833041206,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.972763958154246
+  },
+  {
+   "event_id": "EV-005029",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX7112 में गया। सामान्य खाता XXXX8554 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.3648144169710577,
+   "v2": "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं।",
+   "v2_sentences": [
+    "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.182203915901482
+  },
+  {
+   "event_id": "EV-007179",
+   "language": "hi",
+   "facts": [
+    "12 दिन पहले के चालान EV-007060 (Rs. 2,40,108) से मेल खाता है"
+   ],
+   "main": [
+    "12 दिन पहले के चालान EV-007060 (Rs. 2,40,108) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-007060 (रुपए 2,40,108) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.5110422500874847,
+   "v2": "एव-007060 (रुपये 2,40,108) की आवश्यकता एक दिन पहले की थी।",
+   "v2_sentences": [
+    "एव-007060 (रुपये 2,40,108) की आवश्यकता एक दिन पहले की थी।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.2141659590415657
+  },
+  {
+   "event_id": "EV-007678",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX2719 में गया। सामान्य खाता XXXX6348 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.369194749975577,
+   "v2": "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में भी नहीं.",
+   "v2_sentences": [
+    "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में भी नहीं."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.3142469169106334
+  },
+  {
+   "event_id": "EV-002205",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 7 दिन बाद आया, जबकि सामान्य अंतर 25 दिन है",
+    "अनुमोदन में 2 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "main": [
+    "चालान पिछले के 7 दिन बाद आया, जबकि सामान्य अंतर 25 दिन है",
+    "अनुमोदन में 2 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "v1": "चालान पिछले के 7 दिन बाद आया, जबकि सामान्य अंतर 25 दिन है। इसी प्रकार, अनुमोदन में 2 दिन लगे, सामान्यतः 7 दिन.",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 4.3537037500645965,
+   "v2": "पिछले के 7 दिन बाद चालान आया, जबकि सामान्य अंतर 25 दिन है। संयोजणी में 2 दिन लगे, सामान्यतः 7 दिन",
+   "v2_sentences": [
+    "पिछले के 7 दिन बाद चालान आया, जबकि सामान्य अंतर 25 दिन है।",
+    "संयोजणी में 2 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.9086690419353545
+  },
+  {
+   "event_id": "EV-007168",
+   "language": "hi",
+   "facts": [
+    "1 दिन पहले के चालान EV-007151 (Rs. 1,00,228) से मेल खाता है",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 6 दिन है",
+    "प्रक्रिया में 6 दिन लगे, सामान्यतः 3 दिन"
+   ],
+   "main": [
+    "1 दिन पहले के चालान EV-007151 (Rs. 1,00,228) से मेल खाता है",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 6 दिन है"
+   ],
+   "v1": "दिन पहले के चालान EV-007151 (Rs. 1,00,228) से मेल खाता है। इसकी एक विस्तृत रूप से चालन उठाकर दिन पहले के चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 6 दिन है। प्रक्रिया में 6 दिन लगे, सामान्यतः 3 दिन।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 7.504298874875531,
+   "v2": "दिन पहले के चालान EV-007151 (रुपए 1,00,228) से मेल खाता है. पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 6 दिन है.",
+   "v2_sentences": [
+    "दिन पहले के चालान EV-007151 (रुपए 1,00,228) से मेल खाता है.",
+    "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 6 दिन है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 4.476428875001147
+  },
+  {
+   "event_id": "EV-003007",
+   "language": "hi",
+   "facts": [
+    "11 दिन पहले के चालान EV-002905 (Rs. 1,45,972) से मेल खाता है",
+    "भुगतान खाता XXXX2159 में गया, सामान्य खाता XXXX5529 में नहीं"
+   ],
+   "main": [
+    "11 दिन पहले के चालान EV-002905 (Rs. 1,45,972) से मेल खाता है",
+    "भुगतान खाता XXXX2159 में गया, सामान्य खाता XXXX5529 में नहीं"
+   ],
+   "v1": "दो वर्ष पहले के चालान EV-002905 (Rs. 1,45,972) से मेल खाता है। भुगतान खाता XXXX2159 में गया, सामान्य खाता XXXX5529 में नहीं।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 4.4568213750608265,
+   "v2": "एव-002905 (रुपये 1,45,972) की एक आवश्यकता अनुसंधान को पहले 11 दिन पहले की थी। भुगतान खाता XXXX2159 में गया, सामान्य खाता XXXX5529 में नहीं.",
+   "v2_sentences": [
+    "एव-002905 (रुपये 1,45,972) की एक आवश्यकता अनुसंधान को पहले 11 दिन पहले की थी।",
+    "भुगतान खाता XXXX2159 में गया, सामान्य खाता XXXX5529 में नहीं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 5.198255542200059
+  },
+  {
+   "event_id": "EV-004171",
+   "language": "hi",
+   "facts": [
+    "11 दिन पहले के चालान EV-004065 (Rs. 2,03,131) से मेल खाता है"
+   ],
+   "main": [
+    "11 दिन पहले के चालान EV-004065 (Rs. 2,03,131) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-004065 (रुपए 2,03,131) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.499287541024387,
+   "v2": "एव-004065 (रुपये 2,03,131) की आवश्यकता एक दिन पहले की थी।",
+   "v2_sentences": [
+    "एव-004065 (रुपये 2,03,131) की आवश्यकता एक दिन पहले की थी।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.207844667136669
+  },
+  {
+   "event_id": "EV-001505",
+   "language": "hi",
+   "facts": [
+    "7 दिन पहले के चालान EV-001439 (Rs. 37,467) से मेल खाता है"
+   ],
+   "main": [
+    "7 दिन पहले के चालान EV-001439 (Rs. 37,467) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-001439 (Rs. 37,467) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 2.3212498750071973,
+   "v2": "दिन पहले के चालान EV-001439 (रुपए 37,467) से मेल खाता है.",
+   "v2_sentences": [
+    "दिन पहले के चालान EV-001439 (रुपए 37,467) से मेल खाता है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.1251626249868423
+  },
+  {
+   "event_id": "EV-009584",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 4 दिन लगते हैं।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.325404957868159,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.9898968748748302
+  },
+  {
+   "event_id": "EV-002046",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है",
+    "केवल 2 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है"
+   ],
+   "v1": "चालान पिछले के 2 दिन बाद आया। इसलिए, केवल 2 पिछले चालान और इसलिए तुलनात्मक आधार का उपयोग किया गया।",
+   "v1_outcome": "main fact left out",
+   "v1_anchored": true,
+   "v1_seconds": 3.9434632500633597,
+   "v2": "पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है।",
+   "v2_sentences": [
+    "पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.097718083066866
+  },
+  {
+   "event_id": "EV-006124",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX2923 में गया, सामान्य खाता XXXX1569 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX2923 में गया, सामान्य खाता XXXX1569 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX2923 में गया। सामान्य खाता XXXX1569 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.355779124889523,
+   "v2": "भुगतान खाता XXXX2923 में गया, सामान्य खाता XXXX1569 में नहीं.",
+   "v2_sentences": [
+    "भुगतान खाता XXXX2923 में गया, सामान्य खाता XXXX1569 में नहीं."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.1658670001197606
+  },
+  {
+   "event_id": "EV-008226",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX2206 में गया, सामान्य खाता XXXX9196 में नहीं",
+    "प्रक्रिया में 14 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "main": [
+    "भुगतान खाता XXXX2206 में गया, सामान्य खाता XXXX9196 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX2206 में गया। प्रक्रिया में 14 दिन लगे, सामान्यतः 7 दिन।",
+   "v1_outcome": "main fact left out",
+   "v1_anchored": true,
+   "v1_seconds": 2.896615375066176,
+   "v2": "भुगतान खाता XXXX2206 में गया, सामान्य खाता XXXX9196 में नहीं.",
+   "v2_sentences": [
+    "भुगतान खाता XXXX2206 में गया, सामान्य खाता XXXX9196 में नहीं."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.2163417087867856
+  },
+  {
+   "event_id": "EV-008912",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 51,599, इस विक्रेता की सामान्य राशि Rs. 16,844 की 3.1x है"
+   ],
+   "main": [
+    "राशि Rs. 51,599, इस विक्रेता की सामान्य राशि Rs. 16,844 की 3.1x है"
+   ],
+   "v1": "राशि Rs. 51,599 इस विक्रेता की सामान्य राशि Rs. 16,844 की 3.1x है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.610346875153482,
+   "v2": "राशि Rs. 51,599, इस विक्रेता की सामान्य राशि Rs. 16,844 की 3.1 times है।",
+   "v2_sentences": [
+    "राशि Rs. 51,599, इस विक्रेता की सामान्य राशि Rs. 16,844 की 3.1 times है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.458283416926861
+  },
+  {
+   "event_id": "EV-002410",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 4 दिन लगते हैं।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.3242644171696156,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.998275165911764
+  },
+  {
+   "event_id": "EV-007359",
+   "language": "hi",
+   "facts": [
+    "अनुमोदन में 4 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "main": [
+    "अनुमोदन में 4 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "v1": "अनुमोदन में 4 दिन लगे, सामान्यतः 7 दिन.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.8627802920527756,
+   "v2": "सामान्यतः 4 दिन अनुमोदन में लगे, साथ ही 7 दिन सामान्यतः उपलब्ध है।",
+   "v2_sentences": [
+    "सामान्यतः 4 दिन अनुमोदन में लगे, साथ ही 7 दिन सामान्यतः उपलब्ध है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.6235384999308735
+  },
+  {
+   "event_id": "EV-001547",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 3,61,253, इस विक्रेता की सामान्य राशि Rs. 1,11,305 की 3.2x है"
+   ],
+   "main": [
+    "राशि Rs. 3,61,253, इस विक्रेता की सामान्य राशि Rs. 1,11,305 की 3.2x है"
+   ],
+   "v1": "राशि Rs. 3,61,253 इस विक्रेता की सामान्य राशि Rs. 1,11,305 की 3.2x है.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.7636774589773268,
+   "v2": "राशि Rs. 3,61,253 इस विक्रेता की सामान्य राशि Rs. 1,11,305 की 3.2 times है।",
+   "v2_sentences": [
+    "राशि Rs. 3,61,253 इस विक्रेता की सामान्य राशि Rs. 1,11,305 की 3.2 times है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.563872165977955
+  },
+  {
+   "event_id": "EV-008866",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.7x"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.7x"
+   ],
+   "v1": "दैनिक रकम 3 चालान है। इसे सुझावदायी गणना के आधार पर 2.7x की जगह भी बचत है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 3.068410666892305,
+   "v2": "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।",
+   "v2_sentences": [
+    "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.1938930000178516
+  },
+  {
+   "event_id": "EV-003572",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.9x"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.9x"
+   ],
+   "v1": "दैनिक रुकते हुए 3 चालान, अपेक्षित दर का 2.9x है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.1960729169659317,
+   "v2": "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।",
+   "v2_sentences": [
+    "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.286685167113319
+  },
+  {
+   "event_id": "EV-000448",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 3.0x",
+    "केवल 5 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 3.0x"
+   ],
+   "v1": "7 दिनों में 3 चालान, अपेक्षित दर का 3.0x। केवल 5 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.068753459025174,
+   "v2": "3 चालान वाले एक आवश्यकता प्रस्तुति की समय रूप से 3.0x अपेक्षित दर का है।",
+   "v2_sentences": [
+    "3 चालान वाले एक आवश्यकता प्रस्तुति की समय रूप से 3.0x अपेक्षित दर का है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.6816469160839915
+  },
+  {
+   "event_id": "EV-006401",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 5 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 5 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 5 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.302874540910125,
+   "v2": "इस परिकल्पना के बारे में उपहार विचार किया गया, जबकि सामान्यतः 5 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार विचार किया गया, जबकि सामान्यतः 5 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.0188417080789804
+  },
+  {
+   "event_id": "EV-007939",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 3,51,869, समकक्ष समूह की सामान्य राशि Rs. 31,904 की 11.0x है",
+    "विक्रेता 29 दिन पुराना है और यह भुगतान Rs. 3,51,869 का है",
+    "केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "राशि Rs. 3,51,869, समकक्ष समूह की सामान्य राशि Rs. 31,904 की 11.0x है",
+    "विक्रेता 29 दिन पुराना है और यह भुगतान Rs. 3,51,869 का है"
+   ],
+   "v1": "राशि Rs. 3,51,869, समकक्ष समूह की सामान्य राशि Rs. 31,904 की 11.0x है। विक्रेता 29 दिन पुराना है और यह भुगतान Rs. 3,51,869 का है। केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 7.102209208998829,
+   "v2": "राशि Rs. 3,51,869, समकक्ष समूह की सामान्य राशि Rs. 31,904 की 11.0x है। विक्रेता 29 दिन पुराना है और यह भुगतान ₹3,51,869 का है.",
+   "v2_sentences": [
+    "राशि Rs. 3,51,869, समकक्ष समूह की सामान्य राशि Rs. 31,904 की 11.0x है।",
+    "विक्रेता 29 दिन पुराना है और यह भुगतान ₹3,51,869 का है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 5.025878999847919
+  },
+  {
+   "event_id": "EV-007465",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है"
+   ],
+   "main": [
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है"
+   ],
+   "v1": "चालान पिछले के 1 दिन बाद आया। सामान्य अंतर 20 दिन है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 3.4075087080709636,
+   "v2": "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 20 दिन है.",
+   "v2_sentences": [
+    "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 20 दिन है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.7493128748610616
+  },
+  {
+   "event_id": "EV-006713",
+   "language": "hi",
+   "facts": [
+    "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "main": [
+    "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v1": "शनिवार को 10:29 बजे अनुमोदित है। कार्य समय से बाहर है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 3.230222208891064,
+   "v2": "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर",
+   "v2_sentences": [
+    "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.6056212498806417
+  },
+  {
+   "event_id": "EV-008103",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 3 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 3 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 3 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.411474124994129,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 3 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 3 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.0115161251742393
+  },
+  {
+   "event_id": "EV-004730",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 4 दिन लगते हैं।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.494512834120542,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 4.1350191668607295
+  },
+  {
+   "event_id": "EV-007506",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX2719 में गया। सामान्य खाता XXXX6348 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.9447417920455337,
+   "v2": "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में भी नहीं.",
+   "v2_sentences": [
+    "भुगतान खाता XXXX2719 में गया, सामान्य खाता XXXX6348 में भी नहीं."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.9299790419172496
+  },
+  {
+   "event_id": "EV-001805",
+   "language": "hi",
+   "facts": [
+    "शनिवार को 09:34 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "main": [
+    "शनिवार को 09:34 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v1": "शनिवार को 09:34 बजे अनुमोदित है। कार्य समय से बाहर है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 3.479219916043803,
+   "v2": "शनिवार को 09:34 बजे अनुमोदित, कार्य समय से बाहर",
+   "v2_sentences": [
+    "शनिवार को 09:34 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.542727207997814
+  },
+  {
+   "event_id": "EV-004830",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं",
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 2 दिन लगते हैं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं",
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 2 दिन लगते हैं"
+   ],
+   "v1": "भुगतान खाता XXXX9709 में गया। उसी दिन अनुमोदित कर दिया और सामान्यतः 2 दिन लगते हैं।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 3.760226000100374,
+   "v2": "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं। इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 2 दिन लगते हैं.",
+   "v2_sentences": [
+    "भुगतान खाता XXXX9709 में गया, सामान्य खाता XXXX8671 में नहीं।",
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 2 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 5.703544958028942
+  },
+  {
+   "event_id": "EV-006585",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.89548712503165,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.5063533338252455
+  },
+  {
+   "event_id": "EV-001880",
+   "language": "hi",
+   "facts": [
+    "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "main": [
+    "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v1": "शनिवार को 10:29 बजे अनुमोदित है। कार्य समय से बाहर है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.910907708108425,
+   "v2": "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर",
+   "v2_sentences": [
+    "शनिवार को 10:29 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.302992958808318
+  },
+  {
+   "event_id": "EV-004796",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 3.0651660829316825,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.665351541014388
+  },
+  {
+   "event_id": "EV-007167",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 4,58,746, इस विक्रेता की सामान्य राशि Rs. 16,840 की 27.2x है",
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "1 दिन पहले के चालान EV-007140 (Rs. 4,59,483) से मेल खाता है",
+    "7 दिनों में 6 चालान, अपेक्षित दर का 7.4x",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 8 दिन है",
+    "राशि Rs. 4,58,746, Rs. 5,00,000 की अनुमोदन सीमा का 92% है"
+   ],
+   "main": [
+    "राशि Rs. 4,58,746, इस विक्रेता की सामान्य राशि Rs. 16,840 की 27.2x है",
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "1 दिन पहले के चालान EV-007140 (Rs. 4,59,483) से मेल खाता है"
+   ],
+   "v1": "राशि Rs. 4,58,746, इस विक्रेता की सामान्य राशि Rs. 16,840 की 27.2x है। चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 8 दिन है। 7 दिनों में 6 चालान, अपेक्षित दर का 7.4x। 1 दिन पहले के चालान EV-007140 (Rs. 4,59,483) से मे�",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 11.540189624996856,
+   "v2": "इस विक्रेता की सामान्य राशि Rs. 4,58,746 है, जो Rs. 16,840 की 27.2x है। 4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है। दिन पहले के चालान EV-007140 (रुपए 4,59,483) से मेल खाता है.",
+   "v2_sentences": [
+    "इस विक्रेता की सामान्य राशि Rs. 4,58,746 है, जो Rs. 16,840 की 27.2x है।",
+    "4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है।",
+    "दिन पहले के चालान EV-007140 (रुपए 4,59,483) से मेल खाता है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 9.391871457919478
+  },
+  {
+   "event_id": "EV-008769",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.6x"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.6x"
+   ],
+   "v1": "दैनिक रुकते हुए 3 चालान, अपेक्षित दर का 2.6x है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.4923818330280483,
+   "v2": "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।",
+   "v2_sentences": [
+    "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.4707823330536485
+  },
+  {
+   "event_id": "EV-002929",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 7 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 7 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 7 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.535783833125606,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 7 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 7 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.435520625207573
+  },
+  {
+   "event_id": "EV-004716",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 4,97,745, इस विक्रेता की सामान्य राशि Rs. 1,39,816 की 3.6x है",
+    "राशि Rs. 4,97,745, Rs. 5,00,000 की अनुमोदन सीमा का 100% है"
+   ],
+   "main": [
+    "राशि Rs. 4,97,745, इस विक्रेता की सामान्य राशि Rs. 1,39,816 की 3.6x है",
+    "राशि Rs. 4,97,745, Rs. 5,00,000 की अनुमोदन सीमा का 100% है"
+   ],
+   "v1": "राशि Rs. 4,97,745, इस विक्रेता की सामान्य राशि Rs. 1,39,816 की 3.6x है। इसे Rs. 5,00,000 की अनुमोदन सीमा में लगाया गया है।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 5.73392687481828,
+   "v2": "इस विक्रेता की सामान्य राशि Rs. 4,97,745 है, जो Rs. 1,39,816 की 3.6x है। राशि Rs. 4,97,745 और Rs. 5,00,000 के बीच 100% अनुमोदन सीमा है।",
+   "v2_sentences": [
+    "इस विक्रेता की सामान्य राशि Rs. 4,97,745 है, जो Rs. 1,39,816 की 3.6x है।",
+    "राशि Rs. 4,97,745 और Rs. 5,00,000 के बीच 100% अनुमोदन सीमा है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 5.580367375165224
+  },
+  {
+   "event_id": "EV-008722",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.6x",
+    "प्रक्रिया में 7 दिन लगे, सामान्यतः 3 दिन"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.6x"
+   ],
+   "v1": "दूध की रिपोर्ट जलसमय पर 7 दिनों में 3 चालान थी। इसके बावजूद, सामान्यतः 3 दिनों में उड़ान की रिपोर्ट हुई।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 4.760445083025843,
+   "v2": "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।",
+   "v2_sentences": [
+    "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.4254424578975886
+  },
+  {
+   "event_id": "EV-007284",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX2558 में गया, सामान्य खाता XXXX4754 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX2558 में गया, सामान्य खाता XXXX4754 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX2558 में गया है। सामान्य खाता XXXX4754 में नहीं।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.800868125166744,
+   "v2": "भुगतान खाता XXXX2558 में गया, सामान्य खाता XXXX4754 में नहीं.",
+   "v2_sentences": [
+    "भुगतान खाता XXXX2558 में गया, सामान्य खाता XXXX4754 में नहीं."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.4597832921426743
+  },
+  {
+   "event_id": "EV-007011",
+   "language": "hi",
+   "facts": [
+    "सोमवार को 23:26 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "main": [
+    "सोमवार को 23:26 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v1": "सोमवार को 23:26 बजे अनुमोदित है। कार्य समय से बाहर है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.6238904159981757,
+   "v2": "सोमवार को 23:26 बजे अनुमोदित, कार्य समय से बाहर",
+   "v2_sentences": [
+    "सोमवार को 23:26 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.148958999896422
+  },
+  {
+   "event_id": "EV-005369",
+   "language": "hi",
+   "facts": [
+    "शनिवार को 10:01 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "main": [
+    "शनिवार को 10:01 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v1": "शनिवार को 10:01 बजे अनुमोदित है। कार्य समय से बाहर है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.882171125151217,
+   "v2": "शनिवार को 10:01 बजे अनुमोदित, कार्य समय से बाहर.",
+   "v2_sentences": [
+    "शनिवार को 10:01 बजे अनुमोदित, कार्य समय से बाहर."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.2700823340564966
+  },
+  {
+   "event_id": "EV-003509",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 11.5x",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 33 दिन है"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 11.5x",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 33 दिन है"
+   ],
+   "v1": "दिनों में 3 चालान, अपेक्षित दर का 11.5x। इसकी पिछली रिपोर्ट में 1 दिन बाद आया, जबकि सामान्य अंतर 33 दिन है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 5.1179274171590805,
+   "v2": "समय विस्तृति पर आधारित एक उच्च सुविधा की जाँच 7 दिनों में 3 चालान या अपेक्षित दर के 11.5 गुना है। पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 33 दिन है.",
+   "v2_sentences": [
+    "समय विस्तृति पर आधारित एक उच्च सुविधा की जाँच 7 दिनों में 3 चालान या अपेक्षित दर के 11.5 गुना है।",
+    "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 33 दिन है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 6.827384166885167
+  },
+  {
+   "event_id": "EV-008623",
+   "language": "hi",
+   "facts": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "राशि Rs. 4,66,189, इस विक्रेता की सामान्य राशि Rs. 81,306 की 5.7x है",
+    "7 दिनों में 5 चालान, अपेक्षित दर का 11.3x",
+    "चालान पिछले वाले के उसी दिन आया, जबकि सामान्य अंतर 15 दिन है",
+    "राशि Rs. 4,66,189, Rs. 5,00,000 की अनुमोदन सीमा का 93% है"
+   ],
+   "main": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "राशि Rs. 4,66,189, इस विक्रेता की सामान्य राशि Rs. 81,306 की 5.7x है",
+    "7 दिनों में 5 चालान, अपेक्षित दर का 11.3x"
+   ],
+   "v1": "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान। राशि Rs. 4,66,189, इस विक्रेता की सामान्य राशि Rs. 81,306 की 5.7x है। 7 दिनों में 5 चालान, अपेक्षित दर का 11.3x। चालान पिछले वाले के उसी दिन आया, जबकि सामान्�",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 8.923203957965598,
+   "v2": "4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है। इस विक्रेता की सामान्य राशि Rs. 4,66,189 है, जो Rs. 81,306 की 5.7x है। 7 दिनों में 5 चालान, आयक्रमिक दर का 11.3 गुना है।",
+   "v2_sentences": [
+    "4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है।",
+    "इस विक्रेता की सामान्य राशि Rs. 4,66,189 है, जो Rs. 81,306 की 5.7x है।",
+    "7 दिनों में 5 चालान, आयक्रमिक दर का 11.3 गुना है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 7.412223709048703
+  },
+  {
+   "event_id": "EV-003353",
+   "language": "hi",
+   "facts": [
+    "8 दिन पहले के चालान EV-003271 (Rs. 61,696) से मेल खाता है"
+   ],
+   "main": [
+    "8 दिन पहले के चालान EV-003271 (Rs. 61,696) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-003271 (रुपए 61,696) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.8325000000186265,
+   "v2": "8 दिन पहले की चालान EV-003271 (रुपए 61,696) को मेल खाता है.",
+   "v2_sentences": [
+    "8 दिन पहले की चालान EV-003271 (रुपए 61,696) को मेल खाता है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.5193295830395073
+  },
+  {
+   "event_id": "EV-007462",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 43,859, इस विक्रेता की सामान्य राशि Rs. 7,693 की 5.7x है"
+   ],
+   "main": [
+    "राशि Rs. 43,859, इस विक्रेता की सामान्य राशि Rs. 7,693 की 5.7x है"
+   ],
+   "v1": "राशि Rs. 43,859, इस विक्रेता की सामान्य राशि Rs. 7,693 की 5.7x है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.9862410000059754,
+   "v2": "इस विक्रेता की सामान्य राशि Rs. 43,859 है, जो Rs. 7,693 की 5.7x है।",
+   "v2_sentences": [
+    "इस विक्रेता की सामान्य राशि Rs. 43,859 है, जो Rs. 7,693 की 5.7x है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.614069917006418
+  },
+  {
+   "event_id": "EV-001627",
+   "language": "hi",
+   "facts": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "राशि Rs. 4,86,892, इस विक्रेता की सामान्य राशि Rs. 1,71,514 की 2.8x है",
+    "7 दिनों में 3 चालान, अपेक्षित दर का 3.5x",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 8 दिन है",
+    "राशि Rs. 4,86,892, Rs. 5,00,000 की अनुमोदन सीमा का 97% है"
+   ],
+   "main": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "राशि Rs. 4,86,892, इस विक्रेता की सामान्य राशि Rs. 1,71,514 की 2.8x है",
+    "7 दिनों में 3 चालान, अपेक्षित दर का 3.5x"
+   ],
+   "v1": "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान। राशि Rs. 4,86,892, इस विक्रेता की सामान्य राशि Rs. 1,71,514 की 2.8x है। 7 दिनों में 3 चालान, अपेक्षित दर का 3.5x। चालान पिछले के 1 दिन बाद आया, जबकि सामान्य �",
+   "v1_outcome": "accepted",
+   "v1_anchored": false,
+   "v1_seconds": 8.482216832926497,
+   "v2": "4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है। इस विक्रेता की सामान्य राशि Rs. 1,71,514 की 2.8 times है। 3 चालान वाले एक आवश्यकता प्रस्तुति की समय औषधि का 3.5 गुना अपेक्षित है।",
+   "v2_sentences": [
+    "4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है।",
+    "इस विक्रेता की सामान्य राशि Rs. 1,71,514 की 2.8 times है।",
+    "3 चालान वाले एक आवश्यकता प्रस्तुति की समय औषधि का 3.5 गुना अपेक्षित है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 7.282558040926233
+  },
+  {
+   "event_id": "EV-000211",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 8 दिन है",
+    "केवल 3 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 8 दिन है"
+   ],
+   "v1": "चालान पिछले के 2 दिन बाद आया। इसलिए, सामान्य अंतर की तुलना में उपयोग किया गया।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 3.257934292079881,
+   "v2": "पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 8 दिन है।",
+   "v2_sentences": [
+    "पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 8 दिन है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.1020573750138283
+  },
+  {
+   "event_id": "EV-008158",
+   "language": "hi",
+   "facts": [
+    "विक्रेता 34 दिन पुराना है और यह भुगतान Rs. 3,99,673 का है",
+    "केवल 0 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "विक्रेता 34 दिन पुराना है और यह भुगतान Rs. 3,99,673 का है"
+   ],
+   "v1": "विक्रेता 34 दिन पुराना है और यह भुगतान Rs. 3,99,673 का है। इसलिए तुलनात्मक आधार का उपयोग किया गया।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 3.9589579578023404,
+   "v2": "विक्रेता 34 दिन पुराना है और यह भुगतान ₹3,99,673 का है.",
+   "v2_sentences": [
+    "विक्रेता 34 दिन पुराना है और यह भुगतान ₹3,99,673 का है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.1898698748555034
+  },
+  {
+   "event_id": "EV-003068",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 10 दिन बाद आया, जबकि सामान्य अंतर 29 दिन है"
+   ],
+   "main": [
+    "चालान पिछले के 10 दिन बाद आया, जबकि सामान्य अंतर 29 दिन है"
+   ],
+   "v1": "चालान पिछले के 10 दिन बाद आया। सामान्य अंतर 29 दिन है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.4322924169246107,
+   "v2": "पिछले के 10 दिन बाद आया, जबकि सामान्य अंतर 29 दिन है।",
+   "v2_sentences": [
+    "पिछले के 10 दिन बाद आया, जबकि सामान्य अंतर 29 दिन है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.2102585840038955
+  },
+  {
+   "event_id": "EV-005954",
+   "language": "hi",
+   "facts": [
+    "14 दिन पहले के चालान EV-005821 (Rs. 62,327) से मेल खाता है"
+   ],
+   "main": [
+    "14 दिन पहले के चालान EV-005821 (Rs. 62,327) से मेल खाता है"
+   ],
+   "v1": "14 दिन पहले के चालान EV-005821 (Rs. 62,327) से मेल खाता है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.382455541053787,
+   "v2": "कुछ दिन पहले की एव-005821 (रुपए 62,327) को मेल खाता है।",
+   "v2_sentences": [
+    "कुछ दिन पहले की एव-005821 (रुपए 62,327) को मेल खाता है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.157468584133312
+  },
+  {
+   "event_id": "EV-008426",
+   "language": "hi",
+   "facts": [
+    "6 दिन पहले के चालान EV-008379 (Rs. 2,39,629) से मेल खाता है"
+   ],
+   "main": [
+    "6 दिन पहले के चालान EV-008379 (Rs. 2,39,629) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-008379 (रुपए 2,39,629) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.537936291890219,
+   "v2": "6 दिन पहले की चालान EV-008379 (रुपए 2,39,629) से मेल खाता है",
+   "v2_sentences": [
+    "6 दिन पहले की चालान EV-008379 (रुपए 2,39,629) से मेल खाता है"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.296138250036165
+  },
+  {
+   "event_id": "EV-008109",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 3,83,081, समकक्ष समूह की सामान्य राशि Rs. 28,088 की 13.6x है",
+    "विक्रेता 33 दिन पुराना है और यह भुगतान Rs. 3,83,081 का है",
+    "केवल 2 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "राशि Rs. 3,83,081, समकक्ष समूह की सामान्य राशि Rs. 28,088 की 13.6x है",
+    "विक्रेता 33 दिन पुराना है और यह भुगतान Rs. 3,83,081 का है"
+   ],
+   "v1": "राशि Rs. 3,83,081, समकक्ष समूह की सामान्य राशि Rs. 28,088 की 13.6x है। विक्रेता 33 दिन पुराना है और यह भुगतान Rs. 3,83,081 का है। केवल 2 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 7.216147708939388,
+   "v2": "राशि Rs. 3,83,081, समकक्ष समूह की सामान्य राशि Rs. 28,088 की 13.6 times है। विक्रेता 33 दिन पुराना है और यह भुगतान ₹3,83,081 का है.",
+   "v2_sentences": [
+    "राशि Rs. 3,83,081, समकक्ष समूह की सामान्य राशि Rs. 28,088 की 13.6 times है।",
+    "विक्रेता 33 दिन पुराना है और यह भुगतान ₹3,83,081 का है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 4.967765999957919
+  },
+  {
+   "event_id": "EV-002894",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 3,77,064, इस विक्रेता की सामान्य राशि Rs. 1,36,372 की 2.8x है"
+   ],
+   "main": [
+    "राशि Rs. 3,77,064, इस विक्रेता की सामान्य राशि Rs. 1,36,372 की 2.8x है"
+   ],
+   "v1": "राशि Rs. 3,77,064, इस विक्रेता की सामान्य राशि Rs. 1,36,372 की 2.8x है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.9440333331003785,
+   "v2": "इस विक्रेता की सामान्य राशि Rs. 1,36,372 के बराबर है।",
+   "v2_sentences": [
+    "इस विक्रेता की सामान्य राशि Rs. 1,36,372 के बराबर है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.055149666965008
+  },
+  {
+   "event_id": "EV-009860",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 10 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 10 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 10 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.614542833995074,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 10 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 10 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 6.667296333936974
+  },
+  {
+   "event_id": "EV-006679",
+   "language": "hi",
+   "facts": [
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 11 दिन है"
+   ],
+   "main": [
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 11 दिन है"
+   ],
+   "v1": "चालान पिछले के 1 दिन बाद आया। सामान्य अंतर 11 दिन है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.399366582976654,
+   "v2": "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 11 दिन है.",
+   "v2_sentences": [
+    "पिछले की 1 दिन बाद चालान आया, जबकि सामान्य अंतर 11 दिन है."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.4127858749125153
+  },
+  {
+   "event_id": "EV-005320",
+   "language": "hi",
+   "facts": [
+    "रविवार को 14:00 बजे अनुमोदित, कार्य समय से बाहर",
+    "प्रक्रिया में 9 दिन लगे, सामान्यतः 3 दिन"
+   ],
+   "main": [
+    "रविवार को 14:00 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v1": "रविवार को 14:00 बजे अनुमोदित हुआ। प्रक्रिया में 9 दिन लगी, सामान्यतः 3 दिन।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 3.0958307918626815,
+   "v2": "रविवार को 14:00 बजे अनुमोदित, कार्य समय से बाहर",
+   "v2_sentences": [
+    "रविवार को 14:00 बजे अनुमोदित, कार्य समय से बाहर"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 1.9214998329989612
+  },
+  {
+   "event_id": "EV-006591",
+   "language": "hi",
+   "facts": [
+    "अनुमोदन में 3 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "main": [
+    "अनुमोदन में 3 दिन लगे, सामान्यतः 7 दिन"
+   ],
+   "v1": "अनुमोदन में 3 दिन लगे, सामान्यतः 7 दिन।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 1.9301730419974774,
+   "v2": "सामान्यतः 3 दिन अनुमोदन में 7 दिन लगता है.",
+   "v2_sentences": [
+    "सामान्यतः 3 दिन अनुमोदन में 7 दिन लगता है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 1.8488654159009457
+  },
+  {
+   "event_id": "EV-007116",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX3580 में गया, सामान्य खाता XXXX0374 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX3580 में गया, सामान्य खाता XXXX0374 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX3580 में गया। सामान्य खाता XXXX0374 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.428418416995555,
+   "v2": "भुगतान खाता XXXX3580 में गया, सामान्य खाता XXXX0374 में नहीं.",
+   "v2_sentences": [
+    "भुगतान खाता XXXX3580 में गया, सामान्य खाता XXXX0374 में नहीं."
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.2408414578530937
+  },
+  {
+   "event_id": "EV-002589",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 3 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 3 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 3 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.3405123341362923,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 3 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 3 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.087377417134121
+  },
+  {
+   "event_id": "EV-008400",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX6863 में गया, सामान्य खाता XXXX4405 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX6863 में गया, सामान्य खाता XXXX4405 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX6863 में गया। सामान्य खाता XXXX4405 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.4145348330494016,
+   "v2": "भुगतान खाता XXXX6863 में गया, सामान्य खाता XXXX4405 में नहीं।",
+   "v2_sentences": [
+    "भुगतान खाता XXXX6863 में गया, सामान्य खाता XXXX4405 में नहीं।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.252679292112589
+  },
+  {
+   "event_id": "EV-008546",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 4,55,976, इस विक्रेता की सामान्य राशि Rs. 29,834 की 15.3x है",
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "7 दिनों में 5 चालान, अपेक्षित दर का 13.3x",
+    "चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है",
+    "राशि Rs. 4,55,976, Rs. 5,00,000 की अनुमोदन सीमा का 91% है"
+   ],
+   "main": [
+    "राशि Rs. 4,55,976, इस विक्रेता की सामान्य राशि Rs. 29,834 की 15.3x है",
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 4 चालान",
+    "7 दिनों में 5 चालान, अपेक्षित दर का 13.3x"
+   ],
+   "v1": "राशि Rs. 4,55,976, इस विक्रेता की सामान्य राशि Rs. 29,834 की 15.3x है। चालान पिछले के 1 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है। 7 दिनों में 5 चालान, अपेक्षित दर का 13.3x। अपेक्षित दर का 13.3x। चालान पिछले के 1 दिन �",
+   "v1_outcome": "main fact left out",
+   "v1_anchored": false,
+   "v1_seconds": 8.32134533394128,
+   "v2": "इस विक्रेता की सामान्य राशि Rs. 4,55,976 है, जो Rs. 29,834 की 15.3x है। 4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है। 7 दिनों में 5 चालान, आम दर के साथ 13.3x",
+   "v2_sentences": [
+    "इस विक्रेता की सामान्य राशि Rs. 4,55,976 है, जो Rs. 29,834 की 15.3x है।",
+    "4 चालान तक राशि 5,00,000 रूपए की अनुमोदन सीमा पर आधारित है।",
+    "7 दिनों में 5 चालान, आम दर के साथ 13.3x"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 6.826449249871075
+  },
+  {
+   "event_id": "EV-006008",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 4 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 4 दिन लगते हैं।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.342238709097728,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 4 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.0716296250466257
+  },
+  {
+   "event_id": "EV-006242",
+   "language": "hi",
+   "facts": [
+    "एक ही व्यक्ति (APR06) ने बनाया और अनुमोदित किया"
+   ],
+   "main": [
+    "एक ही व्यक्ति (APR06) ने बनाया और अनुमोदित किया"
+   ],
+   "v1": "एक ही व्यक्ति (APR06) ने एक चौड़ाई 10 सेमी और लंबी 5 सेमी का पेड़ बनाया और उसे अनुमोदित किया।",
+   "v1_outcome": "new number",
+   "v1_anchored": false,
+   "v1_seconds": 3.7651755418628454,
+   "v2": "एक ही व्यक्ति (APR06) ने एक संस्कृति प्रणाली (APR06) जोड़ा और अनुमोदित किया।",
+   "v2_sentences": [
+    "एक ही व्यक्ति (APR06) ने एक संस्कृति प्रणाली (APR06) जोड़ा और अनुमोदित किया।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.8325523750390857
+  },
+  {
+   "event_id": "EV-010002",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 4,94,066, Rs. 5,00,000 की अनुमोदन सीमा का 99% है"
+   ],
+   "main": [
+    "राशि Rs. 4,94,066, Rs. 5,00,000 की अनुमोदन सीमा का 99% है"
+   ],
+   "v1": "राशि Rs. 4,94,066, Rs. 5,00,000 की अनुमोदन सीमा का 99% है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.357934166910127,
+   "v2": "राशि Rs. 4,94,066 और Rs. 5,00,000 के बीच 99% की अनुमोदन सीमा है।",
+   "v2_sentences": [
+    "राशि Rs. 4,94,066 और Rs. 5,00,000 के बीच 99% की अनुमोदन सीमा है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.413966624997556
+  },
+  {
+   "event_id": "EV-009126",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.374159166123718,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.011320208897814
+  },
+  {
+   "event_id": "EV-006824",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.7x"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.7x"
+   ],
+   "v1": "दैनिक रकम 3 चालान है। इसे सुझावदायी गणना के आधार पर 2.7x की जगह भी बचत है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 3.13145483401604,
+   "v2": "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।",
+   "v2_sentences": [
+    "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.293649832950905
+  },
+  {
+   "event_id": "EV-000102",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 58,003, समकक्ष समूह की सामान्य राशि Rs. 29,062 की 2.0x है",
+    "केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "राशि Rs. 58,003, समकक्ष समूह की सामान्य राशि Rs. 29,062 की 2.0x है"
+   ],
+   "v1": "राशि Rs. 58,003, समकक्ष समूह की सामान्य राशि Rs. 29,062 की 2.0x है। इसलिए तुलनात्मक आधार का उपयोग किया गया।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.223724375013262,
+   "v2": "राशि Rs. 58,003, समकक्ष समूह की सामान्य राशि Rs. 29,062 की 2.0x है।",
+   "v2_sentences": [
+    "राशि Rs. 58,003, समकक्ष समूह की सामान्य राशि Rs. 29,062 की 2.0x है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.665965124964714
+  },
+  {
+   "event_id": "EV-006569",
+   "language": "hi",
+   "facts": [
+    "3 दिन पहले के चालान EV-006529 (Rs. 1,15,040) से मेल खाता है"
+   ],
+   "main": [
+    "3 दिन पहले के चालान EV-006529 (Rs. 1,15,040) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-006529 (Rs. 1,15,040) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 2.5530599169433117,
+   "v2": "3 दिन पहले के चालान EV-006529 (रुपए 1,15,040) से मेल खाता है",
+   "v2_sentences": [
+    "3 दिन पहले के चालान EV-006529 (रुपए 1,15,040) से मेल खाता है"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.3168132919818163
+  },
+  {
+   "event_id": "EV-002330",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 4 चालान, अपेक्षित दर का 3.0x"
+   ],
+   "main": [
+    "7 दिनों में 4 चालान, अपेक्षित दर का 3.0x"
+   ],
+   "v1": "दिनों में 4 चालान, अपेक्षित दर का 3.0x है।",
+   "v1_outcome": "main fact left out",
+   "v1_anchored": true,
+   "v1_seconds": 1.9818847919814289,
+   "v2": "4 चालान की आवश्यकता 7 दिनों में अपेक्षित दर का 3.0x है।",
+   "v2_sentences": [
+    "4 चालान की आवश्यकता 7 दिनों में अपेक्षित दर का 3.0x है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.2853428330272436
+  },
+  {
+   "event_id": "EV-009683",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 2 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 2 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 2 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.456192000070587,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 2 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 2 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.1018825420178473
+  },
+  {
+   "event_id": "EV-009391",
+   "language": "hi",
+   "facts": [
+    "7 दिन पहले के चालान EV-009318 (Rs. 15,989) से मेल खाता है"
+   ],
+   "main": [
+    "7 दिन पहले के चालान EV-009318 (Rs. 15,989) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-009318 (Rs. 15,989) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 2.3836134169250727,
+   "v2": "दिन पहले के चालान EV-009318 (रुपए 15,989) से मेल खाता है.",
+   "v2_sentences": [
+    "दिन पहले के चालान EV-009318 (रुपए 15,989) से मेल खाता है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.199410041095689
+  },
+  {
+   "event_id": "EV-000311",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 7 दिन लगते हैं",
+    "केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 7 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित था, जबकि सामान्यतः 7 दिन लगते हैं। केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.614722750149667,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 7 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 7 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.0474694999866188
+  },
+  {
+   "event_id": "EV-001708",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 3,99,216, समकक्ष समूह की सामान्य राशि Rs. 97,748 की 4.1x है",
+    "विक्रेता 23 दिन पुराना है और यह भुगतान Rs. 3,99,216 का है",
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है",
+    "केवल 1 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "राशि Rs. 3,99,216, समकक्ष समूह की सामान्य राशि Rs. 97,748 की 4.1x है",
+    "विक्रेता 23 दिन पुराना है और यह भुगतान Rs. 3,99,216 का है",
+    "चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है"
+   ],
+   "v1": "राशि Rs. 3,99,216, समकक्ष समूह की सामान्य राशि Rs. 97,748 की 4.1x है। विक्रेता 23 दिन पुराना है और यह भुगतान Rs. 3,99,216 का है। चालान पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है। केवल 1 पिछले चालान, इसलिए तुलन",
+   "v1_outcome": "new word",
+   "v1_anchored": true,
+   "v1_seconds": 8.109569207997993,
+   "v2": "राशि Rs. 3,99,216, समकक्ष समूह की सामान्य राशि Rs. 97,748 की 4.1 times है। विक्रेता 23 दिन पुराना है और यह भुगतान ₹3,99,216 का है. पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है।",
+   "v2_sentences": [
+    "राशि Rs. 3,99,216, समकक्ष समूह की सामान्य राशि Rs. 97,748 की 4.1 times है।",
+    "विक्रेता 23 दिन पुराना है और यह भुगतान ₹3,99,216 का है.",
+    "पिछले के 2 दिन बाद आया, जबकि सामान्य अंतर 20 दिन है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 6.986819332931191
+  },
+  {
+   "event_id": "EV-007277",
+   "language": "hi",
+   "facts": [
+    "14 दिन पहले के चालान EV-007148 (Rs. 86,827) से मेल खाता है"
+   ],
+   "main": [
+    "14 दिन पहले के चालान EV-007148 (Rs. 86,827) से मेल खाता है"
+   ],
+   "v1": "14 दिन पहले के चालान EV-007148 (Rs. 86,827) से मेल खाता है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.3484348750207573,
+   "v2": "कुछ दिन पहले की एव-007148 (रुपए 86,827) को मेल खाता है।",
+   "v2_sentences": [
+    "कुछ दिन पहले की एव-007148 (रुपए 86,827) को मेल खाता है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.1539979169610888
+  },
+  {
+   "event_id": "EV-001143",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 3 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 3 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 3 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.3841224999632686,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 3 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 3 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.0260675421450287
+  },
+  {
+   "event_id": "EV-000942",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं",
+    "केवल 4 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित था, जबकि सामान्यतः 6 दिन लगते हैं। केवल 4 पिछले चालान, इसलिए तुलनात्मक आधार का उपयोग किया गया.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 4.669262917013839,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.113230917137116
+  },
+  {
+   "event_id": "EV-009479",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 1,24,845, इस विक्रेता की सामान्य राशि Rs. 36,040 की 3.5x है"
+   ],
+   "main": [
+    "राशि Rs. 1,24,845, इस विक्रेता की सामान्य राशि Rs. 36,040 की 3.5x है"
+   ],
+   "v1": "राशि Rs. 1,24,845, इस विक्रेता की सामान्य राशि Rs. 36,040 की 3.5x है।",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.790249333018437,
+   "v2": "राशि Rs. 1,24,845, इस विक्रेता की सामान्य राशि Rs. 36,040 की 3.5 times है।",
+   "v2_sentences": [
+    "राशि Rs. 1,24,845, इस विक्रेता की सामान्य राशि Rs. 36,040 की 3.5 times है।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.637383583933115
+  },
+  {
+   "event_id": "EV-008469",
+   "language": "hi",
+   "facts": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 3 चालान",
+    "राशि Rs. 4,81,655, इस विक्रेता की सामान्य राशि Rs. 79,574 की 6.1x है",
+    "7 दिनों में 3 चालान, अपेक्षित दर का 14.9x",
+    "चालान पिछले वाले के उसी दिन आया, जबकि सामान्य अंतर 33 दिन है",
+    "राशि Rs. 4,81,655, Rs. 5,00,000 की अनुमोदन सीमा का 96% है"
+   ],
+   "main": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 3 चालान",
+    "राशि Rs. 4,81,655, इस विक्रेता की सामान्य राशि Rs. 79,574 की 6.1x है",
+    "7 दिनों में 3 चालान, अपेक्षित दर का 14.9x"
+   ],
+   "v1": "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 3 चालान। राशि Rs. 4,81,655, इस विक्रेता की सामान्य राशि Rs. 79,574 की 6.1x है। 7 दिनों में 3 चालान, अपेक्षित दर का 14.9x। चालान पिछले वाले के उसी दिन आया, जबकि सामान्�",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 8.216013833880424,
+   "v2": "3 दिनों में ₹5,00,000 की आवश्यकता सीमा पर त्रुटि है। इस विक्रेता की सामान्य राशि Rs. 4,81,655 है, जो Rs. 79,574 की 6.1x है। समय विस्तृति: 7 दिनों में 3 चालान, अपेक्षित दर का 14.9x",
+   "v2_sentences": [
+    "3 दिनों में ₹5,00,000 की आवश्यकता सीमा पर त्रुटि है।",
+    "इस विक्रेता की सामान्य राशि Rs. 4,81,655 है, जो Rs. 79,574 की 6.1x है।",
+    "समय विस्तृति: 7 दिनों में 3 चालान, अपेक्षित दर का 14.9x"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 7.011797999963164
+  },
+  {
+   "event_id": "EV-008541",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.6x"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 2.6x"
+   ],
+   "v1": "दैनिक रुकते हुए 3 चालान, अपेक्षित दर का 2.6x है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.287670500110835,
+   "v2": "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।",
+   "v2_sentences": [
+    "3 चालान की आवश्यकता 7 दिनों में अपेक्षित दर के बराबर है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.276977874804288
+  },
+  {
+   "event_id": "EV-005646",
+   "language": "hi",
+   "facts": [
+    "4 दिन पहले के चालान EV-005592 (Rs. 85,943) से मेल खाता है"
+   ],
+   "main": [
+    "4 दिन पहले के चालान EV-005592 (Rs. 85,943) से मेल खाता है"
+   ],
+   "v1": "दो दिन पहले के चालान EV-005592 (रुपए 85,943) से मेल खाता है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 2.420109000056982,
+   "v2": "4 दिन पहले के चालान EV-005592 (रुपए 85,943) से मेल खाता है",
+   "v2_sentences": [
+    "4 दिन पहले के चालान EV-005592 (रुपए 85,943) से मेल खाता है"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.224296165863052
+  },
+  {
+   "event_id": "EV-004124",
+   "language": "hi",
+   "facts": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 11.7x",
+    "चालान पिछले के 3 दिन बाद आया, जबकि सामान्य अंतर 28 दिन है"
+   ],
+   "main": [
+    "7 दिनों में 3 चालान, अपेक्षित दर का 11.7x",
+    "चालान पिछले के 3 दिन बाद आया, जबकि सामान्य अंतर 28 दिन है"
+   ],
+   "v1": "3 चालान दिनों में अपेक्षित दर का 11.7x है। इनमें से पहला चालान पिछले के 3 दिन बाद आया, जबकि सामान्य अंतर 28 दिन है।",
+   "v1_outcome": "new word",
+   "v1_anchored": false,
+   "v1_seconds": 4.623080499935895,
+   "v2": "सामने 3 चालान जुड़ी प्रति दिन 7 दिनों में आयोजित हुई एक वैशिष्ट्य समारोह का उलट बदला गया। पिछले की 3 दिन बाद चालान आया, जबकि सामान्य अंतर 28 दिन है.",
+   "v2_sentences": [
+    "सामने 3 चालान जुड़ी प्रति दिन 7 दिनों में आयोजित हुई एक वैशिष्ट्य समारोह का उलट बदला गया।",
+    "पिछले की 3 दिन बाद चालान आया, जबकि सामान्य अंतर 28 दिन है."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 5.778393083019182
+  },
+  {
+   "event_id": "EV-008468",
+   "language": "hi",
+   "facts": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 3 चालान",
+    "राशि Rs. 4,67,312, इस विक्रेता की सामान्य राशि Rs. 76,833 की 6.1x है",
+    "राशि Rs. 4,67,312, Rs. 5,00,000 की अनुमोदन सीमा का 93% है"
+   ],
+   "main": [
+    "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 3 चालान",
+    "राशि Rs. 4,67,312, इस विक्रेता की सामान्य राशि Rs. 76,833 की 6.1x है",
+    "राशि Rs. 4,67,312, Rs. 5,00,000 की अनुमोदन सीमा का 93% है"
+   ],
+   "v1": "3 दिनों में Rs. 5,00,000 की अनुमोदन सीमा से ठीक नीचे 3 चालान। राशि Rs. 4,67,312, इस विक्रेता की सामान्य राशि Rs. 76,833 की 6.1x है। राशि Rs. 4,67,312, Rs. 5,00,000 की अनुमोदन सीमा का 93% है.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 6.943274083081633,
+   "v2": "3 दिनों में ₹5,00,000 की आवश्यकता सीमा पर त्रुटि है। इस विक्रेता की सामान्य राशि Rs. 4,67,312 है, जो Rs. 76,833 की 6.1x है। राशि Rs. 4,67,312 और Rs. 5,00,000 के बीच 93% की अनुमोदन सीमा है।",
+   "v2_sentences": [
+    "3 दिनों में ₹5,00,000 की आवश्यकता सीमा पर त्रुटि है।",
+    "इस विक्रेता की सामान्य राशि Rs. 4,67,312 है, जो Rs. 76,833 की 6.1x है।",
+    "राशि Rs. 4,67,312 और Rs. 5,00,000 के बीच 93% की अनुमोदन सीमा है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 6.9982157500926405
+  },
+  {
+   "event_id": "EV-002850",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 6 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.3902380410581827,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 6 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.0636157079134136
+  },
+  {
+   "event_id": "EV-002394",
+   "language": "hi",
+   "facts": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 2 दिन लगते हैं"
+   ],
+   "main": [
+    "उसी दिन अनुमोदित, जबकि सामान्यतः 2 दिन लगते हैं"
+   ],
+   "v1": "उसी दिन अनुमोदित है, जबकि सामान्यतः 2 दिन लगते हैं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.3483299578074366,
+   "v2": "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 2 दिन लगते हैं.",
+   "v2_sentences": [
+    "इस परिकल्पना के बारे में उपहार आयोजित किया गया, जबकि सामान्यतः 2 दिन लगते हैं."
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 3.0314658749848604
+  },
+  {
+   "event_id": "EV-006417",
+   "language": "hi",
+   "facts": [
+    "राशि Rs. 5,61,226, इस विक्रेता की सामान्य राशि Rs. 1,99,363 की 2.8x है"
+   ],
+   "main": [
+    "राशि Rs. 5,61,226, इस विक्रेता की सामान्य राशि Rs. 1,99,363 की 2.8x है"
+   ],
+   "v1": "राशि Rs. 5,61,226 इस विक्रेता की सामान्य राशि Rs. 1,99,363 की 2.8x है.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.8026612501125783,
+   "v2": "इस विक्रेता की सामान्य राशि Rs. 5,61,226 है, जो Rs. 1,99,363 की 2.8 गुना है।",
+   "v2_sentences": [
+    "इस विक्रेता की सामान्य राशि Rs. 5,61,226 है, जो Rs. 1,99,363 की 2.8 गुना है।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.8340183328837156
+  },
+  {
+   "event_id": "EV-007765",
+   "language": "hi",
+   "facts": [
+    "एक ही व्यक्ति (APR04) ने बनाया और अनुमोदित किया"
+   ],
+   "main": [
+    "एक ही व्यक्ति (APR04) ने बनाया और अनुमोदित किया"
+   ],
+   "v1": "एक ही व्यक्ति (APR04) ने एक चौड़ाई 10 सेमी और लंबाई 20 सेमी का पेड़ बनाया और उसे अनुमोदित किया।",
+   "v1_outcome": "new number",
+   "v1_anchored": false,
+   "v1_seconds": 3.8152432499919087,
+   "v2": "एक ही व्यक्ति (APR04) ने एक संस्कृति प्रणाली (APR04) जोड़ा और अनुमोदित किया।",
+   "v2_sentences": [
+    "एक ही व्यक्ति (APR04) ने एक संस्कृति प्रणाली (APR04) जोड़ा और अनुमोदित किया।"
+   ],
+   "v2_outcome": "new word",
+   "v2_seconds": 2.845758334035054
+  },
+  {
+   "event_id": "EV-010021",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX7210 में गया, सामान्य खाता XXXX4375 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX7210 में गया, सामान्य खाता XXXX4375 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX7210 में गया। सामान्य खाता XXXX4375 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.417109292000532,
+   "v2": "भुगतान खाता XXXX7210 में गया, सामान्य खाता XXXX4375 में नहीं।",
+   "v2_sentences": [
+    "भुगतान खाता XXXX7210 में गया, सामान्य खाता XXXX4375 में नहीं।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.2993670410942286
+  },
+  {
+   "event_id": "EV-004864",
+   "language": "hi",
+   "facts": [
+    "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं"
+   ],
+   "main": [
+    "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं"
+   ],
+   "v1": "भुगतान खाता XXXX7112 में गया। सामान्य खाता XXXX8554 में नहीं.",
+   "v1_outcome": "accepted",
+   "v1_anchored": true,
+   "v1_seconds": 2.410154625074938,
+   "v2": "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं।",
+   "v2_sentences": [
+    "भुगतान खाता XXXX7112 में गया, सामान्य खाता XXXX8554 में नहीं।"
+   ],
+   "v2_outcome": "accepted",
+   "v2_seconds": 2.2282781661488116
+  }
+ ]
+}
