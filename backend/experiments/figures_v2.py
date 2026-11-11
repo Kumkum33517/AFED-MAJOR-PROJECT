@@ -43,7 +43,8 @@ def grouped(ax: plt.Axes, labels: list[str], series: dict[str, tuple[list[float]
                       error_kw={"elinewidth": 0.6, "ecolor": MUTED, "capsize": 1.5})
         ax.bar_label(bars, labels=[f"{m:.{digits}f}" for m in means], fontsize=6, padding=1.5, color=INK)
     ax.set_xticks(np.arange(len(labels)), labels, rotation=20, ha="right")
-    ax.legend(frameon=False, fontsize=7, ncol=min(len(series), 6))
+    ax.set_ylim(0, ax.get_ylim()[1] * 1.22)  # headroom so the legend never covers a bar
+    ax.legend(frameon=False, fontsize=7, ncol=min(len(series), 6), loc="upper center")
 
 
 def ms(values: list[float]) -> tuple[float, float]:
@@ -86,8 +87,8 @@ def subthreshold_figure(sub: dict) -> list[str]:
     models = ["Rule-based", "Global IF", "LOF", "AFED v1", "AFED v2"]
     names = list(sub)
     fig, axes = plt.subplots(1, 2, figsize=(10, 3.2))
-    for ax, key, title in zip(axes, ("recall", "pr_auc"), ("Recall", "PR-AUC")):
-        grouped(ax, names, {mo: tuple(zip(*[ms([r[mo][key] for r in sub[n].values()]) for n in names])) for mo in models}, 2)
+    for ax, key, title, digits in zip(axes, ("recall", "pr_auc"), ("Recall", "PR-AUC"), (2, 3)):
+        grouped(ax, names, {mo: tuple(zip(*[ms([r[mo][key] for r in sub[n].values()]) for n in names])) for mo in models}, digits)
         tidy(ax, title)
     fig.suptitle("Sub-threshold benchmark: 2x to 5x the vendor's median, below Rs. 5 lakh (reporting data)", color=INK, fontsize=10)
     fig.tight_layout(); fig.savefig(FIG / "subthreshold_benchmark.png"); plt.close(fig)
