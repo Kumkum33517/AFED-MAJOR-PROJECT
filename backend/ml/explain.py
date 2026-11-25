@@ -341,7 +341,9 @@ FACT_PROMPT = (
     "Example output: It was approved at 22:38 on a Tuesday, outside working hours."
 )
 
-
+# Safety note: this is the per-fact variant of narration. It is stricter than
+# the whole-alert version because each sentence is validated in isolation,
+# which prevents cross-fact number mixing. Any failure -> template fallback.
 def narrate_per_fact(facts: list[Fact], level: str, risk: float, language: str, provider: str) -> tuple[str, str]:
     """Narration v2: one fact at a time, each sentence checked against its own fact only, plus the anchor check.
 
